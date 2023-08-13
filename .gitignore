@@ -46,5 +46,9 @@ lib
 package-lock.json
 yarn.lock
 
+
+# Environment variables
+.env
+
 # others
 .DS_Store

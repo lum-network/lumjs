@@ -1,0 +1,35 @@
+name: Format and unit test the code when a pull request is opened
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  launch-ignite-with-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: install ignite, launch node, and run tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make
+          wget https://golang.org/dl/go1.19.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz
+          export GOPATH=$HOME/go
+          export GOBIN=$GOPATH/bin
+          export GO111MODULE=on
+          export PATH=$PATH:/usr/local/go/bin:$GOBIN
+          go version
+          cp config.yml lum/config.yml
+          cd lum
+          curl https://get.ignite.com/cli! | bash
+          ignite chain serve --skip-proto & sleep 600
+          yarn install
+          yarn lint
+          yarn test

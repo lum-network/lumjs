@@ -1,0 +1,241 @@
+version: 1
+accounts:
+  - name: user1
+    coins: ["120000000000ulum", 100000000000uatom]
+  - name: user2
+    coins: ["100ulum"]
+  - name: relayer
+    coins: ["100000000ulum"]
+    mnemonic: "poem accuse sport census donor curious panther mean debris swap wire skin impose gym pretty dinosaur forget output dad steel venture farm gym pill"
+validators:
+  - name: user1
+    bonded: "100000000ulum"
+    app:
+      pruning: "nothing"
+genesis:
+  chain_id: "lumnetwork-testnet"
+  app_state:
+    crisis:
+      constant_fee:
+        denom: "ulum"
+    mint:
+      params:
+        mint_denom: "ulum"
+    staking:
+      params:
+        bond_denom: "ulum"
+    gov:
+      params:
+        min_deposit: [{ "amount": "10000", "denom": "ulum" }]
+        max_deposit_period: "180s"
+        voting_period: "180s"
+    dfract:
+      params:
+        min_deposit_amount: "1000000"
+        deposit_denoms:
+          [
+            "ibc/05554A9BFDD28894D7F18F4C707AA0930D778751A437A9FE1F4684A3E1199728",
+          ]
+        is_deposit_enabled: true
+    millions:
+      params:
+        min_deposit_amount: "1000"
+        max_prize_strategy_batches: 100
+        max_prize_batch_quantity: 1000
+        min_draw_schedule_delta: "1h"
+        max_draw_schedule_delta: "8784h" # 366days
+        prize_expiration_delta: "720h" # 30days
+        fees_stakers: "0.10"
+        min_deposit_draw_delta: "60s"
+faucet:
+  name: user1
+  coins: ["10ulum"]
+  coins_max: ["120000000ulum"]
+  port: 4500
+version: 1
+accounts:
+  - name: user1
+    coins: ["120000000000ulum", 100000000000uatom]
+    mnemonic: "cave silly dad evil miracle eye moon concert bag attitude lava organ"
+  - name: user2
+    coins: ["120000000000ulum"]
+    mnemonic: "piano subway luggage unique chat shop soccer cancel inhale grunt slow leisure"
+  - name: relayer
+    coins: ["100000000ulum"]
+    mnemonic: "poem accuse sport census donor curious panther mean debris swap wire skin impose gym pretty dinosaur forget output dad steel venture farm gym pill"
+validators:
+  - name: user1
+    bonded: "1000000ulum"
+    staked: "1000000ulum"
+    app:
+      pruning: "nothing"
+genesis:
+  chain_id: "lumnetwork-testnet"
+  app_state:
+    crisis:
+      constant_fee:
+        denom: "ulum"  
+    mint:
+      params:
+        mint_denom: "ulum"
+    gov:
+      params:
+        min_deposit: [{ "amount": "10000", "denom": "ulum" }]
+        max_deposit_period: "180s"
+        voting_period: "180s"
+    staking:
+      params:
+        bond_denom: "ulum"     
+    dfract:
+      params:
+        min_deposit_amount: "1000000"
+        deposit_denoms:
+          [
+            "ibc/05554A9BFDD28894D7F18F4C707AA0930D778751A437A9FE1F4684A3E1199728",
+          ]
+        is_deposit_enabled: true
+    millions:
+      params:
+        min_deposit_amount: "1000"
+        max_prize_strategy_batches: 10
+        max_prize_batch_quantity: 1000
+        min_draw_schedule_delta: "1h"
+        max_draw_schedule_delta: "8784h" # 366days
+        prize_expiration_delta: "720h" # 30days
+        fees_stakers: "0.10"
+        min_deposit_draw_delta: "60s"
+      pools:
+        - available_prize_pool:
+            amount: "1000000"
+            denom: ulum
+          bech32_prefix_acc_addr: lum
+          bech32_prefix_val_addr: lumvaloper
+          chain_id: lumnetwork-testnet
+          connection_id: ""
+          created_at: "2023-09-12T14:02:17.518631Z"
+          created_at_height: "0"
+          denom: ulum
+          depositors_count: "1"
+          draw_schedule:
+            draw_delta: 3600s
+            initial_draw_at: "2023-04-19T00:23:00Z"
+          ica_deposit_address: lum1992f8t8dgher6q9nvvdca3u400d3mfhryuyqshw03cvenk4fpy5qmdxale
+          ica_deposit_port_id: ""
+          ica_prizepool_address: lum1eyz76j5avau7hvge6w89adgryxrnux2zsv4qqatcnyqv688fcgksvke03q
+          ica_prizepool_port_id: ""
+          last_draw_created_at: "2023-09-12T14:02:18.545590Z"
+          last_draw_state: DRAW_STATE_SUCCESS
+          local_address: lum1992f8t8dgher6q9nvvdca3u400d3mfhryuyqshw03cvenk4fpy5qmdxale
+          max_unbonding_entries: "7"
+          min_deposit_amount: "1000000"
+          native_denom: ulum
+          next_draw_id: "2"
+          pool_id: "1"
+          pool_type: POOL_TYPE_STAKING
+          prize_strategy:
+            prize_batches:
+              - draw_probability: "1.000000000000000000"
+                is_unique: false
+                pool_percent: "100"
+                quantity: "100"
+          sponsorship_amount: "0"
+          state: POOL_STATE_READY
+          transfer_channel_id: ""
+          tvl_amount: "1000000"
+          unbonding_duration: 1814400s
+          updated_at: "2023-09-12T14:02:18.545590Z"
+          updated_at_height: "1"
+          validators:
+            - bonded_amount: "1000000"
+              is_enabled: true
+              operator_address: lumvaloper1uthq5p2022u90guf0774kxtr0hq6kfc48gh3az
+      deposits:
+        - amount:
+            amount: "1000000"
+            denom: ulum
+          created_at: "2023-09-12T14:02:17.518631Z"
+          created_at_height: "0"
+          deposit_id: "228"
+          depositor_address: lum1uthq5p2022u90guf0774kxtr0hq6kfc4cl7zxx
+          error_state: DEPOSIT_STATE_UNSPECIFIED
+          is_sponsor: false
+          pool_id: "1"
+          state: DEPOSIT_STATE_SUCCESS
+          updated_at: "2023-07-20T14:20:49.232132261Z"
+          updated_at_height: "1"
+          winner_address: lum1uthq5p2022u90guf0774kxtr0hq6kfc4cl7zxx
+      draws:
+        - created_at: "2023-09-12T14:02:17.518631Z"
+          created_at_height: "0"
+          draw_id: "1"
+          error_state: DRAW_STATE_UNSPECIFIED
+          pool_id: "1"
+          prize_pool:
+            amount: "0"
+            denom: ulum
+          prize_pool_fresh_amount: "0"
+          prize_pool_remains_amount: "0"
+          prizes_refs:
+            - amount: "1000"
+              prize_id: "1"
+              winner_address: lum1uthq5p2022u90guf0774kxtr0hq6kfc4cl7zxx
+            - amount: "1000"
+              prize_id: "2"
+              winner_address: lum1uthq5p2022u90guf0774kxtr0hq6kfc4cl7zxx
+          rand_seed: "-26892812894530236"
+          state: DRAW_STATE_SUCCESS
+          total_win_amount: "2000"
+          total_win_count: "1"
+          updated_at: "2023-09-12T14:02:18.545590Z"
+          updated_at_height: "1"
+        - created_at: "2023-09-12T14:02:17.518631Z"
+          created_at_height: "0"
+          draw_id: "2"
+          error_state: DRAW_STATE_UNSPECIFIED
+          pool_id: "1"
+          prize_pool:
+            amount: "0"
+            denom: ulum
+          prize_pool_fresh_amount: "0"
+          prizes_refs: []
+          rand_seed: "2542400448814115288"
+          state: DRAW_STATE_SUCCESS
+          total_win_amount: "0"
+          total_win_count: "0"
+          updated_at: "2023-09-12T14:02:18.545590Z"
+          updated_at_height: "1"
+      prizes:
+        - amount:
+            amount: "1000"
+            denom: ulum
+          created_at: "2023-09-12T14:02:17.518631Z"
+          created_at_height: "0"
+          draw_id: "1"
+          expires_at: "2023-10-12T14:02:17.518631Z"
+          pool_id: "1"
+          prize_id: "1"
+          state: PRIZE_STATE_PENDING
+          updated_at: "2023-09-12T14:02:18.545590Z"
+          updated_at_height: "1"
+          winner_address: lum1uthq5p2022u90guf0774kxtr0hq6kfc4cl7zxx
+        - amount:
+            amount: "1000"
+            denom: ulum
+          created_at: "2023-09-12T14:02:17.518631Z"
+          created_at_height: "0"
+          draw_id: "1"
+          expires_at: "2023-10-12T14:02:17.518631Z"
+          pool_id: "1"
+          prize_id: "2"
+          state: PRIZE_STATE_PENDING
+          updated_at: "2023-09-12T14:02:18.545590Z"
+          updated_at_height: "1"
+          winner_address: lum1uthq5p2022u90guf0774kxtr0hq6kfc4cl7zxx
+faucet:
+  name: user1
+  coins: ["10ulum"]
+  coins_max: ["120000000ulum"]
+  port: 4500
+
+
+

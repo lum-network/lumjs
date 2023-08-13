@@ -1,296 +1,229 @@
-# lum-network
+# Documentation
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/545047/188804067-28e67e5e-0214-4449-ab04-2e0c564a6885.svg" width="80"><br />
-    lum-network sdk js
-</p>
+The code should be documented enough to make this library easy to use for anyone familiar with blockchain technology and especially the Tendermint engine and the Cosmos SDK.
 
+You can find more details by browsing the [code documentation](./lib).
 
-## install
+## Examples
 
-```sh
-npm install lum-network
-```
-## Table of contents
+A couple examples to help you get started.
 
-- [lum-network](#lum-network)
-  - [Install](#install)
-  - [Table of contents](#table-of-contents)
-- [Usage](#usage)
-    - [RPC Clients](#rpc-clients)
-    - [Composing Messages](#composing-messages)
-        - Cosmos, CosmWasm, and IBC
-            - [CosmWasm](#cosmwasm-messages)
-            - [IBC](#ibc-messages)
-            - [Cosmos](#cosmos-messages)
-- [Wallets and Signers](#connecting-with-wallets-and-signing-messages)
-    - [Stargate Client](#initializing-the-stargate-client)
-    - [Creating Signers](#creating-signers)
-    - [Broadcasting Messages](#broadcasting-messages)
-- [Advanced Usage](#advanced-usage)
-- [Developing](#developing)
-- [Credits](#credits)
+### Imports
 
-## Usage
-### RPC Clients
-
-```js
-import { lum-network } from 'lum-network';
-
-const { createRPCQueryClient } = lum-network.ClientFactory; 
-const client = await createRPCQueryClient({ rpcEndpoint: RPC_ENDPOINT });
-
-// now you can query the cosmos modules
-const balance = await client.cosmos.bank.v1beta1
-    .allBalances({ address: 'lum-network1addresshere' });
-
-// you can also query the lum-network modules
-const balances = await client.lum-network.exchange.v1beta1
-    .exchangeBalances()
+```typescript
+import { LumWalletFactory, LumClient, LumTypes, LumUtils, LumConstants, LumMessages } from '@lum-network/sdk-javascript';
 ```
 
-### Composing Messages
+### Software wallets
 
-Import the `lum-network` object from `lum-network`. 
+#### Mnemonic
 
-```js
-import { lum-network } from 'lum-network';
+```typescript
+// Create a new cryptographically secure random mnemonic
+const mnemonic = LumUtils.generateMnemonic(12);
 
-const {
-    createSpotLimitOrder,
-    createSpotMarketOrder,
-    deposit
-} = lum-network.exchange.v1beta1.MessageComposer.withTypeUrl;
+// Create a wallet instance based on this fresh mnemonic
+const wallet = await LumWalletFactory.fromMnemonic(mnemonic);
 ```
 
-#### CosmWasm Messages
+#### Private key
 
-```js
-import { cosmwasm } from "lum-network";
+```typescript
+// Create a new cryptographically secure random private key
+const privateKey = LumUtils.generatePrivateKey();
 
-const {
-    clearAdmin,
-    executeContract,
-    instantiateContract,
-    migrateContract,
-    storeCode,
-    updateAdmin
-} = cosmwasm.wasm.v1.MessageComposer.withTypeUrl;
+// Create a wallet instance based on this fresh private key
+const wallet = await LumWalletFactory.fromPrivateKey(mnemonic);
+console.log(`Wallet address: ${wallet.getAddress()}`);
+
+// Create a wallet instance based on an hexadecimal private key (ex: user input - 0x is optional)
+const hexPrivateKey = '0xb8e62c34928025cdd3aef6cbebc68694b5ad9209b2aff6d3891c8e61d22d3a3b';
+const existingWallet = await LumWalletFactory.fromPrivateKey(LumUtils.keyFromHex(hexPrivateKey));
+console.log(`Existing wallet address: ${wallet.getAddress()}`);
 ```
 
-#### IBC Messages
+#### Keystore
 
-```js
-import { ibc } from 'lum-network';
-
-const {
-    transfer
-} = ibc.applications.transfer.v1.MessageComposer.withTypeUrl
+```typescript
+// Create a random private key for the sake of this example
+const privateKey = LumUtils.generatePrivateKey();
+// Create a keystore (or consume user input)
+const keystore = LumUtils.generateKeyStore(privateKey, 'some-password');
+const wallet = await LumWalletFactory.fromKeyStore(keystore, 'some-password');
+console.log(`Wallet address: ${wallet.getAddress()}`);
 ```
 
-#### Cosmos Messages
+### Hardware wallets
 
-```js
-import { cosmos } from 'lum-network';
+**IMPORTANT NOTES:**
 
-const {
-    fundCommunityPool,
-    setWithdrawAddress,
-    withdrawDelegatorReward,
-    withdrawValidatorCommission
-} = cosmos.distribution.v1beta1.MessageComposer.fromPartial;
+-   Transaction signature using Ledger only works with legacy amino (wich will be deprecated at some point)
+-   Derivation path using the Cosmos Ledger application cannot be set to the default Lum Path for now `m/44'/880'/0'/*/*` and must remain on the Cosmos path `m/44'/'118/0'/*/*`
 
-const {
-    multiSend,
-    send
-} = cosmos.bank.v1beta1.MessageComposer.fromPartial;
+#### Ledger
 
-const {
-    beginRedelegate,
-    createValidator,
-    delegate,
-    editValidator,
-    undelegate
-} = cosmos.staking.v1beta1.MessageComposer.fromPartial;
+The SDK only provides access to the Ledger API using a provided Transport.
+Ledger transport must be initialized and handled by the code using the SDK.
 
-const {
-    deposit,
-    submitProposal,
-    vote,
-    voteWeighted
-} = cosmos.gov.v1beta1.MessageComposer.fromPartial;
+See [LedgerHQ/ledgerjs documentation](https://github.com/LedgerHQ/ledgerjs) for more information.
+
+```typescript
+import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
+
+// Connect your ledger device
+// Unlock it
+// Open the Cosmos application
+
+// Create a Node HID transport
+const transport = await TransportNodeHid.create();
+
+// Create the ledger based wallet instance
+const wallet = await LumWalletFactory.fromLedgerTransport(transport, `m/44'/118'/0'/0/0`, 'lum');
+
+// Change account to 1 and wallet to 1 (optional)
+await wallet.useAccount(`m/44'/118'/0'/1/1`, 'lum');
+
+// Get account information
+const account = await client.getAccount(wallet.getAddress());
+if (account === null) {
+    console.log('Account: not found');
+} else {
+    console.log(`Account: ${account.address}, ${account.accountNumber}, ${account.sequence}`);
+}
 ```
 
-## Connecting with Wallets and Signing Messages
+### Connect to the testnet
 
-⚡️ For web interfaces, we recommend using [cosmos-kit](https://github.com/cosmology-tech/cosmos-kit). Continue below to see how to manually construct signers and clients.
-
-Here are the docs on [creating signers](https://github.com/cosmology-tech/cosmos-kit/tree/main/packages/react#signing-clients) in cosmos-kit that can be used with Keplr and other wallets.
-
-### Initializing the Stargate Client
-
-Use `getSigninglum-networkClient` to get your `SigningStargateClient`, with the proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
-
-```js
-import { getSigninglum-networkClient } from 'lum-network';
-
-const stargateClient = await getSigninglum-networkClient({
-  rpcEndpoint,
-  signer // OfflineSigner
-});
-```
-### Creating Signers
-
-To broadcast messages, you can create signers with a variety of options:
-
-* [cosmos-kit](https://github.com/cosmology-tech/cosmos-kit/tree/main/packages/react#signing-clients) (recommended)
-* [keplr](https://docs.keplr.app/api/cosmjs.html)
-* [cosmjs](https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9)
-### Amino Signer
-
-Likely you'll want to use the Amino, so unless you need proto, you should use this one:
-
-```js
-import { getOfflineSignerAmino as getOfflineSigner } from 'cosmjs-utils';
-```
-### Proto Signer
-
-```js
-import { getOfflineSignerProto as getOfflineSigner } from 'cosmjs-utils';
+```typescript
+// Use http://node0.lum.network/rpc to connect to the mainnet
+const client = await LumClient.connect('http://node0.testnet.lum.network/rpc');
 ```
 
-WARNING: NOT RECOMMENDED TO USE PLAIN-TEXT MNEMONICS. Please take care of your security and use best practices such as AES encryption and/or methods from 12factor applications.
+### Account information & balance
 
-```js
-import { chains } from 'chain-registry';
+#### Get account information
 
-const mnemonic =
-  'unfold client turtle either pilot stock floor glow toward bullet car science';
-  const chain = chains.find(({ chain_name }) => chain_name === 'lum-network');
-  const signer = await getOfflineSigner({
-    mnemonic,
-    chain
-  });
+```typescript
+const account = await client.getAccount(wallet.getAddress());
+if (account === null) {
+    console.log('Account: not found');
+} else {
+    console.log(`Account: ${account.address}, ${account.accountNumber}, ${account.sequence}`);
+}
 ```
-### Broadcasting Messages
 
-Now that you have your `stargateClient`, you can broadcast messages:
+#### Get account balances
 
-```js
-const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
+```typescript
+const balances = await client.getAllBalances(wallet.getAddress(), undefined);
+if (balances.length === 0) {
+    console.log('Balances: empty account');
+} else {
+    console.log(
+        `Balances: ${balances.map((coin) => {
+            coin.denom + ': ' + coin.amount;
+        })}`,
+    );
+}
+```
 
-const msg = send({
-    amount: [
-    {
-        denom: 'coin',
-        amount: '1000'
-    }
-    ],
-    toAddress: address,
-    fromAddress: address
-});
+### Transactions
 
-const fee: StdFee = {
-    amount: [
-    {
-        denom: 'coin',
-        amount: '864'
-    }
-    ],
-    gas: '86364'
+#### Get account transactions (sent and received)
+
+```typescript
+// The client search feature supports multiple searches and merge+sort the results
+const transactions = await client.searchTx([LumUtils.searchTxFrom(wallet.getAddress()), LumUtils.searchTxTo(wallet.getAddress())]);
+console.log(`Transactions: ${transactions.map((tx) => tx.hash).join(', ')}`);
+```
+
+#### Send transaction
+
+```typescript
+// Build transaction message (Send 100 LUM)
+const sendMsg = LumMessages.BuildMsgSend(wallet.getAddress(), toAddress, [{ denom: LumConstants.LumDenom, amount: '100' }]);
+// Define fees (1 LUM)
+const fee = {
+    amount: [{ denom: LumConstants.LumDenom, amount: '1' }],
+    gas: '100000',
 };
-const response = await stargateClient.signAndBroadcast(address, [msg], fee);
-```
-
-## Advanced Usage
-
-
-If you want to manually construct a stargate client
-
-```js
-import { OfflineSigner, GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
-
-import { 
-    cosmosAminoConverters,
-    cosmosProtoRegistry,
-    cosmwasmAminoConverters,
-    cosmwasmProtoRegistry,
-    ibcProtoRegistry,
-    ibcAminoConverters,
-    lum-networkAminoConverters,
-    lum-networkProtoRegistry
-} from 'lum-network';
-
-const signer: OfflineSigner = /* create your signer (see above)  */
-const rpcEndpint = 'https://rpc.cosmos.directory/lum-network'; // or another URL
-
-const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
-    ...cosmosProtoRegistry,
-    ...cosmwasmProtoRegistry,
-    ...ibcProtoRegistry,
-    ...lum-networkProtoRegistry
-];
-
-const aminoConverters = {
-    ...cosmosAminoConverters,
-    ...cosmwasmAminoConverters,
-    ...ibcAminoConverters,
-    ...lum-networkAminoConverters
+// Fetch account number and sequence
+const account = await client.getAccount(wallet.getAddress());
+// Create the transaction document
+const doc = {
+    chainId,
+    fee: fee,
+    memo: 'my transaction memo',
+    messages: [sendMsg],
+    signers: [
+        {
+            accountNumber: account.accountNumber,
+            sequence: account.sequence,
+            publicKey: wallet.getPublicKey(),
+        },
+    ],
 };
-
-const registry = new Registry(protoRegistry);
-const aminoTypes = new AminoTypes(aminoConverters);
-
-const stargateClient = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer, {
-    registry,
-    aminoTypes
-});
+// Sign and broadcast the transaction using the client
+const broadcastResult = await client.signAndBroadcastTx(w1, doc);
+// Verify the transaction was succesfully broadcasted and made it into a block
+console.log(`Broadcast success: ${LumUtils.broadcastTxCommitSuccess(broadcastResult)}`);
 ```
 
-## Developing
+### Query Millions
 
-When first cloning the repo:
-
-```
-yarn
-yarn build
-```
-
-### Codegen
-
-Contract schemas live in `./contracts`, and protos in `./proto`. Look inside of `scripts/codegen.js` and configure the settings for bundling your SDK and contracts into `lum-network`:
-
-```
-yarn codegen
+```typescript
+const deposits = await client.queryClient.millions.deposits();
+// query with account deposits - pass the desired pagination
+const accountDeposit = await client.queryClient.millions.accountDeposits({ depositorAddress: deposit.depositorAddress, pagination: undefined });
+const withdrawals = await client.queryClient.millions.withdrawals();
+// query with account withdrawals - pass the desired pagination
+const accountWithdrawals = await client.queryClient.millions.accountWithdrawals({ depositorAddress: withdrawal.depositorAddress, pagination: undefined });
+const prizes = await client.queryClient.millions.prizes();
+const draws = await client.queryClient.millions.draws();
 ```
 
-### Publishing
+### Use all tendermint RPCs
 
-Build the types and then publish:
+The underlying tendermint client is directly accessible via the `.tmClient` property of the LumClient.
 
+```typescript
+const health = await client.tmClient.health();
+const status = await client.tmClient.status();
+const genesis = await client.tmClient.genesis();
+const latestBlock = await client.tmClient.block();
 ```
-yarn build
-yarn publish
+
+### Use all modules RPCs
+
+The underlying query client is directly accessible via the `.queryClient` property of the LumClient.
+
+It allows to directly query all modules endpoints such as:
+
+```typescript
+const supplies = await clt.queryClient.bank.unverified.totalSupply();
+// [{ denom: 'lum', amount: '1000000' }]
 ```
 
-## Related
+### Message signature & verification
 
-Checkout these related projects:
+#### Sign a message
 
-* [@cosmwasm/ts-codegen](https://github.com/CosmWasm/ts-codegen) for generated CosmWasm contract Typescript classes
-* [@cosmology/telescope](https://github.com/cosmology-tech/telescope) a "babel for the Cosmos", Telescope is a TypeScript Transpiler for Cosmos Protobufs.
-* [chain-registry](https://github.com/cosmology-tech/chain-registry) an npm module for the official Cosmos chain-registry.
-* [cosmos-kit](https://github.com/cosmology-tech/cosmos-kit) A wallet connector for the Cosmos ⚛️
-* [create-cosmos-app](https://github.com/cosmology-tech/create-cosmos-app) set up a modern Cosmos app by running one command.
-* [starship](https://github.com/cosmology-tech/starship) a k8s-based unified development environment for Cosmos Ecosystem
+```typescript
+const message = 'Lum network is an awesome decentralized protocol';
+const signedPayload = await wallet.signMessage(message);
+// { address, publicKey, msg, sig, version, signer }
+const validSig = await LumUtils.verifySignMsg(signedPayload);
+// true
+const invalidSig = await LumUtils.verifySignMsg(Object.assign(signedPayload, { msg: 'Wrong message input' }));
+// false
+```
 
 ## Credits
 
-🛠 Built by Cosmology — if you like our tools, please consider delegating to [our validator ⚛️](https://cosmology.tech/validator)
+🛠 Built witht Cosmology
 
-## Disclaimer
+Code built with the help of these related projects:
 
-AS DESCRIBED IN THE LICENSES, THE SOFTWARE IS PROVIDED “AS IS”, AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND.
-
-No developer or entity involved in creating this software will be liable for any claims or damages whatsoever associated with your use, inability to use, or your interaction with other users of the code or software using the code, including any direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits, cryptocurrencies, tokens, or anything else of value.
+-   [@cosmwasm/ts-codegen](https://github.com/CosmWasm/ts-codegen) for generated CosmWasm contract Typescript classes
+-   [@cosmology/telescope](https://github.com/cosmology-tech/telescope) a "babel for the Cosmos", Telescope is a TypeScript Transpiler for Cosmos Protobufs.
+-   [chain-registry](https://github.com/cosmology-tech/chain-registry) an npm module for the official Cosmos chain-registry

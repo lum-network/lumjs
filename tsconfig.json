@@ -8,10 +8,7 @@
         "esModuleInterop": true,
         "target": "es2022",
         "module": "es2022",
-        "lib": [
-            "es2022",
-            "DOM"
-        ],
+        "lib": ["es2022", "DOM"],
         "sourceMap": true,
         "isolatedModules": true,
         "allowJs": true,
@@ -19,10 +16,6 @@
         "moduleResolution": "node",
         "resolveJsonModule": true
     },
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": ["./src/**/*", "./tests/**/*"],
+    "exclude": ["node_modules"]
 }

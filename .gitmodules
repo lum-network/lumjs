@@ -1,0 +1,3 @@
+[submodule "lum"]
+	path = lum
+	url = git@github.com:lum-network/chain.git
