@@ -197,6 +197,16 @@ export class LumClient {
     };
 
     /**
+     * Get a transaction by Hash
+     *
+     * @param hash transaction hash to retrieve
+     * @param includeProof whether or not to include proof of the transaction inclusion in the block
+     */
+    getTx = async (hash: Uint8Array, includeProof?: boolean): Promise<LumTypes.TxResponse | null> => {
+        return this.tmClient.tx({ hash: hash, prove: includeProof });
+    };
+
+    /**
      * Search for transactions (paginated)
      * All queries will be run and results will be deduplicated, merged and sorted by block height
      *

@@ -3,7 +3,6 @@ export * from './broadcasts';
 export * from './commons';
 export * from './encoding';
 export * from './keys';
-export * from './registry';
 export * from './transactions';
 export * from './txlogs';
 export * from './search';

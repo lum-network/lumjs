@@ -1,5 +1,6 @@
 export * from './authz';
 export * from './bank';
+export * from './beam';
 export * from './distribution';
 export * from './feegrant';
 export * from './gov';

@@ -4,7 +4,7 @@ import { SignDoc } from '../src/codegen/cosmos/tx/v1beta1/tx';
 import { LumWallet, LumWalletFactory, LumUtils, LumConstants, LumMessages } from '../src/helpers';
 import { AminoSignResponse, encodeSecp256k1Signature, OfflineAminoSigner, StdSignDoc } from '@cosmjs/amino';
 import { SignMode } from '../src/codegen/cosmos/tx/signing/v1beta1/signing';
-import { aminoTypes } from '../src/helpers/utils';
+import { aminoTypes } from '../src/helpers/registry';
 
 class FakeOfflineDirectSigner implements OfflineDirectSigner {
     private readonly privateKey: Uint8Array;

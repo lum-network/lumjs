@@ -11,6 +11,7 @@ export const aminoTypes = new AminoTypes({
     ...lumAminoConverters,
     ...ibcAminoConverters,
 });
+
 export class ExtendedRegistry extends Registry {
     decodeTx = (tx: Uint8Array): Tx => {
         return Tx.decode(tx);

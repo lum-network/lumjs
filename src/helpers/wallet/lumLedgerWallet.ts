@@ -6,7 +6,7 @@ import { SignMode } from '../../codegen/cosmos/tx/signing/v1beta1/signing';
 import { LumUtils, LumTypes, LumConstants } from '..';
 import { LumWallet } from '.';
 import { SignDoc } from '../../codegen/cosmos/tx/v1beta1/tx';
-import { aminoTypes } from '../utils';
+import { aminoTypes } from '../registry';
 
 export class LumLedgerWallet extends LumWallet {
     cosmosApp: Cosmos;

@@ -13,7 +13,7 @@ import { sortJSON } from './commons';
 import { sha256 } from './encoding';
 
 import { getAddressFromPublicKey, publicKeyToProto } from './keys';
-import { LumRegistry } from './registry';
+import { LumRegistry } from '../registry';
 import { LumTypes } from '..';
 
 /**

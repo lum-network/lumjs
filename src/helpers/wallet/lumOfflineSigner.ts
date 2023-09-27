@@ -7,7 +7,7 @@ import { LumUtils, LumTypes, LumConstants } from '..';
 import { LumWallet } from '.';
 
 import { SignDoc } from '../../codegen/cosmos/tx/v1beta1/tx';
-import { aminoTypes } from '../utils';
+import { aminoTypes } from '../registry';
 
 export class LumOfflineSignerWallet extends LumWallet {
     private readonly offlineSigner: OfflineSigner;

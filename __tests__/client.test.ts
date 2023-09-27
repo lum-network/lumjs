@@ -1,7 +1,7 @@
 import Long from 'long';
 import { LumClient, LumConstants, LumMessages, LumTypes, LumUtils, LumWallet, LumWalletFactory } from '../src/helpers';
 import dotenv from 'dotenv';
-import { LumRegistry } from '../src/helpers/utils';
+import { LumRegistry } from '../src/helpers/registry';
 import { DecodeObject } from '@cosmjs/proto-signing';
 dotenv.config();
 
