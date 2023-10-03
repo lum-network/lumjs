@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/distribution/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/distribution/v1beta1/tx.registry';
 import { MsgFundCommunityPool, MsgSetWithdrawAddress, MsgWithdrawDelegatorReward, MsgWithdrawValidatorCommission } from '../../codegen/cosmos/distribution/v1beta1/tx';
 import { Message, Coin } from '../types';
 
@@ -34,3 +34,13 @@ export const BuildMsgWithdrawValidatorCommission = (validatorAddress: string): M
     };
     return withdrawValidatorCommission(value);
 };
+
+const distributionMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    distributionMsgUrl[msgType] = url;
+});
+
+export { distributionMsgUrl };

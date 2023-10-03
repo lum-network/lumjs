@@ -1,7 +1,7 @@
+import { Any } from '../../../codegen/google/protobuf/any';
 import { Message } from '../../types';
 import { MsgCreateClient, MsgSubmitMisbehaviour, MsgUpdateClient, MsgUpgradeClient } from '../../../codegen/ibc/core/client/v1/tx';
-import { MessageComposer } from '../../../codegen/ibc/core/client/v1/tx.registry';
-import { Any } from '../../../codegen/google/protobuf/any';
+import { registry, MessageComposer } from '../../../codegen/ibc/core/client/v1/tx.registry';
 
 const { createClient, updateClient, upgradeClient, submitMisbehaviour } = MessageComposer.withTypeUrl;
 
@@ -43,3 +43,13 @@ export const BuildMsgSubmitMisbehaviour = (signer: string, clientId: string, mis
     };
     return submitMisbehaviour(value);
 };
+
+const ibcClientMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcClientMsgUrl[msgType] = url;
+});
+
+export { ibcClientMsgUrl };

@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/bank/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/bank/v1beta1/tx.registry';
 import { Input, Output } from '../../codegen/cosmos/bank/v1beta1/bank';
 import { MsgMultiSend, MsgSend } from '../../codegen/cosmos/bank/v1beta1/tx';
 import { Message, Coin } from '../types';
@@ -21,3 +21,13 @@ export const BuildMsgMultiSend = (inputs: Input[], outputs: Output[]): Message =
     };
     return multiSend(value);
 };
+
+const bankMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    bankMsgUrl[msgType] = url;
+});
+
+export { bankMsgUrl };

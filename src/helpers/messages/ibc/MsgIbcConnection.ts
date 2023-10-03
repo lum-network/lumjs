@@ -1,6 +1,6 @@
 import { Any } from '../../../codegen/google/protobuf/any';
 import { Message } from '../../types';
-import { MessageComposer } from '../../../codegen/ibc/core/connection/v1/tx.registry';
+import { registry, MessageComposer } from '../../../codegen/ibc/core/connection/v1/tx.registry';
 import { MsgConnectionOpenAck, MsgConnectionOpenConfirm, MsgConnectionOpenInit, MsgConnectionOpenTry } from '../../../codegen/ibc/core/connection/v1/tx';
 import { Height } from '../../../codegen/ibc/core/client/v1/client';
 import { Version, Counterparty } from '../../../codegen/ibc/core/connection/v1/connection';
@@ -85,3 +85,13 @@ export const BuildMsgConnectionOpenTry = (
     };
     return connectionOpenTry(value);
 };
+
+const ibcConnectionMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcConnectionMsgUrl[msgType] = url;
+});
+
+export { ibcConnectionMsgUrl };

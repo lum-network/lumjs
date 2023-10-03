@@ -1,5 +1,5 @@
 import { Any } from '../../codegen/google/protobuf/any';
-import { MessageComposer } from '../../codegen/cosmos/feegrant/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/feegrant/v1beta1/tx.registry';
 import { MsgGrantAllowance, MsgRevokeAllowance } from '../../codegen/cosmos/feegrant/v1beta1/tx';
 import { Message } from '../types';
 
@@ -21,3 +21,13 @@ export const BuildMsgRevokeAllowance = (granter: string, grantee: string): Messa
     };
     return revokeAllowance(value);
 };
+
+const feeGrantMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    feeGrantMsgUrl[msgType] = url;
+});
+
+export { feeGrantMsgUrl };

@@ -1,7 +1,7 @@
 import Long from 'long';
 
 import { Message, Coin } from '../types';
-import { MessageComposer } from '../../codegen/cosmos/vesting/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/vesting/v1beta1/tx.registry';
 import { MsgCreatePeriodicVestingAccount, MsgCreatePermanentLockedAccount, MsgCreateVestingAccount } from '../../codegen/cosmos/vesting/v1beta1/tx';
 import { Period } from '../../codegen/cosmos/vesting/v1beta1/vesting';
 
@@ -36,3 +36,13 @@ export const BuildMsgCreatePeriodicVestingAccount = (fromAddress: string, toAddr
     };
     return createPeriodicVestingAccount(value);
 };
+
+const vestingMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    vestingMsgUrl[msgType] = url;
+});
+
+export { vestingMsgUrl };

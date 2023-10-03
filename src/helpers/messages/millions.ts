@@ -13,7 +13,7 @@ import {
     MsgRestoreInterchainAccounts,
     MsgGenerateSeed,
 } from '../../codegen/lum/network/millions/tx';
-import { MessageComposer } from '../../codegen/lum/network/millions/tx.registry';
+import { registry, MessageComposer } from '../../codegen/lum/network/millions/tx.registry';
 
 const { deposit, depositEdit, depositRetry, claimPrize, drawRetry, withdrawDeposit, withdrawDepositRetry, restoreInterchainAccounts, generateSeed } = MessageComposer.withTypeUrl;
 
@@ -103,3 +103,13 @@ export const BuildMsgGenerateSeed = (requesterAddress: string): Message => {
     };
     return generateSeed(value);
 };
+
+const millionsMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    millionsMsgUrl[msgType] = url;
+});
+
+export { millionsMsgUrl };

@@ -1,8 +1,6 @@
-import Long from 'long';
-
 import { Message, Coin } from '../types';
 import { MsgClaimBeam, MsgOpenBeam, MsgUpdateBeam } from '../../codegen/lum/network/beam/tx';
-import { MessageComposer } from '../../codegen/lum/network/beam/tx.registry';
+import { registry, MessageComposer } from '../../codegen/lum/network/beam/tx.registry';
 import { BeamData, BeamState } from '../../codegen/lum/network/beam/beam';
 
 const { claimBeam, openBeam, updateBeam } = MessageComposer.withTypeUrl;
@@ -67,3 +65,13 @@ export const BuildMsgUpdateBeam = (
     };
     return updateBeam(value);
 };
+
+const beamMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    beamMsgUrl[msgType] = url;
+});
+
+export { beamMsgUrl };

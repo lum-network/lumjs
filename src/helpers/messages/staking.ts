@@ -1,7 +1,7 @@
 import { Any } from '../../codegen/google/protobuf/any';
 import { Coin, Description, CommissionRates, Message } from '../types';
 import { MsgBeginRedelegate, MsgCreateValidator, MsgDelegate, MsgEditValidator, MsgUndelegate } from '../../codegen/cosmos/staking/v1beta1/tx';
-import { MessageComposer } from '../../codegen/cosmos/staking/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/staking/v1beta1/tx.registry';
 
 const { beginRedelegate, createValidator, delegate, editValidator, undelegate } = MessageComposer.withTypeUrl;
 
@@ -63,3 +63,13 @@ export const BuildMsgUndelegate = (delegatorAddress: string, validatorAddress: s
     };
     return undelegate(value);
 };
+
+const stakingMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    stakingMsgUrl[msgType] = url;
+});
+
+export { stakingMsgUrl };

@@ -1,5 +1,5 @@
 import { Any } from '../../codegen/google/protobuf/any';
-import { MessageComposer } from '../../codegen/cosmos/gov/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/gov/v1beta1/tx.registry';
 import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from '../../codegen/cosmos/gov/v1beta1/tx';
 import { Coin, Message } from '../types';
 import { VoteOption, WeightedVoteOption } from 'src/codegen/cosmos/gov/v1beta1/gov';
@@ -41,3 +41,13 @@ export const BuildMsgVoteWeighted = (proposalId: Long, voter: string, options: W
     };
     return voteWeighted(value);
 };
+
+const govMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    govMsgUrl[msgType] = url;
+});
+
+export { govMsgUrl };

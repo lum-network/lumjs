@@ -1,5 +1,5 @@
 import { Message } from '../../types';
-import { MessageComposer } from '../../../codegen/ibc/core/channel/v1/tx.registry';
+import { registry, MessageComposer } from '../../../codegen/ibc/core/channel/v1/tx.registry';
 import {
     MsgAcknowledgement,
     MsgChannelCloseConfirm,
@@ -153,3 +153,13 @@ export const BuildMsgTimeoutOnClose = (nextSequenceRecv: Long.Long, signer: stri
     };
     return timeoutOnClose(value);
 };
+
+const ibcChannelMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcChannelMsgUrl[msgType] = url;
+});
+
+export { ibcChannelMsgUrl };

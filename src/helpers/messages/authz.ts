@@ -1,5 +1,5 @@
 import { Any } from '../../codegen/google/protobuf/any';
-import { MessageComposer } from '../../codegen/cosmos/authz/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/authz/v1beta1/tx.registry';
 import { MsgExec, MsgGrant, MsgRevoke } from '../../codegen/cosmos/authz/v1beta1/tx';
 import { Grant } from '../../codegen/cosmos/authz/v1beta1/authz';
 import { Message } from '../types';
@@ -31,3 +31,13 @@ export const BuildMsgRevoke = (granter: string, grantee: string, msgTypeUrl: str
     };
     return revoke(value);
 };
+
+const authzMsgUrl: { [key: string]: string } = {};
+
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    authzMsgUrl[msgType] = url;
+});
+
+export { authzMsgUrl };
