@@ -5,3 +5,7 @@ export declare const BuildMsgCreateValidator: (validatorAddress: string, delegat
 export declare const BuildMsgDelegate: (delegatorAddress: string, validatorAddress: string, amount?: Coin) => Message;
 export declare const BuildMsgEditValidator: (validatorAddress: string, commissionRate: string, minSelfDelegation: string, description?: Description) => Message;
 export declare const BuildMsgUndelegate: (delegatorAddress: string, validatorAddress: string, amount?: Coin) => Message;
+declare const stakingMsgUrl: {
+    [key: string]: string;
+};
+export { stakingMsgUrl };

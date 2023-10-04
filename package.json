@@ -1,6 +1,6 @@
 {
     "name": "lumjs",
-    "version": "2.0.0",
+    "version": "1.0.0",
     "description": "Javascript SDK library for NodeJS and Web browsers to interact with the Lum Network.",
     "author": "Lum Network <contact@lum-network.com>",
     "homepage": "https://github.com/lum-network/lumjs#readme",
@@ -58,7 +58,7 @@
         "@babel/plugin-transform-runtime": "7.22.9",
         "@babel/preset-env": "7.22.9",
         "@babel/preset-typescript": "^7.22.5",
-        "@cosmology/telescope": "^0.102.0",
+        "@cosmology/telescope": "^0.103.0",
         "@protobufs/amino": "^0.0.11",
         "@protobufs/cosmos": "^0.1.0",
         "@protobufs/cosmos_proto": "^0.0.10",

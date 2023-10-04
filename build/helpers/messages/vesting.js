@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgCreatePeriodicVestingAccount = exports.BuildMsgCreatePermanentLock = exports.BuildMsgCreateVestingAccount = void 0;
+exports.vestingMsgUrl = exports.BuildMsgCreatePeriodicVestingAccount = exports.BuildMsgCreatePermanentLock = exports.BuildMsgCreateVestingAccount = void 0;
 const tx_registry_1 = require("../../codegen/cosmos/vesting/v1beta1/tx.registry");
 const { createVestingAccount, createPermanentLockedAccount, createPeriodicVestingAccount } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgCreateVestingAccount = (fromAddress, toAddress, amount, endTime, delayed) => {
@@ -33,4 +33,11 @@ const BuildMsgCreatePeriodicVestingAccount = (fromAddress, toAddress, amount, st
     return createPeriodicVestingAccount(value);
 };
 exports.BuildMsgCreatePeriodicVestingAccount = BuildMsgCreatePeriodicVestingAccount;
+const vestingMsgUrl = {};
+exports.vestingMsgUrl = vestingMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    vestingMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=vesting.js.map

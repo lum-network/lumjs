@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/lum/network/millions/tx.registry';
+import { registry, MessageComposer } from '../../codegen/lum/network/millions/tx.registry';
 const { deposit, depositEdit, depositRetry, claimPrize, drawRetry, withdrawDeposit, withdrawDepositRetry, restoreInterchainAccounts, generateSeed } = MessageComposer.withTypeUrl;
 export const BuildMsgMillionsDeposit = (poolId, depositorAddress, winnerAddress, isSponsor, amount) => {
     const value = {
@@ -78,4 +78,11 @@ export const BuildMsgGenerateSeed = (requesterAddress) => {
     };
     return generateSeed(value);
 };
+const millionsMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    millionsMsgUrl[msgType] = url;
+});
+export { millionsMsgUrl };
 //# sourceMappingURL=millions.js.map

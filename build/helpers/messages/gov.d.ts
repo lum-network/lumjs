@@ -5,3 +5,7 @@ export declare const BuildMsgDeposit: (proposalId: Long, depositor: string, amou
 export declare const BuildMsgSubmitProposal: (content: Any | undefined, initialDeposit: Coin[], proposer: string) => Message;
 export declare const BuildMsgVote: (proposalId: Long, voter: string, option: VoteOption, metadata: string) => Message;
 export declare const BuildMsgVoteWeighted: (proposalId: Long, voter: string, options: WeightedVoteOption[]) => Message;
+declare const govMsgUrl: {
+    [key: string]: string;
+};
+export { govMsgUrl };

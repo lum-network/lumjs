@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../../codegen/ibc/core/connection/v1/tx.registry';
+import { registry, MessageComposer } from '../../../codegen/ibc/core/connection/v1/tx.registry';
 const { connectionOpenAck, connectionOpenConfirm, connectionOpenInit, connectionOpenTry } = MessageComposer.withTypeUrl;
 export const BuildMsgConnectionOpenAck = (connectionId, signer, counterpartyConnectionId, proofClient, proofConsensus, proofTry, clientState, proofHeight, consensusHeight, version) => {
     const value = {
@@ -51,4 +51,11 @@ export const BuildMsgConnectionOpenTry = (signer, clientId, previousConnectionId
     };
     return connectionOpenTry(value);
 };
+const ibcConnectionMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcConnectionMsgUrl[msgType] = url;
+});
+export { ibcConnectionMsgUrl };
 //# sourceMappingURL=MsgIbcConnection.js.map

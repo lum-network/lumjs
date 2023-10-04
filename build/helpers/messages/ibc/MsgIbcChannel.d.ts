@@ -11,3 +11,7 @@ export declare const BuildMsgChannelOpenTry: (portId: string, previousChannelId:
 export declare const BuildMsgRecvPacket: (signer: string, proofCommitment: Uint8Array, packet?: Packet, proofHeight?: Height) => Message;
 export declare const BuildMsgTimeout: (nextSequenceRecv: Long.Long, proofUnreceived: Uint8Array, signer: string, packet?: Packet, proofHeight?: Height) => Message;
 export declare const BuildMsgTimeoutOnClose: (nextSequenceRecv: Long.Long, signer: string, proofClose: Uint8Array, proofUnreceived: Uint8Array, packet?: Packet, proofHeight?: Height) => Message;
+declare const ibcChannelMsgUrl: {
+    [key: string]: string;
+};
+export { ibcChannelMsgUrl };

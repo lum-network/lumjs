@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/staking/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/staking/v1beta1/tx.registry';
 const { beginRedelegate, createValidator, delegate, editValidator, undelegate } = MessageComposer.withTypeUrl;
 export const BuildMsgBeginRedelegate = (delegatorAddress, validatorSrcAddress, validatorDstAddress, amount) => {
     const value = {
@@ -46,4 +46,11 @@ export const BuildMsgUndelegate = (delegatorAddress, validatorAddress, amount) =
     };
     return undelegate(value);
 };
+const stakingMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    stakingMsgUrl[msgType] = url;
+});
+export { stakingMsgUrl };
 //# sourceMappingURL=staking.js.map

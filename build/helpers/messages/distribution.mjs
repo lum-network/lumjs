@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/distribution/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/distribution/v1beta1/tx.registry';
 const { fundCommunityPool, setWithdrawAddress, withdrawDelegatorReward, withdrawValidatorCommission } = MessageComposer.withTypeUrl;
 export const BuildMsgFundCommunityPool = (depositor, amount) => {
     const value = {
@@ -27,4 +27,11 @@ export const BuildMsgWithdrawValidatorCommission = (validatorAddress) => {
     };
     return withdrawValidatorCommission(value);
 };
+const distributionMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    distributionMsgUrl[msgType] = url;
+});
+export { distributionMsgUrl };
 //# sourceMappingURL=distribution.js.map

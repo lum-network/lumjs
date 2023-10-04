@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgConnectionOpenTry = exports.BuildMsgConnectionOpenInit = exports.BuildMsgConnectionOpenConfirm = exports.BuildMsgConnectionOpenAck = void 0;
+exports.ibcConnectionMsgUrl = exports.BuildMsgConnectionOpenTry = exports.BuildMsgConnectionOpenInit = exports.BuildMsgConnectionOpenConfirm = exports.BuildMsgConnectionOpenAck = void 0;
 const tx_registry_1 = require("../../../codegen/ibc/core/connection/v1/tx.registry");
 const { connectionOpenAck, connectionOpenConfirm, connectionOpenInit, connectionOpenTry } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgConnectionOpenAck = (connectionId, signer, counterpartyConnectionId, proofClient, proofConsensus, proofTry, clientState, proofHeight, consensusHeight, version) => {
@@ -58,4 +58,11 @@ const BuildMsgConnectionOpenTry = (signer, clientId, previousConnectionId, delay
     return connectionOpenTry(value);
 };
 exports.BuildMsgConnectionOpenTry = BuildMsgConnectionOpenTry;
+const ibcConnectionMsgUrl = {};
+exports.ibcConnectionMsgUrl = ibcConnectionMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcConnectionMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=MsgIbcConnection.js.map

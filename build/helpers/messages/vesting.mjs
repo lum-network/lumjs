@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/vesting/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/vesting/v1beta1/tx.registry';
 const { createVestingAccount, createPermanentLockedAccount, createPeriodicVestingAccount } = MessageComposer.withTypeUrl;
 export const BuildMsgCreateVestingAccount = (fromAddress, toAddress, amount, endTime, delayed) => {
     const value = {
@@ -27,4 +27,11 @@ export const BuildMsgCreatePeriodicVestingAccount = (fromAddress, toAddress, amo
     };
     return createPeriodicVestingAccount(value);
 };
+const vestingMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    vestingMsgUrl[msgType] = url;
+});
+export { vestingMsgUrl };
 //# sourceMappingURL=vesting.js.map

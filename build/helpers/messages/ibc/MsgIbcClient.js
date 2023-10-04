@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgSubmitMisbehaviour = exports.BuildMsgUpgradeClient = exports.BuildMsgUpdateClient = exports.BuildMsgCreateClient = void 0;
+exports.ibcClientMsgUrl = exports.BuildMsgSubmitMisbehaviour = exports.BuildMsgUpgradeClient = exports.BuildMsgUpdateClient = exports.BuildMsgCreateClient = void 0;
 const tx_registry_1 = require("../../../codegen/ibc/core/client/v1/tx.registry");
 const { createClient, updateClient, upgradeClient, submitMisbehaviour } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgCreateClient = (signer, clientState, consensusState) => {
@@ -42,4 +42,11 @@ const BuildMsgSubmitMisbehaviour = (signer, clientId, misbehaviour) => {
     return submitMisbehaviour(value);
 };
 exports.BuildMsgSubmitMisbehaviour = BuildMsgSubmitMisbehaviour;
+const ibcClientMsgUrl = {};
+exports.ibcClientMsgUrl = ibcClientMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcClientMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=MsgIbcClient.js.map

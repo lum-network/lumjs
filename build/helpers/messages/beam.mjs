@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/lum/network/beam/tx.registry';
+import { registry, MessageComposer } from '../../codegen/lum/network/beam/tx.registry';
 const { claimBeam, openBeam, updateBeam } = MessageComposer.withTypeUrl;
 export const BuildMsgClaimBeam = (id, claimerAddress, secret) => {
     const value = {
@@ -37,4 +37,11 @@ export const BuildMsgUpdateBeam = (id, updaterAddress, amount, status, data, can
     };
     return updateBeam(value);
 };
+const beamMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    beamMsgUrl[msgType] = url;
+});
+export { beamMsgUrl };
 //# sourceMappingURL=beam.js.map

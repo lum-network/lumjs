@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgUndelegate = exports.BuildMsgEditValidator = exports.BuildMsgDelegate = exports.BuildMsgCreateValidator = exports.BuildMsgBeginRedelegate = void 0;
+exports.stakingMsgUrl = exports.BuildMsgUndelegate = exports.BuildMsgEditValidator = exports.BuildMsgDelegate = exports.BuildMsgCreateValidator = exports.BuildMsgBeginRedelegate = void 0;
 const tx_registry_1 = require("../../codegen/cosmos/staking/v1beta1/tx.registry");
 const { beginRedelegate, createValidator, delegate, editValidator, undelegate } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgBeginRedelegate = (delegatorAddress, validatorSrcAddress, validatorDstAddress, amount) => {
@@ -54,4 +54,11 @@ const BuildMsgUndelegate = (delegatorAddress, validatorAddress, amount) => {
     return undelegate(value);
 };
 exports.BuildMsgUndelegate = BuildMsgUndelegate;
+const stakingMsgUrl = {};
+exports.stakingMsgUrl = stakingMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    stakingMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=staking.js.map

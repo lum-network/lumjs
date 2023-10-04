@@ -1,8 +1,8 @@
 import Long from 'long';
-import { LumClient, LumConstants, LumMessages, LumTypes, LumUtils, LumWallet, LumWalletFactory } from '../src/helpers';
 import dotenv from 'dotenv';
-import { LumRegistry } from '../src/helpers/registry';
 import { DecodeObject } from '@cosmjs/proto-signing';
+import { LumClient, LumConstants, LumMessages, LumTypes, LumUtils, LumWallet, LumWalletFactory } from '../src/helpers';
+import { LumRegistry } from '../src/helpers/registry';
 dotenv.config();
 
 describe('LumClient', () => {
@@ -206,6 +206,7 @@ describe('LumClient', () => {
             const balanceBeforeW2Numeric = parseFloat(balanceBeforeW2?.balance?.amount || '0');
 
             const tx = await client.signAndBroadcastTx(w1, doc);
+
             expect(tx?.deliverTx?.code).toBe(0);
             expect(LumUtils.broadcastTxCommitSuccess(tx)).toBeTruthy();
 

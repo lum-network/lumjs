@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgUpdateBeam = exports.BuildMsgOpenBeam = exports.BuildMsgClaimBeam = void 0;
+exports.beamMsgUrl = exports.BuildMsgUpdateBeam = exports.BuildMsgOpenBeam = exports.BuildMsgClaimBeam = void 0;
 const tx_registry_1 = require("../../codegen/lum/network/beam/tx.registry");
 const { claimBeam, openBeam, updateBeam } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgClaimBeam = (id, claimerAddress, secret) => {
@@ -43,4 +43,11 @@ const BuildMsgUpdateBeam = (id, updaterAddress, amount, status, data, cancelReas
     return updateBeam(value);
 };
 exports.BuildMsgUpdateBeam = BuildMsgUpdateBeam;
+const beamMsgUrl = {};
+exports.beamMsgUrl = beamMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    beamMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=beam.js.map

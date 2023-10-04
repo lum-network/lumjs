@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgTimeoutOnClose = exports.BuildMsgTimeout = exports.BuildMsgRecvPacket = exports.BuildMsgChannelOpenTry = exports.BuildMsgChannelOpenInit = exports.BuildMsgChannelOpenConfirm = exports.BuildMsgChannelOpenAck = exports.BuildMsgChannelCloseInit = exports.BuildMsgChannelCloseConfirm = exports.BuildMsgAcknowledgement = void 0;
+exports.ibcChannelMsgUrl = exports.BuildMsgTimeoutOnClose = exports.BuildMsgTimeout = exports.BuildMsgRecvPacket = exports.BuildMsgChannelOpenTry = exports.BuildMsgChannelOpenInit = exports.BuildMsgChannelOpenConfirm = exports.BuildMsgChannelOpenAck = exports.BuildMsgChannelCloseInit = exports.BuildMsgChannelCloseConfirm = exports.BuildMsgAcknowledgement = void 0;
 const tx_registry_1 = require("../../../codegen/ibc/core/channel/v1/tx.registry");
 const { acknowledgement: acknowledgementMessage, channelCloseConfirm, channelCloseInit, channelOpenAck, channelOpenConfirm, channelOpenInit, channelOpenTry, recvPacket, timeout, timeoutOnClose, } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgAcknowledgement = (acknowledgement, proofAcked, signer, packet, proofHeight) => {
@@ -113,4 +113,11 @@ const BuildMsgTimeoutOnClose = (nextSequenceRecv, signer, proofClose, proofUnrec
     return timeoutOnClose(value);
 };
 exports.BuildMsgTimeoutOnClose = BuildMsgTimeoutOnClose;
+const ibcChannelMsgUrl = {};
+exports.ibcChannelMsgUrl = ibcChannelMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcChannelMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=MsgIbcChannel.js.map

@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../../codegen/ibc/core/client/v1/tx.registry';
+import { registry, MessageComposer } from '../../../codegen/ibc/core/client/v1/tx.registry';
 const { createClient, updateClient, upgradeClient, submitMisbehaviour } = MessageComposer.withTypeUrl;
 export const BuildMsgCreateClient = (signer, clientState, consensusState) => {
     const value = {
@@ -35,4 +35,11 @@ export const BuildMsgSubmitMisbehaviour = (signer, clientId, misbehaviour) => {
     };
     return submitMisbehaviour(value);
 };
+const ibcClientMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcClientMsgUrl[msgType] = url;
+});
+export { ibcClientMsgUrl };
 //# sourceMappingURL=MsgIbcClient.js.map

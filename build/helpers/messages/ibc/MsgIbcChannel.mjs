@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../../codegen/ibc/core/channel/v1/tx.registry';
+import { registry, MessageComposer } from '../../../codegen/ibc/core/channel/v1/tx.registry';
 const { acknowledgement: acknowledgementMessage, channelCloseConfirm, channelCloseInit, channelOpenAck, channelOpenConfirm, channelOpenInit, channelOpenTry, recvPacket, timeout, timeoutOnClose, } = MessageComposer.withTypeUrl;
 export const BuildMsgAcknowledgement = (acknowledgement, proofAcked, signer, packet, proofHeight) => {
     const value = {
@@ -100,4 +100,11 @@ export const BuildMsgTimeoutOnClose = (nextSequenceRecv, signer, proofClose, pro
     };
     return timeoutOnClose(value);
 };
+const ibcChannelMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    ibcChannelMsgUrl[msgType] = url;
+});
+export { ibcChannelMsgUrl };
 //# sourceMappingURL=MsgIbcChannel.js.map

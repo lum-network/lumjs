@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgVoteWeighted = exports.BuildMsgVote = exports.BuildMsgSubmitProposal = exports.BuildMsgDeposit = void 0;
+exports.govMsgUrl = exports.BuildMsgVoteWeighted = exports.BuildMsgVote = exports.BuildMsgSubmitProposal = exports.BuildMsgDeposit = void 0;
 const tx_registry_1 = require("../../codegen/cosmos/gov/v1beta1/tx.registry");
 const { deposit, submitProposal, vote, voteWeighted } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgDeposit = (proposalId, depositor, amount) => {
@@ -39,4 +39,11 @@ const BuildMsgVoteWeighted = (proposalId, voter, options) => {
     return voteWeighted(value);
 };
 exports.BuildMsgVoteWeighted = BuildMsgVoteWeighted;
+const govMsgUrl = {};
+exports.govMsgUrl = govMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    govMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=gov.js.map

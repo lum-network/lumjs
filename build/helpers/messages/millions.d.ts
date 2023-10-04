@@ -9,3 +9,7 @@ export declare const BuildMsgWithdrawDeposit: (poolId: Long, depositId: Long, de
 export declare const BuildMsgWithdrawDepositRetry: (poolId: Long, withdrawalId: Long, depositorAddress: string) => Message;
 export declare const BuildMsgRestoreInterchainAccounts: (poolId: Long, restorerAddress: string) => Message;
 export declare const BuildMsgGenerateSeed: (requesterAddress: string) => Message;
+declare const millionsMsgUrl: {
+    [key: string]: string;
+};
+export { millionsMsgUrl };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuildMsgGenerateSeed = exports.BuildMsgRestoreInterchainAccounts = exports.BuildMsgWithdrawDepositRetry = exports.BuildMsgWithdrawDeposit = exports.BuildMsgDrawRetry = exports.BuildMsgClaimPrize = exports.BuildMsgDepositRetry = exports.BuildMsgDepositEdit = exports.BuildMsgMillionsDeposit = void 0;
+exports.millionsMsgUrl = exports.BuildMsgGenerateSeed = exports.BuildMsgRestoreInterchainAccounts = exports.BuildMsgWithdrawDepositRetry = exports.BuildMsgWithdrawDeposit = exports.BuildMsgDrawRetry = exports.BuildMsgClaimPrize = exports.BuildMsgDepositRetry = exports.BuildMsgDepositEdit = exports.BuildMsgMillionsDeposit = void 0;
 const tx_registry_1 = require("../../codegen/lum/network/millions/tx.registry");
 const { deposit, depositEdit, depositRetry, claimPrize, drawRetry, withdrawDeposit, withdrawDepositRetry, restoreInterchainAccounts, generateSeed } = tx_registry_1.MessageComposer.withTypeUrl;
 const BuildMsgMillionsDeposit = (poolId, depositorAddress, winnerAddress, isSponsor, amount) => {
@@ -90,4 +90,11 @@ const BuildMsgGenerateSeed = (requesterAddress) => {
     return generateSeed(value);
 };
 exports.BuildMsgGenerateSeed = BuildMsgGenerateSeed;
+const millionsMsgUrl = {};
+exports.millionsMsgUrl = millionsMsgUrl;
+tx_registry_1.registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    millionsMsgUrl[msgType] = url;
+});
 //# sourceMappingURL=millions.js.map

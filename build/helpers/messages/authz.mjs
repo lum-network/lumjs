@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/authz/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/authz/v1beta1/tx.registry';
 const { exec, grant, revoke } = MessageComposer.withTypeUrl;
 export const BuildMsgExec = (grantee, msgs) => {
     const value = {
@@ -23,4 +23,11 @@ export const BuildMsgRevoke = (granter, grantee, msgTypeUrl) => {
     };
     return revoke(value);
 };
+const authzMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    authzMsgUrl[msgType] = url;
+});
+export { authzMsgUrl };
 //# sourceMappingURL=authz.js.map

@@ -17,6 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./authz"), exports);
 __exportStar(require("./bank"), exports);
 __exportStar(require("./beam"), exports);
+__exportStar(require("./dfract"), exports);
 __exportStar(require("./distribution"), exports);
 __exportStar(require("./feegrant"), exports);
 __exportStar(require("./gov"), exports);

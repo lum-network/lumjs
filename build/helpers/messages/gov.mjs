@@ -1,4 +1,4 @@
-import { MessageComposer } from '../../codegen/cosmos/gov/v1beta1/tx.registry';
+import { registry, MessageComposer } from '../../codegen/cosmos/gov/v1beta1/tx.registry';
 const { deposit, submitProposal, vote, voteWeighted } = MessageComposer.withTypeUrl;
 export const BuildMsgDeposit = (proposalId, depositor, amount) => {
     const value = {
@@ -32,4 +32,11 @@ export const BuildMsgVoteWeighted = (proposalId, voter, options) => {
     };
     return voteWeighted(value);
 };
+const govMsgUrl = {};
+registry.forEach(([url, _]) => {
+    const parts = url.split('.');
+    const msgType = parts[parts.length - 1];
+    govMsgUrl[msgType] = url;
+});
+export { govMsgUrl };
 //# sourceMappingURL=gov.js.map
