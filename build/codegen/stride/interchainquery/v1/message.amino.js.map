@@ -1,1 +1,0 @@
-{"version":3,"file":"message.amino.js","sourceRoot":"","sources":["../../../../../src/codegen/stride/interchainquery/v1/message.amino.ts"],"names":[],"mappings":";;;AAAA,aAAa;AACb,uCAAmD;AACtC,QAAA,cAAc,GAAG;IAC5B,mDAAmD,EAAE;QACnD,SAAS,EAAE,mDAAmD;QAC9D,OAAO,EAAE,gCAAsB,CAAC,OAAO;QACvC,SAAS,EAAE,gCAAsB,CAAC,SAAS;KAC5C;CACF,CAAC"}
