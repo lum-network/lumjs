@@ -1,7 +1,7 @@
 import { Any } from '../../../codegen/google/protobuf/any';
-import { Message } from '../../types';
 import { MsgCreateClient, MsgSubmitMisbehaviour, MsgUpdateClient, MsgUpgradeClient } from '../../../codegen/ibc/core/client/v1/tx';
 import { registry, MessageComposer } from '../../../codegen/ibc/core/client/v1/tx.registry';
+import { Message } from '../../types';
 
 const { createClient, updateClient, upgradeClient, submitMisbehaviour } = MessageComposer.withTypeUrl;
 

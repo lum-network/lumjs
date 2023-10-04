@@ -1,9 +1,9 @@
 import Long from 'long';
 
-import { Message, Coin } from '../types';
 import { registry, MessageComposer } from '../../codegen/cosmos/vesting/v1beta1/tx.registry';
 import { MsgCreatePeriodicVestingAccount, MsgCreatePermanentLockedAccount, MsgCreateVestingAccount } from '../../codegen/cosmos/vesting/v1beta1/tx';
 import { Period } from '../../codegen/cosmos/vesting/v1beta1/vesting';
+import { Message, Coin } from '../types';
 
 const { createVestingAccount, createPermanentLockedAccount, createPeriodicVestingAccount } = MessageComposer.withTypeUrl;
 

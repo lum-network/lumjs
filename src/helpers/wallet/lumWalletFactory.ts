@@ -2,8 +2,8 @@ import Transport from '@ledgerhq/hw-transport';
 import { OfflineSigner } from '@cosmjs/proto-signing';
 
 import { LumOfflineSignerWallet, LumPaperWallet, LumWallet } from '.';
-import { LumLedgerWallet } from './lumLedgerWallet';
 import { LumConstants, LumUtils } from '..';
+import { LumLedgerWallet } from './lumLedgerWallet';
 
 export class LumWalletFactory {
     /**

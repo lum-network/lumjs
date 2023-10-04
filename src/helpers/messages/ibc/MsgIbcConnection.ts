@@ -1,9 +1,9 @@
 import { Any } from '../../../codegen/google/protobuf/any';
-import { Message } from '../../types';
 import { registry, MessageComposer } from '../../../codegen/ibc/core/connection/v1/tx.registry';
 import { MsgConnectionOpenAck, MsgConnectionOpenConfirm, MsgConnectionOpenInit, MsgConnectionOpenTry } from '../../../codegen/ibc/core/connection/v1/tx';
 import { Height } from '../../../codegen/ibc/core/client/v1/client';
 import { Version, Counterparty } from '../../../codegen/ibc/core/connection/v1/connection';
+import { Message } from '../../types';
 
 const { connectionOpenAck, connectionOpenConfirm, connectionOpenInit, connectionOpenTry } = MessageComposer.withTypeUrl;
 

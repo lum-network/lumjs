@@ -1,6 +1,5 @@
 import Long from 'long';
 
-import { Message, Coin } from '../types';
 import { BoolValue } from '../../codegen/google/protobuf/wrappers';
 import {
     MsgDeposit,
@@ -14,6 +13,7 @@ import {
     MsgGenerateSeed,
 } from '../../codegen/lum/network/millions/tx';
 import { registry, MessageComposer } from '../../codegen/lum/network/millions/tx.registry';
+import { Message, Coin } from '../types';
 
 const { deposit, depositEdit, depositRetry, claimPrize, drawRetry, withdrawDeposit, withdrawDepositRetry, restoreInterchainAccounts, generateSeed } = MessageComposer.withTypeUrl;
 

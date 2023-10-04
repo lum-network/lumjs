@@ -2,9 +2,8 @@ import { RpcClient, StatusResponse, Tendermint37Client, Method as RpcMethod, Bro
 import { Account, Coin, QueryClient as StargateQueryClient } from '@cosmjs/stargate';
 import { JsonRpcRequest } from '@cosmjs/json-rpc';
 
-import { CosmosExtension, setupCosmosExtension, LumExtension, setupLumExtension } from '../extensions';
-
 import { LumTypes, LumUtils, LumWallet } from '../index';
+import { CosmosExtension, setupCosmosExtension, LumExtension, setupLumExtension } from '../extensions';
 import { PageRequest } from '../../codegen/cosmos/base/query/v1beta1/pagination';
 
 function defaultErrorHandler(error: unknown): void {

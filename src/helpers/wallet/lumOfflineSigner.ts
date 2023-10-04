@@ -2,12 +2,11 @@ import Long from 'long';
 import { OfflineAminoSigner } from '@cosmjs/amino';
 import { OfflineSigner, OfflineDirectSigner } from '@cosmjs/proto-signing';
 
-import { SignMode } from '../../codegen/cosmos/tx/signing/v1beta1/signing';
-import { LumUtils, LumTypes, LumConstants } from '..';
 import { LumWallet } from '.';
-
-import { SignDoc } from '../../codegen/cosmos/tx/v1beta1/tx';
+import { LumUtils, LumTypes, LumConstants } from '..';
 import { aminoTypes } from '../registry';
+import { SignMode } from '../../codegen/cosmos/tx/signing/v1beta1/signing';
+import { SignDoc } from '../../codegen/cosmos/tx/v1beta1/tx';
 
 export class LumOfflineSignerWallet extends LumWallet {
     private readonly offlineSigner: OfflineSigner;

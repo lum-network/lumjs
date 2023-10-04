@@ -1,7 +1,7 @@
 import { Any } from '../../codegen/google/protobuf/any';
-import { Coin, Description, CommissionRates, Message } from '../types';
 import { MsgBeginRedelegate, MsgCreateValidator, MsgDelegate, MsgEditValidator, MsgUndelegate } from '../../codegen/cosmos/staking/v1beta1/tx';
 import { registry, MessageComposer } from '../../codegen/cosmos/staking/v1beta1/tx.registry';
+import { Coin, Description, CommissionRates, Message } from '../types';
 
 const { beginRedelegate, createValidator, delegate, editValidator, undelegate } = MessageComposer.withTypeUrl;
 

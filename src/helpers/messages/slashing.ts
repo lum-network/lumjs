@@ -1,6 +1,6 @@
-import { Message } from '../types';
 import { MsgUnjail } from '../../codegen/cosmos/slashing/v1beta1/tx';
 import { registry, MessageComposer } from '../../codegen/cosmos/slashing/v1beta1/tx.registry';
+import { Message } from '../types';
 
 const { unjail } = MessageComposer.withTypeUrl;
 

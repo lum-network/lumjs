@@ -2,9 +2,9 @@ import Transport from '@ledgerhq/hw-transport';
 import Cosmos from '@ledgerhq/hw-app-cosmos';
 import { ExtendedSecp256k1Signature } from '@cosmjs/crypto';
 
-import { SignMode } from '../../codegen/cosmos/tx/signing/v1beta1/signing';
-import { LumUtils, LumTypes, LumConstants } from '..';
 import { LumWallet } from '.';
+import { LumUtils, LumTypes, LumConstants } from '..';
+import { SignMode } from '../../codegen/cosmos/tx/signing/v1beta1/signing';
 import { SignDoc } from '../../codegen/cosmos/tx/v1beta1/tx';
 import { aminoTypes } from '../registry';
 

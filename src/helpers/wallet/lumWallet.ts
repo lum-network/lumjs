@@ -1,6 +1,6 @@
+import { LumTypes } from '..';
 import { SignMode } from '../../codegen/cosmos/tx/signing/v1beta1/signing';
 import { SignDoc } from '../../codegen/cosmos/tx/v1beta1/tx';
-import { LumTypes } from '..';
 
 export abstract class LumWallet {
     protected publicKey?: Uint8Array;

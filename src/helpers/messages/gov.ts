@@ -1,8 +1,8 @@
 import { Any } from '../../codegen/google/protobuf/any';
 import { registry, MessageComposer } from '../../codegen/cosmos/gov/v1beta1/tx.registry';
 import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from '../../codegen/cosmos/gov/v1beta1/tx';
-import { Coin, Message } from '../types';
 import { VoteOption, WeightedVoteOption } from 'src/codegen/cosmos/gov/v1beta1/gov';
+import { Coin, Message } from '../types';
 
 const { deposit, submitProposal, vote, voteWeighted } = MessageComposer.withTypeUrl;
 

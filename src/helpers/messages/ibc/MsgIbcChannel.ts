@@ -1,4 +1,3 @@
-import { Message } from '../../types';
 import { registry, MessageComposer } from '../../../codegen/ibc/core/channel/v1/tx.registry';
 import {
     MsgAcknowledgement,
@@ -14,6 +13,7 @@ import {
 } from '../../../codegen/ibc/core/channel/v1/tx';
 import { Packet, Channel } from '../../../codegen/ibc/core/channel/v1/channel';
 import { Height } from '../../../codegen/ibc/core/client/v1/client';
+import { Message } from '../../types';
 
 const {
     acknowledgement: acknowledgementMessage,

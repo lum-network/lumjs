@@ -1,7 +1,8 @@
 import { GeneratedType, Registry } from '@cosmjs/proto-signing';
-import { Tx } from '../../codegen/cosmos/tx/v1beta1/tx';
-import { cosmosProtoRegistry, cosmosAminoConverters, lumAminoConverters, lumProtoRegistry, ibcProtoRegistry, ibcAminoConverters } from '../../codegen';
 import { AminoTypes } from '@cosmjs/stargate';
+
+import { cosmosProtoRegistry, cosmosAminoConverters, lumAminoConverters, lumProtoRegistry, ibcProtoRegistry, ibcAminoConverters } from '../../codegen';
+import { Tx } from '../../codegen/cosmos/tx/v1beta1/tx';
 import { Coin, DecCoin, DecProto, IntProto } from '../../codegen/cosmos/base/v1beta1/coin';
 import { PubKey, PrivKey } from '../../codegen/cosmos/crypto/secp256k1/keys';
 import { BaseAccount, ModuleAccount, Params as AuthParams } from '../../codegen/cosmos/auth/v1beta1/auth';
