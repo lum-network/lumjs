@@ -1,221 +1,127 @@
-# Documentation
+# Lum Network - Javascript SDK
 
-The code should be documented enough to make this library easy to use for anyone familiar with blockchain technology and especially the Tendermint engine and the Cosmos SDK.
+[![npm version](https://badge.fury.io/js/%40lum-network%2Fsdk-javascript.svg)](https://badge.fury.io/js/%40lum-network%2Fsdk-javascript)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-You can find more details by browsing the [code documentation](./lib).
+This Javascript SDK enables browsers and NodeJS clients to interact with the Lum Network.
 
-## Examples
+## SDK Usage
 
-A couple examples to help you get started.
+### Node version
 
-### Imports
+The library is tested using **NodeJS 18.x**.
 
-```typescript
-import { LumWalletFactory, LumClient, LumTypes, LumUtils, LumConstants, LumMessages } from '@lum-network/sdk-javascript';
+It should also work in all recent browsers.
+
+### Installation
+
+```bash
+yarn add @lum-network/sdk-javascript
 ```
 
-### Software wallets
+### Documentation
 
-#### Mnemonic
+The SDK code should be documented enough for developers to explore and use it easily. Therefore the documentation might not cover all the capabilities of the SDK. Feel free to contribute if you wish to improve the code documentation and/or the provided samples.
 
-```typescript
-// Create a new cryptographically secure random mnemonic
-const mnemonic = LumUtils.generateMnemonic(12);
+The [Documentation](./docs/README.md) contains:
 
-// Create a wallet instance based on this fresh mnemonic
-const wallet = await LumWalletFactory.fromMnemonic(mnemonic);
+-   Installation instructions
+-   Basic usage
+-   Code samples
+-   Code auto-generated documentation
+
+## SDK Features
+
+This SDK provides an easy access to all the available Lum Network blockchain RPCs as well as the payload generation and the cryptographic features to properly consume those RPCs.
+
+**Most commonly used features:**
+
+-   Core cryptographic tools:
+    -   Seed, private key and encrypted mnemonic generation
+    -   Private and public keys management
+    -   Transaction payload generation
+    -   Transaction signature and verification
+-   Wallets:
+    -   Unlock wallets from private keys, keystore and mnemonic
+    -   Sign transaction using unlocked wallets
+-   Client service:
+    -   Connection to a blockchain node (http and socket mode)
+    -   Commonly used Tendermint and Cosmos RPCs
+    -   All Lum Network dedicated RPCs
+    -   Transaction broadcast
+-   Transactions
+    -   Payload generation
+    -   Signature
+-   Messages & Types:
+    -   Cosmos & Lum messages payload building
+    -   Typescript implementation of RPCs requests and responses
+-   Other utils:
+    -   Encoding data from/to: Uint8Array, base64 and hex
+    -   Build Transaction search queries
+    -   Log & event parsing
+
+## Code structure
+
+The SDK is based on the [@cosmoslogy/telescope](https://github.com/cosmology-tech/telescope) implementation and heavily relies on it.
+
+It is intented to be used standalone, without having to import specific CosmJS packages which can get make implementations tricky and messy.
+
+Therefore all codecs, types, functions are features from the CosmJS SDK are either re-implemented by this SDK or re-exported for simplicity purposes.
+
+Directly importing the CosmJS SDK or other cryptographic library should be considered bad practice for most use cases.
+
+Do not hesitate to contribute to this repository. This SDK is intended to be a one-stop-shop for all Lum Network javascript implementations and should definitely be improved over time by all its users.
+
+### Unittests
+
+#### All unittests except the ones involving a Ledger device (skipped by default) can be run using the following command
+
+```bash
+yarn test
 ```
 
-#### Private key
+#### Ledger unittests
 
-```typescript
-// Create a new cryptographically secure random private key
-const privateKey = LumUtils.generatePrivateKey();
+In order to run the unittest involving Ledger devices you need to do the following:
 
-// Create a wallet instance based on this fresh private key
-const wallet = await LumWalletFactory.fromPrivateKey(mnemonic);
-console.log(`Wallet address: ${wallet.getAddress()}`);
+1. Chose which application you want to use for the tests (Cosmos or Lum)
+2. Remove the `.skip` from all the tests your want to run in `./tests/ledger.test.ts`
+3. Connect a Ledger device and open either the Cosmos application or the Lum application
+4. Run `yarn test tests/ledger.test.ts`
+5. Follow the instructions on your Ledger device to pass each test that require a user input
 
-// Create a wallet instance based on an hexadecimal private key (ex: user input - 0x is optional)
-const hexPrivateKey = '0xb8e62c34928025cdd3aef6cbebc68694b5ad9209b2aff6d3891c8e61d22d3a3b';
-const existingWallet = await LumWalletFactory.fromPrivateKey(LumUtils.keyFromHex(hexPrivateKey));
-console.log(`Existing wallet address: ${wallet.getAddress()}`);
+### Run the package locally
+
+### Install the latest lum repository version
+
+```bash
+git submodule foreach git pull origin master
 ```
 
-#### Keystore
+### Install telescope
 
-```typescript
-// Create a random private key for the sake of this example
-const privateKey = LumUtils.generatePrivateKey();
-// Create a keystore (or consume user input)
-const keystore = LumUtils.generateKeyStore(privateKey, 'some-password');
-const wallet = await LumWalletFactory.fromKeyStore(keystore, 'some-password');
-console.log(`Wallet address: ${wallet.getAddress()}`);
+```bash
+npm install -g @cosmology/telescope
 ```
 
-### Hardware wallets
+### Transpile the proto
 
-**IMPORTANT NOTES:**
-
--   Transaction signature using Ledger only works with legacy amino (wich will be deprecated at some point)
--   Derivation path using the Cosmos Ledger application cannot be set to the default Lum Path for now `m/44'/880'/0'/*/*` and must remain on the Cosmos path `m/44'/'118/0'/*/*`
-
-#### Ledger
-
-The SDK only provides access to the Ledger API using a provided Transport.
-Ledger transport must be initialized and handled by the code using the SDK.
-
-See [LedgerHQ/ledgerjs documentation](https://github.com/LedgerHQ/ledgerjs) for more information.
-
-```typescript
-import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
-
-// Connect your ledger device
-// Unlock it
-// Open the Cosmos application
-
-// Create a Node HID transport
-const transport = await TransportNodeHid.create();
-
-// Create the ledger based wallet instance
-const wallet = await LumWalletFactory.fromLedgerTransport(transport, `m/44'/118'/0'/0/0`, 'lum');
-
-// Change account to 1 and wallet to 1 (optional)
-await wallet.useAccount(`m/44'/118'/0'/1/1`, 'lum');
-
-// Get account information
-const account = await client.getAccount(wallet.getAddress());
-if (account === null) {
-    console.log('Account: not found');
-} else {
-    console.log(`Account: ${account.address}, ${account.accountNumber}, ${account.sequence}`);
-}
+```bash
+telescope transpile
 ```
 
-### Connect to the testnet
+follow the steps from the terminal
 
-```typescript
-// Use http://node0.lum.network/rpc to connect to the mainnet
-const client = await LumClient.connect('http://node0.testnet.lum.network/rpc');
+### Install dependencies
+
+```bash
+yarn
 ```
 
-### Account information & balance
+### Run codegen
 
-#### Get account information
-
-```typescript
-const account = await client.getAccount(wallet.getAddress());
-if (account === null) {
-    console.log('Account: not found');
-} else {
-    console.log(`Account: ${account.address}, ${account.accountNumber}, ${account.sequence}`);
-}
-```
-
-#### Get account balances
-
-```typescript
-const balances = await client.getAllBalances(wallet.getAddress(), undefined);
-if (balances.length === 0) {
-    console.log('Balances: empty account');
-} else {
-    console.log(
-        `Balances: ${balances.map((coin) => {
-            coin.denom + ': ' + coin.amount;
-        })}`,
-    );
-}
-```
-
-### Transactions
-
-#### Get account transactions (sent and received)
-
-```typescript
-// The client search feature supports multiple searches and merge+sort the results
-const transactions = await client.searchTx([LumUtils.searchTxFrom(wallet.getAddress()), LumUtils.searchTxTo(wallet.getAddress())]);
-console.log(`Transactions: ${transactions.map((tx) => tx.hash).join(', ')}`);
-```
-
-#### Send transaction
-
-```typescript
-// Build transaction message (Send 100 LUM)
-const sendMsg = LumMessages.BuildMsgSend(wallet.getAddress(), toAddress, [{ denom: LumConstants.LumDenom, amount: '100' }]);
-// Define fees (1 LUM)
-const fee = {
-    amount: [{ denom: LumConstants.LumDenom, amount: '1' }],
-    gas: '100000',
-};
-// Fetch account number and sequence
-const account = await client.getAccount(wallet.getAddress());
-// Create the transaction document
-const doc = {
-    chainId,
-    fee: fee,
-    memo: 'my transaction memo',
-    messages: [sendMsg],
-    signers: [
-        {
-            accountNumber: account.accountNumber,
-            sequence: account.sequence,
-            publicKey: wallet.getPublicKey(),
-        },
-    ],
-};
-// Sign and broadcast the transaction using the client
-const broadcastResult = await client.signAndBroadcastTx(w1, doc);
-// Verify the transaction was succesfully broadcasted and made it into a block
-console.log(`Broadcast success: ${LumUtils.broadcastTxCommitSuccess(broadcastResult)}`);
-```
-
-### Query Millions
-
-```typescript
-const deposits = await client.queryClient.millions.deposits();
-// query with account deposits - pass the desired pagination
-const accountDeposit = await client.queryClient.millions.accountDeposits({ depositorAddress: deposit.depositorAddress, pagination: undefined });
-const withdrawals = await client.queryClient.millions.withdrawals();
-// query with account withdrawals - pass the desired pagination
-const accountWithdrawals = await client.queryClient.millions.accountWithdrawals({ depositorAddress: withdrawal.depositorAddress, pagination: undefined });
-const prizes = await client.queryClient.millions.prizes();
-const draws = await client.queryClient.millions.draws();
-```
-
-### Use all tendermint RPCs
-
-The underlying tendermint client is directly accessible via the `.tmClient` property of the LumClient.
-
-```typescript
-const health = await client.tmClient.health();
-const status = await client.tmClient.status();
-const genesis = await client.tmClient.genesis();
-const latestBlock = await client.tmClient.block();
-```
-
-### Use all modules RPCs
-
-The underlying query client is directly accessible via the `.queryClient` property of the LumClient.
-
-It allows to directly query all modules endpoints such as:
-
-```typescript
-const supplies = await clt.queryClient.bank.unverified.totalSupply();
-// [{ denom: 'lum', amount: '1000000' }]
-```
-
-### Message signature & verification
-
-#### Sign a message
-
-```typescript
-const message = 'Lum network is an awesome decentralized protocol';
-const signedPayload = await wallet.signMessage(message);
-// { address, publicKey, msg, sig, version, signer }
-const validSig = await LumUtils.verifySignMsg(signedPayload);
-// true
-const invalidSig = await LumUtils.verifySignMsg(Object.assign(signedPayload, { msg: 'Wrong message input' }));
-// false
+```bash
+yarn run codegen
 ```
 
 ## Credits
@@ -227,3 +133,9 @@ Code built with the help of these related projects:
 -   [@cosmwasm/ts-codegen](https://github.com/CosmWasm/ts-codegen) for generated CosmWasm contract Typescript classes
 -   [@cosmology/telescope](https://github.com/cosmology-tech/telescope) a "babel for the Cosmos", Telescope is a TypeScript Transpiler for Cosmos Protobufs.
 -   [chain-registry](https://github.com/cosmology-tech/chain-registry) an npm module for the official Cosmos chain-registry
+
+## Contributing
+
+Contributions are most welcome.
+
+Please test your changes with a local client and add unit tests coverage for your code before submission.
