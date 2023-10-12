@@ -66,48 +66,13 @@ The SDK is based on the [@cosmoslogy/telescope](https://github.com/cosmology-tec
 
 It is intented to be used standalone, without having to import specific CosmJS packages which can get make implementations tricky and messy.
 
-Therefore all codecs, types, functions are features from the CosmJS SDK are either re-implemented by this SDK or re-exported for simplicity purposes.
+Therefore all types, functions are features from the CosmJS SDK are either re-implemented by this SDK or re-exported for simplicity purposes.
 
 Directly importing the CosmJS SDK or other cryptographic library should be considered bad practice for most use cases.
 
 Do not hesitate to contribute to this repository. This SDK is intended to be a one-stop-shop for all Lum Network javascript implementations and should definitely be improved over time by all its users.
 
-### Unittests
-
-#### All unittests except the ones involving a Ledger device (skipped by default) can be run using the following command
-
-Make sure to run the local chain aside.
-Do this in a separate terminal window. You can copy the config from config.yml and pass it to the lum folder.
-
-```bash
-cp config.yml lum/config.yml
-```
-
-```bash
-cd lum
-```
-
-```bash
-ignite chain serve --skip-proto
-```
-
-at the root of the project in the initial terminal window run:
-
-```bash
-yarn test
-```
-
-#### Ledger unittests
-
-In order to run the unittest involving Ledger devices you need to do the following:
-
-1. Chose which application you want to use for the tests (Cosmos or Lum)
-2. Remove the `.skip` from all the tests your want to run in `./tests/ledger.test.ts`
-3. Connect a Ledger device and open either the Cosmos application or the Lum application
-4. Run `yarn test tests/ledger.test.ts`
-5. Follow the instructions on your Ledger device to pass each test that require a user input
-
-### Run the package locally
+## Run the package locally
 
 ### Install the latest lum repository version
 
@@ -140,6 +105,39 @@ yarn
 ```bash
 yarn run codegen
 ```
+
+## Unittests
+
+Make sure to run the local chain aside.
+Do this in a separate terminal window. You can copy the config from config.yml and pass it to the lum folder.
+
+```bash
+cp config.yml lum/config.yml
+```
+
+```bash
+cd lum
+```
+
+```bash
+ignite chain serve --skip-proto
+```
+
+at the root of the project in the initial terminal window run:
+
+```bash
+yarn test
+```
+
+### Ledger unittests
+
+In order to run the unittest involving Ledger devices you need to do the following:
+
+1. Chose which application you want to use for the tests (Cosmos or Lum)
+2. Remove the `.skip` from all the tests your want to run in `./tests/ledger.test.ts`
+3. Connect a Ledger device and open either the Cosmos application or the Lum application
+4. Run `yarn test tests/ledger.test.ts`
+5. Follow the instructions on your Ledger device to pass each test that require a user input
 
 ## Credits
 
