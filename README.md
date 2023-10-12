@@ -76,6 +76,23 @@ Do not hesitate to contribute to this repository. This SDK is intended to be a o
 
 #### All unittests except the ones involving a Ledger device (skipped by default) can be run using the following command
 
+Make sure to run the local chain aside.
+Do this in a separate terminal window. You can copy the config from config.yml and pass it to the lum folder.
+
+```bash
+cp config.yml lum/config.yml
+```
+
+```bash
+cd lum
+```
+
+```bash
+ignite chain serve --skip-proto
+```
+
+at the root of the project in the initial terminal window run:
+
 ```bash
 yarn test
 ```
