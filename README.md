@@ -153,6 +153,8 @@ simulate the pipeline for a pull request
 act pull_request --container-architecture linux/amd64
 ```
 
+nb: be patient, this can take up to 15min
+
 ## Credits
 
 🛠 Built witht Cosmology
