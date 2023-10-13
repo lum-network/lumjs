@@ -139,6 +139,20 @@ In order to run the unittest involving Ledger devices you need to do the followi
 4. Run `yarn test tests/ledger.test.ts`
 5. Follow the instructions on your Ledger device to pass each test that require a user input
 
+## Simulate pipelines locally
+
+install act, for instance:
+
+```bash
+brew install act
+```
+
+simulate the pipeline for a pull request
+
+```bash
+act pull_request --container-architecture linux/amd64
+```
+
 ## Credits
 
 🛠 Built witht Cosmology
