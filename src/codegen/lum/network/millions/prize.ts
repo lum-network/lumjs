@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Long, toTimestamp, fromTimestamp, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 export enum PrizeState {
   PRIZE_STATE_UNSPECIFIED = 0,
   PRIZE_STATE_PENDING = 1,
@@ -35,14 +35,14 @@ export function prizeStateToJSON(object: PrizeState): string {
   }
 }
 export interface Prize {
-  poolId: Long;
-  drawId: Long;
-  prizeId: Long;
+  poolId: bigint;
+  drawId: bigint;
+  prizeId: bigint;
   state: PrizeState;
   winnerAddress: string;
   amount: Coin | undefined;
-  createdAtHeight: Long;
-  updatedAtHeight: Long;
+  createdAtHeight: bigint;
+  updatedAtHeight: bigint;
   expiresAt: Date | undefined;
   createdAt: Date | undefined;
   updatedAt: Date | undefined;
@@ -60,31 +60,31 @@ export interface PrizeAmino {
   amount?: CoinAmino | undefined;
   created_at_height: string;
   updated_at_height: string;
-  expires_at?: Date | undefined;
-  created_at?: Date | undefined;
-  updated_at?: Date | undefined;
+  expires_at?: string | undefined;
+  created_at?: string | undefined;
+  updated_at?: string | undefined;
 }
 export interface PrizeAminoMsg {
   type: "/lum.network.millions.Prize";
   value: PrizeAmino;
 }
 export interface PrizeSDKType {
-  pool_id: Long;
-  draw_id: Long;
-  prize_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
+  prize_id: bigint;
   state: PrizeState;
   winner_address: string;
   amount: CoinSDKType | undefined;
-  created_at_height: Long;
-  updated_at_height: Long;
+  created_at_height: bigint;
+  updated_at_height: bigint;
   expires_at: Date | undefined;
   created_at: Date | undefined;
   updated_at: Date | undefined;
 }
 export interface PrizeIDs {
-  poolId: Long;
-  drawId: Long;
-  prizeId: Long;
+  poolId: bigint;
+  drawId: bigint;
+  prizeId: bigint;
 }
 export interface PrizeIDsProtoMsg {
   typeUrl: "/lum.network.millions.PrizeIDs";
@@ -100,9 +100,9 @@ export interface PrizeIDsAminoMsg {
   value: PrizeIDsAmino;
 }
 export interface PrizeIDsSDKType {
-  pool_id: Long;
-  draw_id: Long;
-  prize_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
+  prize_id: bigint;
 }
 export interface PrizeIDsCollection {
   prizesIds: PrizeIDs[];
@@ -123,28 +123,29 @@ export interface PrizeIDsCollectionSDKType {
 }
 function createBasePrize(): Prize {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    prizeId: Long.UZERO,
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    prizeId: BigInt(0),
     state: 0,
     winnerAddress: "",
     amount: Coin.fromPartial({}),
-    createdAtHeight: Long.ZERO,
-    updatedAtHeight: Long.ZERO,
+    createdAtHeight: BigInt(0),
+    updatedAtHeight: BigInt(0),
     expiresAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date()
   };
 }
 export const Prize = {
-  encode(message: Prize, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.Prize",
+  encode(message: Prize, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
-    if (!message.prizeId.isZero()) {
+    if (message.prizeId !== BigInt(0)) {
       writer.uint32(24).uint64(message.prizeId);
     }
     if (message.state !== 0) {
@@ -156,10 +157,10 @@ export const Prize = {
     if (message.amount !== undefined) {
       Coin.encode(message.amount, writer.uint32(50).fork()).ldelim();
     }
-    if (!message.createdAtHeight.isZero()) {
+    if (message.createdAtHeight !== BigInt(0)) {
       writer.uint32(56).int64(message.createdAtHeight);
     }
-    if (!message.updatedAtHeight.isZero()) {
+    if (message.updatedAtHeight !== BigInt(0)) {
       writer.uint32(64).int64(message.updatedAtHeight);
     }
     if (message.expiresAt !== undefined) {
@@ -173,21 +174,21 @@ export const Prize = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Prize {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Prize {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrize();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
-          message.prizeId = (reader.uint64() as Long);
+          message.prizeId = reader.uint64();
           break;
         case 4:
           message.state = (reader.int32() as any);
@@ -199,10 +200,10 @@ export const Prize = {
           message.amount = Coin.decode(reader, reader.uint32());
           break;
         case 7:
-          message.createdAtHeight = (reader.int64() as Long);
+          message.createdAtHeight = reader.int64();
           break;
         case 8:
-          message.updatedAtHeight = (reader.int64() as Long);
+          message.updatedAtHeight = reader.int64();
           break;
         case 9:
           message.expiresAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
@@ -220,16 +221,16 @@ export const Prize = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Prize>): Prize {
+  fromPartial(object: Partial<Prize>): Prize {
     const message = createBasePrize();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
-    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? Long.fromValue(object.prizeId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
+    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? BigInt(object.prizeId.toString()) : BigInt(0);
     message.state = object.state ?? 0;
     message.winnerAddress = object.winnerAddress ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
-    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? Long.fromValue(object.createdAtHeight) : Long.ZERO;
-    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? Long.fromValue(object.updatedAtHeight) : Long.ZERO;
+    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? BigInt(object.createdAtHeight.toString()) : BigInt(0);
+    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? BigInt(object.updatedAtHeight.toString()) : BigInt(0);
     message.expiresAt = object.expiresAt ?? undefined;
     message.createdAt = object.createdAt ?? undefined;
     message.updatedAt = object.updatedAt ?? undefined;
@@ -237,17 +238,17 @@ export const Prize = {
   },
   fromAmino(object: PrizeAmino): Prize {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
-      prizeId: Long.fromString(object.prize_id),
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
+      prizeId: BigInt(object.prize_id),
       state: isSet(object.state) ? prizeStateFromJSON(object.state) : -1,
       winnerAddress: object.winner_address,
       amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      createdAtHeight: Long.fromString(object.created_at_height),
-      updatedAtHeight: Long.fromString(object.updated_at_height),
-      expiresAt: object.expires_at,
-      createdAt: object.created_at,
-      updatedAt: object.updated_at
+      createdAtHeight: BigInt(object.created_at_height),
+      updatedAtHeight: BigInt(object.updated_at_height),
+      expiresAt: object?.expires_at ? fromTimestamp(Timestamp.fromAmino(object.expires_at)) : undefined,
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
+      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
     };
   },
   toAmino(message: Prize): PrizeAmino {
@@ -260,9 +261,9 @@ export const Prize = {
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
     obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
     obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
-    obj.expires_at = message.expiresAt;
-    obj.created_at = message.createdAt;
-    obj.updated_at = message.updatedAt;
+    obj.expires_at = message.expiresAt ? Timestamp.toAmino(toTimestamp(message.expiresAt)) : undefined;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
+    obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: PrizeAminoMsg): Prize {
@@ -283,39 +284,40 @@ export const Prize = {
 };
 function createBasePrizeIDs(): PrizeIDs {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    prizeId: Long.UZERO
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    prizeId: BigInt(0)
   };
 }
 export const PrizeIDs = {
-  encode(message: PrizeIDs, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.PrizeIDs",
+  encode(message: PrizeIDs, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
-    if (!message.prizeId.isZero()) {
+    if (message.prizeId !== BigInt(0)) {
       writer.uint32(24).uint64(message.prizeId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PrizeIDs {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PrizeIDs {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrizeIDs();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
-          message.prizeId = (reader.uint64() as Long);
+          message.prizeId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -324,18 +326,18 @@ export const PrizeIDs = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PrizeIDs>): PrizeIDs {
+  fromPartial(object: Partial<PrizeIDs>): PrizeIDs {
     const message = createBasePrizeIDs();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
-    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? Long.fromValue(object.prizeId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
+    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? BigInt(object.prizeId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: PrizeIDsAmino): PrizeIDs {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
-      prizeId: Long.fromString(object.prize_id)
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
+      prizeId: BigInt(object.prize_id)
     };
   },
   toAmino(message: PrizeIDs): PrizeIDsAmino {
@@ -367,14 +369,15 @@ function createBasePrizeIDsCollection(): PrizeIDsCollection {
   };
 }
 export const PrizeIDsCollection = {
-  encode(message: PrizeIDsCollection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.PrizeIDsCollection",
+  encode(message: PrizeIDsCollection, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.prizesIds) {
       PrizeIDs.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PrizeIDsCollection {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PrizeIDsCollection {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrizeIDsCollection();
     while (reader.pos < end) {
@@ -390,7 +393,7 @@ export const PrizeIDsCollection = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PrizeIDsCollection>): PrizeIDsCollection {
+  fromPartial(object: Partial<PrizeIDsCollection>): PrizeIDsCollection {
     const message = createBasePrizeIDsCollection();
     message.prizesIds = object.prizesIds?.map(e => PrizeIDs.fromPartial(e)) || [];
     return message;

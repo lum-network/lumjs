@@ -1,8 +1,7 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { CallbackData, CallbackDataAmino, CallbackDataSDKType } from "./callback_data";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 export interface QueryParamsRequestProtoMsg {
@@ -74,7 +73,7 @@ export interface QueryGetCallbackDataResponseSDKType {
   callback_data: CallbackDataSDKType | undefined;
 }
 export interface QueryAllCallbackDataRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAllCallbackDataRequestProtoMsg {
   typeUrl: "/lum.network.icacallbacks.QueryAllCallbackDataRequest";
@@ -88,11 +87,11 @@ export interface QueryAllCallbackDataRequestAminoMsg {
   value: QueryAllCallbackDataRequestAmino;
 }
 export interface QueryAllCallbackDataRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAllCallbackDataResponse {
   callbackData: CallbackData[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryAllCallbackDataResponseProtoMsg {
   typeUrl: "/lum.network.icacallbacks.QueryAllCallbackDataResponse";
@@ -108,17 +107,18 @@ export interface QueryAllCallbackDataResponseAminoMsg {
 }
 export interface QueryAllCallbackDataResponseSDKType {
   callback_data: CallbackDataSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.QueryParamsRequest",
+  encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -131,7 +131,7 @@ export const QueryParamsRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+  fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
   },
@@ -164,14 +164,15 @@ function createBaseQueryParamsResponse(): QueryParamsResponse {
   };
 }
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.QueryParamsResponse",
+  encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -187,7 +188,7 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
+  fromPartial(object: Partial<QueryParamsResponse>): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
@@ -224,14 +225,15 @@ function createBaseQueryGetCallbackDataRequest(): QueryGetCallbackDataRequest {
   };
 }
 export const QueryGetCallbackDataRequest = {
-  encode(message: QueryGetCallbackDataRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.QueryGetCallbackDataRequest",
+  encode(message: QueryGetCallbackDataRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.callbackKey !== "") {
       writer.uint32(10).string(message.callbackKey);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetCallbackDataRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetCallbackDataRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetCallbackDataRequest();
     while (reader.pos < end) {
@@ -247,7 +249,7 @@ export const QueryGetCallbackDataRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetCallbackDataRequest>): QueryGetCallbackDataRequest {
+  fromPartial(object: Partial<QueryGetCallbackDataRequest>): QueryGetCallbackDataRequest {
     const message = createBaseQueryGetCallbackDataRequest();
     message.callbackKey = object.callbackKey ?? "";
     return message;
@@ -284,14 +286,15 @@ function createBaseQueryGetCallbackDataResponse(): QueryGetCallbackDataResponse 
   };
 }
 export const QueryGetCallbackDataResponse = {
-  encode(message: QueryGetCallbackDataResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.QueryGetCallbackDataResponse",
+  encode(message: QueryGetCallbackDataResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.callbackData !== undefined) {
       CallbackData.encode(message.callbackData, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetCallbackDataResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetCallbackDataResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetCallbackDataResponse();
     while (reader.pos < end) {
@@ -307,7 +310,7 @@ export const QueryGetCallbackDataResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetCallbackDataResponse>): QueryGetCallbackDataResponse {
+  fromPartial(object: Partial<QueryGetCallbackDataResponse>): QueryGetCallbackDataResponse {
     const message = createBaseQueryGetCallbackDataResponse();
     message.callbackData = object.callbackData !== undefined && object.callbackData !== null ? CallbackData.fromPartial(object.callbackData) : undefined;
     return message;
@@ -340,18 +343,19 @@ export const QueryGetCallbackDataResponse = {
 };
 function createBaseQueryAllCallbackDataRequest(): QueryAllCallbackDataRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAllCallbackDataRequest = {
-  encode(message: QueryAllCallbackDataRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.QueryAllCallbackDataRequest",
+  encode(message: QueryAllCallbackDataRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllCallbackDataRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllCallbackDataRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllCallbackDataRequest();
     while (reader.pos < end) {
@@ -367,7 +371,7 @@ export const QueryAllCallbackDataRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAllCallbackDataRequest>): QueryAllCallbackDataRequest {
+  fromPartial(object: Partial<QueryAllCallbackDataRequest>): QueryAllCallbackDataRequest {
     const message = createBaseQueryAllCallbackDataRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -401,11 +405,12 @@ export const QueryAllCallbackDataRequest = {
 function createBaseQueryAllCallbackDataResponse(): QueryAllCallbackDataResponse {
   return {
     callbackData: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAllCallbackDataResponse = {
-  encode(message: QueryAllCallbackDataResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.QueryAllCallbackDataResponse",
+  encode(message: QueryAllCallbackDataResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.callbackData) {
       CallbackData.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -414,8 +419,8 @@ export const QueryAllCallbackDataResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllCallbackDataResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllCallbackDataResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllCallbackDataResponse();
     while (reader.pos < end) {
@@ -434,7 +439,7 @@ export const QueryAllCallbackDataResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAllCallbackDataResponse>): QueryAllCallbackDataResponse {
+  fromPartial(object: Partial<QueryAllCallbackDataResponse>): QueryAllCallbackDataResponse {
     const message = createBaseQueryAllCallbackDataResponse();
     message.callbackData = object.callbackData?.map(e => CallbackData.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;

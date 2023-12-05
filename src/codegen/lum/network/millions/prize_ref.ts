@@ -1,8 +1,7 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface PrizeRef {
   amount: string;
-  prizeId?: Long;
+  prizeId?: bigint;
   winnerAddress?: string;
 }
 export interface PrizeRefProtoMsg {
@@ -20,7 +19,7 @@ export interface PrizeRefAminoMsg {
 }
 export interface PrizeRefSDKType {
   amount: string;
-  prize_id?: Long;
+  prize_id?: bigint;
   winner_address?: string;
 }
 function createBasePrizeRef(): PrizeRef {
@@ -31,7 +30,8 @@ function createBasePrizeRef(): PrizeRef {
   };
 }
 export const PrizeRef = {
-  encode(message: PrizeRef, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.PrizeRef",
+  encode(message: PrizeRef, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.amount !== "") {
       writer.uint32(10).string(message.amount);
     }
@@ -43,8 +43,8 @@ export const PrizeRef = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PrizeRef {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PrizeRef {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrizeRef();
     while (reader.pos < end) {
@@ -54,7 +54,7 @@ export const PrizeRef = {
           message.amount = reader.string();
           break;
         case 2:
-          message.prizeId = (reader.uint64() as Long);
+          message.prizeId = reader.uint64();
           break;
         case 3:
           message.winnerAddress = reader.string();
@@ -66,17 +66,17 @@ export const PrizeRef = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PrizeRef>): PrizeRef {
+  fromPartial(object: Partial<PrizeRef>): PrizeRef {
     const message = createBasePrizeRef();
     message.amount = object.amount ?? "";
-    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? Long.fromValue(object.prizeId) : undefined;
+    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? BigInt(object.prizeId.toString()) : undefined;
     message.winnerAddress = object.winnerAddress ?? undefined;
     return message;
   },
   fromAmino(object: PrizeRefAmino): PrizeRef {
     return {
       amount: object.amount,
-      prizeId: object?.prize_id ? Long.fromString(object.prize_id) : undefined,
+      prizeId: object?.prize_id ? BigInt(object.prize_id) : undefined,
       winnerAddress: object?.winner_address
     };
   },

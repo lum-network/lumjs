@@ -1,9 +1,8 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** TableDescriptor describes an ORM table. */
 export interface TableDescriptor {
   /** primary_key defines the primary key for the table. */
-  primaryKey: PrimaryKeyDescriptor | undefined;
+  primaryKey?: PrimaryKeyDescriptor | undefined;
   /** index defines one or more secondary indexes. */
   index: SecondaryIndexDescriptor[];
   /**
@@ -36,7 +35,7 @@ export interface TableDescriptorAminoMsg {
 }
 /** TableDescriptor describes an ORM table. */
 export interface TableDescriptorSDKType {
-  primary_key: PrimaryKeyDescriptorSDKType | undefined;
+  primary_key?: PrimaryKeyDescriptorSDKType | undefined;
   index: SecondaryIndexDescriptorSDKType[];
   id: number;
 }
@@ -229,13 +228,15 @@ export interface SingletonDescriptorSDKType {
 }
 function createBaseTableDescriptor(): TableDescriptor {
   return {
-    primaryKey: PrimaryKeyDescriptor.fromPartial({}),
+    primaryKey: undefined,
     index: [],
     id: 0
   };
 }
 export const TableDescriptor = {
-  encode(message: TableDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.orm.v1.TableDescriptor",
+  aminoType: "cosmos-sdk/TableDescriptor",
+  encode(message: TableDescriptor, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.primaryKey !== undefined) {
       PrimaryKeyDescriptor.encode(message.primaryKey, writer.uint32(10).fork()).ldelim();
     }
@@ -247,8 +248,8 @@ export const TableDescriptor = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): TableDescriptor {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): TableDescriptor {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTableDescriptor();
     while (reader.pos < end) {
@@ -270,7 +271,7 @@ export const TableDescriptor = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<TableDescriptor>): TableDescriptor {
+  fromPartial(object: Partial<TableDescriptor>): TableDescriptor {
     const message = createBaseTableDescriptor();
     message.primaryKey = object.primaryKey !== undefined && object.primaryKey !== null ? PrimaryKeyDescriptor.fromPartial(object.primaryKey) : undefined;
     message.index = object.index?.map(e => SecondaryIndexDescriptor.fromPartial(e)) || [];
@@ -324,7 +325,9 @@ function createBasePrimaryKeyDescriptor(): PrimaryKeyDescriptor {
   };
 }
 export const PrimaryKeyDescriptor = {
-  encode(message: PrimaryKeyDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.orm.v1.PrimaryKeyDescriptor",
+  aminoType: "cosmos-sdk/PrimaryKeyDescriptor",
+  encode(message: PrimaryKeyDescriptor, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.fields !== "") {
       writer.uint32(10).string(message.fields);
     }
@@ -333,8 +336,8 @@ export const PrimaryKeyDescriptor = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PrimaryKeyDescriptor {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PrimaryKeyDescriptor {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrimaryKeyDescriptor();
     while (reader.pos < end) {
@@ -353,7 +356,7 @@ export const PrimaryKeyDescriptor = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PrimaryKeyDescriptor>): PrimaryKeyDescriptor {
+  fromPartial(object: Partial<PrimaryKeyDescriptor>): PrimaryKeyDescriptor {
     const message = createBasePrimaryKeyDescriptor();
     message.fields = object.fields ?? "";
     message.autoIncrement = object.autoIncrement ?? false;
@@ -401,7 +404,9 @@ function createBaseSecondaryIndexDescriptor(): SecondaryIndexDescriptor {
   };
 }
 export const SecondaryIndexDescriptor = {
-  encode(message: SecondaryIndexDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.orm.v1.SecondaryIndexDescriptor",
+  aminoType: "cosmos-sdk/SecondaryIndexDescriptor",
+  encode(message: SecondaryIndexDescriptor, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.fields !== "") {
       writer.uint32(10).string(message.fields);
     }
@@ -413,8 +418,8 @@ export const SecondaryIndexDescriptor = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SecondaryIndexDescriptor {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SecondaryIndexDescriptor {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSecondaryIndexDescriptor();
     while (reader.pos < end) {
@@ -436,7 +441,7 @@ export const SecondaryIndexDescriptor = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<SecondaryIndexDescriptor>): SecondaryIndexDescriptor {
+  fromPartial(object: Partial<SecondaryIndexDescriptor>): SecondaryIndexDescriptor {
     const message = createBaseSecondaryIndexDescriptor();
     message.fields = object.fields ?? "";
     message.id = object.id ?? 0;
@@ -485,14 +490,16 @@ function createBaseSingletonDescriptor(): SingletonDescriptor {
   };
 }
 export const SingletonDescriptor = {
-  encode(message: SingletonDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.orm.v1.SingletonDescriptor",
+  aminoType: "cosmos-sdk/SingletonDescriptor",
+  encode(message: SingletonDescriptor, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== 0) {
       writer.uint32(8).uint32(message.id);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SingletonDescriptor {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SingletonDescriptor {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSingletonDescriptor();
     while (reader.pos < end) {
@@ -508,7 +515,7 @@ export const SingletonDescriptor = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<SingletonDescriptor>): SingletonDescriptor {
+  fromPartial(object: Partial<SingletonDescriptor>): SingletonDescriptor {
     const message = createBaseSingletonDescriptor();
     message.id = object.id ?? 0;
     return message;

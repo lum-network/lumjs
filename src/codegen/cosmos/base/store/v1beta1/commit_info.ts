@@ -1,11 +1,10 @@
-import { Long, DeepPartial } from "../../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /**
  * CommitInfo defines commit information used by the multi-store when committing
  * a version/height.
  */
 export interface CommitInfo {
-  version: Long;
+  version: bigint;
   storeInfos: StoreInfo[];
 }
 export interface CommitInfoProtoMsg {
@@ -29,7 +28,7 @@ export interface CommitInfoAminoMsg {
  * a version/height.
  */
 export interface CommitInfoSDKType {
-  version: Long;
+  version: bigint;
   store_infos: StoreInfoSDKType[];
 }
 /**
@@ -69,7 +68,7 @@ export interface StoreInfoSDKType {
  * committed.
  */
 export interface CommitID {
-  version: Long;
+  version: bigint;
   hash: Uint8Array;
 }
 export interface CommitIDProtoMsg {
@@ -93,18 +92,20 @@ export interface CommitIDAminoMsg {
  * committed.
  */
 export interface CommitIDSDKType {
-  version: Long;
+  version: bigint;
   hash: Uint8Array;
 }
 function createBaseCommitInfo(): CommitInfo {
   return {
-    version: Long.ZERO,
+    version: BigInt(0),
     storeInfos: []
   };
 }
 export const CommitInfo = {
-  encode(message: CommitInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.version.isZero()) {
+  typeUrl: "/cosmos.base.store.v1beta1.CommitInfo",
+  aminoType: "cosmos-sdk/CommitInfo",
+  encode(message: CommitInfo, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.version !== BigInt(0)) {
       writer.uint32(8).int64(message.version);
     }
     for (const v of message.storeInfos) {
@@ -112,15 +113,15 @@ export const CommitInfo = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): CommitInfo {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): CommitInfo {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommitInfo();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.version = (reader.int64() as Long);
+          message.version = reader.int64();
           break;
         case 2:
           message.storeInfos.push(StoreInfo.decode(reader, reader.uint32()));
@@ -132,15 +133,15 @@ export const CommitInfo = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<CommitInfo>): CommitInfo {
+  fromPartial(object: Partial<CommitInfo>): CommitInfo {
     const message = createBaseCommitInfo();
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.ZERO;
+    message.version = object.version !== undefined && object.version !== null ? BigInt(object.version.toString()) : BigInt(0);
     message.storeInfos = object.storeInfos?.map(e => StoreInfo.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: CommitInfoAmino): CommitInfo {
     return {
-      version: Long.fromString(object.version),
+      version: BigInt(object.version),
       storeInfos: Array.isArray(object?.store_infos) ? object.store_infos.map((e: any) => StoreInfo.fromAmino(e)) : []
     };
   },
@@ -183,7 +184,9 @@ function createBaseStoreInfo(): StoreInfo {
   };
 }
 export const StoreInfo = {
-  encode(message: StoreInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.base.store.v1beta1.StoreInfo",
+  aminoType: "cosmos-sdk/StoreInfo",
+  encode(message: StoreInfo, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -192,8 +195,8 @@ export const StoreInfo = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): StoreInfo {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): StoreInfo {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStoreInfo();
     while (reader.pos < end) {
@@ -212,7 +215,7 @@ export const StoreInfo = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<StoreInfo>): StoreInfo {
+  fromPartial(object: Partial<StoreInfo>): StoreInfo {
     const message = createBaseStoreInfo();
     message.name = object.name ?? "";
     message.commitId = object.commitId !== undefined && object.commitId !== null ? CommitID.fromPartial(object.commitId) : undefined;
@@ -254,13 +257,15 @@ export const StoreInfo = {
 };
 function createBaseCommitID(): CommitID {
   return {
-    version: Long.ZERO,
+    version: BigInt(0),
     hash: new Uint8Array()
   };
 }
 export const CommitID = {
-  encode(message: CommitID, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.version.isZero()) {
+  typeUrl: "/cosmos.base.store.v1beta1.CommitID",
+  aminoType: "cosmos-sdk/CommitID",
+  encode(message: CommitID, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.version !== BigInt(0)) {
       writer.uint32(8).int64(message.version);
     }
     if (message.hash.length !== 0) {
@@ -268,15 +273,15 @@ export const CommitID = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): CommitID {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): CommitID {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommitID();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.version = (reader.int64() as Long);
+          message.version = reader.int64();
           break;
         case 2:
           message.hash = reader.bytes();
@@ -288,15 +293,15 @@ export const CommitID = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<CommitID>): CommitID {
+  fromPartial(object: Partial<CommitID>): CommitID {
     const message = createBaseCommitID();
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.ZERO;
+    message.version = object.version !== undefined && object.version !== null ? BigInt(object.version.toString()) : BigInt(0);
     message.hash = object.hash ?? new Uint8Array();
     return message;
   },
   fromAmino(object: CommitIDAmino): CommitID {
     return {
-      version: Long.fromString(object.version),
+      version: BigInt(object.version),
       hash: object.hash
     };
   },

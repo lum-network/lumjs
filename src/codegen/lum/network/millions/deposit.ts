@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Long, toTimestamp, fromTimestamp, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 export enum DepositState {
   DEPOSIT_STATE_UNSPECIFIED = 0,
   DEPOSIT_STATE_IBC_TRANSFER = 1,
@@ -53,16 +53,16 @@ export function depositStateToJSON(object: DepositState): string {
   }
 }
 export interface Deposit {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
   state: DepositState;
   errorState: DepositState;
   depositorAddress: string;
   amount: Coin | undefined;
   winnerAddress: string;
   isSponsor: boolean;
-  createdAtHeight: Long;
-  updatedAtHeight: Long;
+  createdAtHeight: bigint;
+  updatedAtHeight: bigint;
   createdAt: Date | undefined;
   updatedAt: Date | undefined;
 }
@@ -81,49 +81,50 @@ export interface DepositAmino {
   is_sponsor: boolean;
   created_at_height: string;
   updated_at_height: string;
-  created_at?: Date | undefined;
-  updated_at?: Date | undefined;
+  created_at?: string | undefined;
+  updated_at?: string | undefined;
 }
 export interface DepositAminoMsg {
   type: "/lum.network.millions.Deposit";
   value: DepositAmino;
 }
 export interface DepositSDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
   state: DepositState;
   error_state: DepositState;
   depositor_address: string;
   amount: CoinSDKType | undefined;
   winner_address: string;
   is_sponsor: boolean;
-  created_at_height: Long;
-  updated_at_height: Long;
+  created_at_height: bigint;
+  updated_at_height: bigint;
   created_at: Date | undefined;
   updated_at: Date | undefined;
 }
 function createBaseDeposit(): Deposit {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO,
+    poolId: BigInt(0),
+    depositId: BigInt(0),
     state: 0,
     errorState: 0,
     depositorAddress: "",
     amount: Coin.fromPartial({}),
     winnerAddress: "",
     isSponsor: false,
-    createdAtHeight: Long.ZERO,
-    updatedAtHeight: Long.ZERO,
+    createdAtHeight: BigInt(0),
+    updatedAtHeight: BigInt(0),
     createdAt: new Date(),
     updatedAt: new Date()
   };
 }
 export const Deposit = {
-  encode(message: Deposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.Deposit",
+  encode(message: Deposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     if (message.state !== 0) {
@@ -144,10 +145,10 @@ export const Deposit = {
     if (message.isSponsor === true) {
       writer.uint32(64).bool(message.isSponsor);
     }
-    if (!message.createdAtHeight.isZero()) {
+    if (message.createdAtHeight !== BigInt(0)) {
       writer.uint32(80).int64(message.createdAtHeight);
     }
-    if (!message.updatedAtHeight.isZero()) {
+    if (message.updatedAtHeight !== BigInt(0)) {
       writer.uint32(88).int64(message.updatedAtHeight);
     }
     if (message.createdAt !== undefined) {
@@ -158,18 +159,18 @@ export const Deposit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Deposit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Deposit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeposit();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         case 3:
           message.state = (reader.int32() as any);
@@ -190,10 +191,10 @@ export const Deposit = {
           message.isSponsor = reader.bool();
           break;
         case 10:
-          message.createdAtHeight = (reader.int64() as Long);
+          message.createdAtHeight = reader.int64();
           break;
         case 11:
-          message.updatedAtHeight = (reader.int64() as Long);
+          message.updatedAtHeight = reader.int64();
           break;
         case 12:
           message.createdAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
@@ -208,36 +209,36 @@ export const Deposit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Deposit>): Deposit {
+  fromPartial(object: Partial<Deposit>): Deposit {
     const message = createBaseDeposit();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     message.state = object.state ?? 0;
     message.errorState = object.errorState ?? 0;
     message.depositorAddress = object.depositorAddress ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     message.winnerAddress = object.winnerAddress ?? "";
     message.isSponsor = object.isSponsor ?? false;
-    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? Long.fromValue(object.createdAtHeight) : Long.ZERO;
-    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? Long.fromValue(object.updatedAtHeight) : Long.ZERO;
+    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? BigInt(object.createdAtHeight.toString()) : BigInt(0);
+    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? BigInt(object.updatedAtHeight.toString()) : BigInt(0);
     message.createdAt = object.createdAt ?? undefined;
     message.updatedAt = object.updatedAt ?? undefined;
     return message;
   },
   fromAmino(object: DepositAmino): Deposit {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id),
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id),
       state: isSet(object.state) ? depositStateFromJSON(object.state) : -1,
       errorState: isSet(object.error_state) ? depositStateFromJSON(object.error_state) : -1,
       depositorAddress: object.depositor_address,
       amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
       winnerAddress: object.winner_address,
       isSponsor: object.is_sponsor,
-      createdAtHeight: Long.fromString(object.created_at_height),
-      updatedAtHeight: Long.fromString(object.updated_at_height),
-      createdAt: object.created_at,
-      updatedAt: object.updated_at
+      createdAtHeight: BigInt(object.created_at_height),
+      updatedAtHeight: BigInt(object.updated_at_height),
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
+      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
     };
   },
   toAmino(message: Deposit): DepositAmino {
@@ -252,8 +253,8 @@ export const Deposit = {
     obj.is_sponsor = message.isSponsor;
     obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
     obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
-    obj.created_at = message.createdAt;
-    obj.updated_at = message.updatedAt;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
+    obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: DepositAminoMsg): Deposit {

@@ -1,5 +1,5 @@
-import { Long, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export enum TransferType {
   TRANSFER_TYPE_UNSPECIFIED = 0,
   TRANSFER_TYPE_CLAIM = 1,
@@ -59,8 +59,8 @@ export interface SplitDelegationSDKType {
   amount: string;
 }
 export interface DelegateCallback {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
   splitDelegations: SplitDelegation[];
 }
 export interface DelegateCallbackProtoMsg {
@@ -77,13 +77,13 @@ export interface DelegateCallbackAminoMsg {
   value: DelegateCallbackAmino;
 }
 export interface DelegateCallbackSDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
   split_delegations: SplitDelegationSDKType[];
 }
 export interface UndelegateCallback {
-  poolId: Long;
-  withdrawalIds: Long[];
+  poolId: bigint;
+  withdrawalIds: bigint[];
 }
 export interface UndelegateCallbackProtoMsg {
   typeUrl: "/lum.network.millions.UndelegateCallback";
@@ -98,11 +98,11 @@ export interface UndelegateCallbackAminoMsg {
   value: UndelegateCallbackAmino;
 }
 export interface UndelegateCallbackSDKType {
-  pool_id: Long;
-  withdrawal_ids: Long[];
+  pool_id: bigint;
+  withdrawal_ids: bigint[];
 }
 export interface RedelegateCallback {
-  poolId: Long;
+  poolId: bigint;
   operatorAddress: string;
   splitDelegations: SplitDelegation[];
 }
@@ -120,13 +120,13 @@ export interface RedelegateCallbackAminoMsg {
   value: RedelegateCallbackAmino;
 }
 export interface RedelegateCallbackSDKType {
-  pool_id: Long;
+  pool_id: bigint;
   operator_address: string;
   split_delegations: SplitDelegationSDKType[];
 }
 export interface ClaimRewardsCallback {
-  poolId: Long;
-  drawId: Long;
+  poolId: bigint;
+  drawId: bigint;
 }
 export interface ClaimRewardsCallbackProtoMsg {
   typeUrl: "/lum.network.millions.ClaimRewardsCallback";
@@ -141,12 +141,12 @@ export interface ClaimRewardsCallbackAminoMsg {
   value: ClaimRewardsCallbackAmino;
 }
 export interface ClaimRewardsCallbackSDKType {
-  pool_id: Long;
-  draw_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
 }
 export interface TransferToNativeCallback {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
 }
 export interface TransferToNativeCallbackProtoMsg {
   typeUrl: "/lum.network.millions.TransferToNativeCallback";
@@ -161,14 +161,14 @@ export interface TransferToNativeCallbackAminoMsg {
   value: TransferToNativeCallbackAmino;
 }
 export interface TransferToNativeCallbackSDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
 }
 export interface TransferFromNativeCallback {
   type: TransferType;
-  poolId: Long;
-  drawId: Long;
-  withdrawalId: Long;
+  poolId: bigint;
+  drawId: bigint;
+  withdrawalId: bigint;
 }
 export interface TransferFromNativeCallbackProtoMsg {
   typeUrl: "/lum.network.millions.TransferFromNativeCallback";
@@ -186,12 +186,12 @@ export interface TransferFromNativeCallbackAminoMsg {
 }
 export interface TransferFromNativeCallbackSDKType {
   type: TransferType;
-  pool_id: Long;
-  draw_id: Long;
-  withdrawal_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
+  withdrawal_id: bigint;
 }
 export interface SetWithdrawAddressCallback {
-  poolId: Long;
+  poolId: bigint;
 }
 export interface SetWithdrawAddressCallbackProtoMsg {
   typeUrl: "/lum.network.millions.SetWithdrawAddressCallback";
@@ -205,11 +205,11 @@ export interface SetWithdrawAddressCallbackAminoMsg {
   value: SetWithdrawAddressCallbackAmino;
 }
 export interface SetWithdrawAddressCallbackSDKType {
-  pool_id: Long;
+  pool_id: bigint;
 }
 export interface BankSendCallback {
-  poolId: Long;
-  withdrawalId: Long;
+  poolId: bigint;
+  withdrawalId: bigint;
 }
 export interface BankSendCallbackProtoMsg {
   typeUrl: "/lum.network.millions.BankSendCallback";
@@ -224,8 +224,8 @@ export interface BankSendCallbackAminoMsg {
   value: BankSendCallbackAmino;
 }
 export interface BankSendCallbackSDKType {
-  pool_id: Long;
-  withdrawal_id: Long;
+  pool_id: bigint;
+  withdrawal_id: bigint;
 }
 function createBaseSplitDelegation(): SplitDelegation {
   return {
@@ -234,7 +234,8 @@ function createBaseSplitDelegation(): SplitDelegation {
   };
 }
 export const SplitDelegation = {
-  encode(message: SplitDelegation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.SplitDelegation",
+  encode(message: SplitDelegation, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.validatorAddress !== "") {
       writer.uint32(10).string(message.validatorAddress);
     }
@@ -243,8 +244,8 @@ export const SplitDelegation = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SplitDelegation {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SplitDelegation {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSplitDelegation();
     while (reader.pos < end) {
@@ -263,7 +264,7 @@ export const SplitDelegation = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<SplitDelegation>): SplitDelegation {
+  fromPartial(object: Partial<SplitDelegation>): SplitDelegation {
     const message = createBaseSplitDelegation();
     message.validatorAddress = object.validatorAddress ?? "";
     message.amount = object.amount ?? "";
@@ -299,17 +300,18 @@ export const SplitDelegation = {
 };
 function createBaseDelegateCallback(): DelegateCallback {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO,
+    poolId: BigInt(0),
+    depositId: BigInt(0),
     splitDelegations: []
   };
 }
 export const DelegateCallback = {
-  encode(message: DelegateCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.DelegateCallback",
+  encode(message: DelegateCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     for (const v of message.splitDelegations) {
@@ -317,18 +319,18 @@ export const DelegateCallback = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): DelegateCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): DelegateCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDelegateCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         case 3:
           message.splitDelegations.push(SplitDelegation.decode(reader, reader.uint32()));
@@ -340,17 +342,17 @@ export const DelegateCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<DelegateCallback>): DelegateCallback {
+  fromPartial(object: Partial<DelegateCallback>): DelegateCallback {
     const message = createBaseDelegateCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     message.splitDelegations = object.splitDelegations?.map(e => SplitDelegation.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: DelegateCallbackAmino): DelegateCallback {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id),
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id),
       splitDelegations: Array.isArray(object?.split_delegations) ? object.split_delegations.map((e: any) => SplitDelegation.fromAmino(e)) : []
     };
   },
@@ -383,13 +385,14 @@ export const DelegateCallback = {
 };
 function createBaseUndelegateCallback(): UndelegateCallback {
   return {
-    poolId: Long.UZERO,
+    poolId: BigInt(0),
     withdrawalIds: []
   };
 }
 export const UndelegateCallback = {
-  encode(message: UndelegateCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.UndelegateCallback",
+  encode(message: UndelegateCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     writer.uint32(34).fork();
@@ -399,24 +402,24 @@ export const UndelegateCallback = {
     writer.ldelim();
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): UndelegateCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): UndelegateCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUndelegateCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 4:
           if ((tag & 7) === 2) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.withdrawalIds.push((reader.uint64() as Long));
+              message.withdrawalIds.push(reader.uint64());
             }
           } else {
-            message.withdrawalIds.push((reader.uint64() as Long));
+            message.withdrawalIds.push(reader.uint64());
           }
           break;
         default:
@@ -426,23 +429,23 @@ export const UndelegateCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<UndelegateCallback>): UndelegateCallback {
+  fromPartial(object: Partial<UndelegateCallback>): UndelegateCallback {
     const message = createBaseUndelegateCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.withdrawalIds = object.withdrawalIds?.map(e => Long.fromValue(e)) || [];
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.withdrawalIds = object.withdrawalIds?.map(e => BigInt(e.toString())) || [];
     return message;
   },
   fromAmino(object: UndelegateCallbackAmino): UndelegateCallback {
     return {
-      poolId: Long.fromString(object.pool_id),
-      withdrawalIds: Array.isArray(object?.withdrawal_ids) ? object.withdrawal_ids.map((e: any) => e) : []
+      poolId: BigInt(object.pool_id),
+      withdrawalIds: Array.isArray(object?.withdrawal_ids) ? object.withdrawal_ids.map((e: any) => BigInt(e)) : []
     };
   },
   toAmino(message: UndelegateCallback): UndelegateCallbackAmino {
     const obj: any = {};
     obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     if (message.withdrawalIds) {
-      obj.withdrawal_ids = message.withdrawalIds.map(e => e);
+      obj.withdrawal_ids = message.withdrawalIds.map(e => e.toString());
     } else {
       obj.withdrawal_ids = [];
     }
@@ -466,14 +469,15 @@ export const UndelegateCallback = {
 };
 function createBaseRedelegateCallback(): RedelegateCallback {
   return {
-    poolId: Long.UZERO,
+    poolId: BigInt(0),
     operatorAddress: "",
     splitDelegations: []
   };
 }
 export const RedelegateCallback = {
-  encode(message: RedelegateCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.RedelegateCallback",
+  encode(message: RedelegateCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.operatorAddress !== "") {
@@ -484,15 +488,15 @@ export const RedelegateCallback = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): RedelegateCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): RedelegateCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRedelegateCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.operatorAddress = reader.string();
@@ -507,16 +511,16 @@ export const RedelegateCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<RedelegateCallback>): RedelegateCallback {
+  fromPartial(object: Partial<RedelegateCallback>): RedelegateCallback {
     const message = createBaseRedelegateCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.operatorAddress = object.operatorAddress ?? "";
     message.splitDelegations = object.splitDelegations?.map(e => SplitDelegation.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: RedelegateCallbackAmino): RedelegateCallback {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       operatorAddress: object.operator_address,
       splitDelegations: Array.isArray(object?.split_delegations) ? object.split_delegations.map((e: any) => SplitDelegation.fromAmino(e)) : []
     };
@@ -550,32 +554,33 @@ export const RedelegateCallback = {
 };
 function createBaseClaimRewardsCallback(): ClaimRewardsCallback {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO
+    poolId: BigInt(0),
+    drawId: BigInt(0)
   };
 }
 export const ClaimRewardsCallback = {
-  encode(message: ClaimRewardsCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.ClaimRewardsCallback",
+  encode(message: ClaimRewardsCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ClaimRewardsCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ClaimRewardsCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClaimRewardsCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -584,16 +589,16 @@ export const ClaimRewardsCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ClaimRewardsCallback>): ClaimRewardsCallback {
+  fromPartial(object: Partial<ClaimRewardsCallback>): ClaimRewardsCallback {
     const message = createBaseClaimRewardsCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: ClaimRewardsCallbackAmino): ClaimRewardsCallback {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id)
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id)
     };
   },
   toAmino(message: ClaimRewardsCallback): ClaimRewardsCallbackAmino {
@@ -620,32 +625,33 @@ export const ClaimRewardsCallback = {
 };
 function createBaseTransferToNativeCallback(): TransferToNativeCallback {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO
+    poolId: BigInt(0),
+    depositId: BigInt(0)
   };
 }
 export const TransferToNativeCallback = {
-  encode(message: TransferToNativeCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.TransferToNativeCallback",
+  encode(message: TransferToNativeCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): TransferToNativeCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): TransferToNativeCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTransferToNativeCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -654,16 +660,16 @@ export const TransferToNativeCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<TransferToNativeCallback>): TransferToNativeCallback {
+  fromPartial(object: Partial<TransferToNativeCallback>): TransferToNativeCallback {
     const message = createBaseTransferToNativeCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: TransferToNativeCallbackAmino): TransferToNativeCallback {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id)
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id)
     };
   },
   toAmino(message: TransferToNativeCallback): TransferToNativeCallbackAmino {
@@ -691,29 +697,30 @@ export const TransferToNativeCallback = {
 function createBaseTransferFromNativeCallback(): TransferFromNativeCallback {
   return {
     type: 0,
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    withdrawalId: Long.UZERO
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    withdrawalId: BigInt(0)
   };
 }
 export const TransferFromNativeCallback = {
-  encode(message: TransferFromNativeCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.TransferFromNativeCallback",
+  encode(message: TransferFromNativeCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
-    if (!message.poolId.isZero()) {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(16).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(24).uint64(message.drawId);
     }
-    if (!message.withdrawalId.isZero()) {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(32).uint64(message.withdrawalId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): TransferFromNativeCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): TransferFromNativeCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTransferFromNativeCallback();
     while (reader.pos < end) {
@@ -723,13 +730,13 @@ export const TransferFromNativeCallback = {
           message.type = (reader.int32() as any);
           break;
         case 2:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 3:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 4:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -738,20 +745,20 @@ export const TransferFromNativeCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<TransferFromNativeCallback>): TransferFromNativeCallback {
+  fromPartial(object: Partial<TransferFromNativeCallback>): TransferFromNativeCallback {
     const message = createBaseTransferFromNativeCallback();
     message.type = object.type ?? 0;
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: TransferFromNativeCallbackAmino): TransferFromNativeCallback {
     return {
       type: isSet(object.type) ? transferTypeFromJSON(object.type) : -1,
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
-      withdrawalId: Long.fromString(object.withdrawal_id)
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
+      withdrawalId: BigInt(object.withdrawal_id)
     };
   },
   toAmino(message: TransferFromNativeCallback): TransferFromNativeCallbackAmino {
@@ -780,25 +787,26 @@ export const TransferFromNativeCallback = {
 };
 function createBaseSetWithdrawAddressCallback(): SetWithdrawAddressCallback {
   return {
-    poolId: Long.UZERO
+    poolId: BigInt(0)
   };
 }
 export const SetWithdrawAddressCallback = {
-  encode(message: SetWithdrawAddressCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.SetWithdrawAddressCallback",
+  encode(message: SetWithdrawAddressCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetWithdrawAddressCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SetWithdrawAddressCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetWithdrawAddressCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -807,14 +815,14 @@ export const SetWithdrawAddressCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<SetWithdrawAddressCallback>): SetWithdrawAddressCallback {
+  fromPartial(object: Partial<SetWithdrawAddressCallback>): SetWithdrawAddressCallback {
     const message = createBaseSetWithdrawAddressCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: SetWithdrawAddressCallbackAmino): SetWithdrawAddressCallback {
     return {
-      poolId: Long.fromString(object.pool_id)
+      poolId: BigInt(object.pool_id)
     };
   },
   toAmino(message: SetWithdrawAddressCallback): SetWithdrawAddressCallbackAmino {
@@ -840,32 +848,33 @@ export const SetWithdrawAddressCallback = {
 };
 function createBaseBankSendCallback(): BankSendCallback {
   return {
-    poolId: Long.UZERO,
-    withdrawalId: Long.UZERO
+    poolId: BigInt(0),
+    withdrawalId: BigInt(0)
   };
 }
 export const BankSendCallback = {
-  encode(message: BankSendCallback, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.BankSendCallback",
+  encode(message: BankSendCallback, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.withdrawalId.isZero()) {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(16).uint64(message.withdrawalId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BankSendCallback {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BankSendCallback {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBankSendCallback();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -874,16 +883,16 @@ export const BankSendCallback = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BankSendCallback>): BankSendCallback {
+  fromPartial(object: Partial<BankSendCallback>): BankSendCallback {
     const message = createBaseBankSendCallback();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: BankSendCallbackAmino): BankSendCallback {
     return {
-      poolId: Long.fromString(object.pool_id),
-      withdrawalId: Long.fromString(object.withdrawal_id)
+      poolId: BigInt(object.pool_id),
+      withdrawalId: BigInt(object.withdrawal_id)
     };
   },
   toAmino(message: BankSendCallback): BankSendCallbackAmino {

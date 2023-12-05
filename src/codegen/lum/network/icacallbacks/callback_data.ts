@@ -1,10 +1,9 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface CallbackData {
   callbackKey: string;
   portId: string;
   channelId: string;
-  sequence: Long;
+  sequence: bigint;
   callbackId: string;
   callbackArgs: Uint8Array;
 }
@@ -28,7 +27,7 @@ export interface CallbackDataSDKType {
   callback_key: string;
   port_id: string;
   channel_id: string;
-  sequence: Long;
+  sequence: bigint;
   callback_id: string;
   callback_args: Uint8Array;
 }
@@ -37,13 +36,14 @@ function createBaseCallbackData(): CallbackData {
     callbackKey: "",
     portId: "",
     channelId: "",
-    sequence: Long.UZERO,
+    sequence: BigInt(0),
     callbackId: "",
     callbackArgs: new Uint8Array()
   };
 }
 export const CallbackData = {
-  encode(message: CallbackData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.CallbackData",
+  encode(message: CallbackData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.callbackKey !== "") {
       writer.uint32(10).string(message.callbackKey);
     }
@@ -53,7 +53,7 @@ export const CallbackData = {
     if (message.channelId !== "") {
       writer.uint32(26).string(message.channelId);
     }
-    if (!message.sequence.isZero()) {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(32).uint64(message.sequence);
     }
     if (message.callbackId !== "") {
@@ -64,8 +64,8 @@ export const CallbackData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): CallbackData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): CallbackData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCallbackData();
     while (reader.pos < end) {
@@ -81,7 +81,7 @@ export const CallbackData = {
           message.channelId = reader.string();
           break;
         case 4:
-          message.sequence = (reader.uint64() as Long);
+          message.sequence = reader.uint64();
           break;
         case 5:
           message.callbackId = reader.string();
@@ -96,12 +96,12 @@ export const CallbackData = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<CallbackData>): CallbackData {
+  fromPartial(object: Partial<CallbackData>): CallbackData {
     const message = createBaseCallbackData();
     message.callbackKey = object.callbackKey ?? "";
     message.portId = object.portId ?? "";
     message.channelId = object.channelId ?? "";
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
     message.callbackId = object.callbackId ?? "";
     message.callbackArgs = object.callbackArgs ?? new Uint8Array();
     return message;
@@ -111,7 +111,7 @@ export const CallbackData = {
       callbackKey: object.callback_key,
       portId: object.port_id,
       channelId: object.channel_id,
-      sequence: Long.fromString(object.sequence),
+      sequence: BigInt(object.sequence),
       callbackId: object.callback_id,
       callbackArgs: object.callback_args
     };

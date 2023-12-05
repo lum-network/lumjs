@@ -4,8 +4,8 @@ import { Duration, DurationAmino, DurationSDKType } from "../../../google/protob
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { DrawState, drawStateFromJSON } from "./draw";
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { Long, toTimestamp, fromTimestamp, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 /**
  * PoolState the state of a Pool
  * Deposits are only accepted for Pools in a Ready state
@@ -104,7 +104,7 @@ export function poolTypeToJSON(object: PoolType): string {
   }
 }
 export interface Pool {
-  poolId: Long;
+  poolId: bigint;
   denom: string;
   nativeDenom: string;
   chainId: string;
@@ -124,16 +124,16 @@ export interface Pool {
   localAddress: string;
   icaDepositAddress: string;
   icaPrizepoolAddress: string;
-  nextDrawId: Long;
+  nextDrawId: bigint;
   tvlAmount: string;
-  depositorsCount: Long;
+  depositorsCount: bigint;
   sponsorshipAmount: string;
   lastDrawCreatedAt?: Date | undefined;
   lastDrawState: DrawState;
   availablePrizePool: Coin | undefined;
   state: PoolState;
-  createdAtHeight: Long;
-  updatedAtHeight: Long;
+  createdAtHeight: bigint;
+  updatedAtHeight: bigint;
   createdAt: Date | undefined;
   updatedAt: Date | undefined;
 }
@@ -166,21 +166,21 @@ export interface PoolAmino {
   tvl_amount: string;
   depositors_count: string;
   sponsorship_amount: string;
-  last_draw_created_at?: Date | undefined;
+  last_draw_created_at?: string | undefined;
   last_draw_state: DrawState;
   available_prize_pool?: CoinAmino | undefined;
   state: PoolState;
   created_at_height: string;
   updated_at_height: string;
-  created_at?: Date | undefined;
-  updated_at?: Date | undefined;
+  created_at?: string | undefined;
+  updated_at?: string | undefined;
 }
 export interface PoolAminoMsg {
   type: "/lum.network.millions.Pool";
   value: PoolAmino;
 }
 export interface PoolSDKType {
-  pool_id: Long;
+  pool_id: bigint;
   denom: string;
   native_denom: string;
   chain_id: string;
@@ -200,16 +200,16 @@ export interface PoolSDKType {
   local_address: string;
   ica_deposit_address: string;
   ica_prizepool_address: string;
-  next_draw_id: Long;
+  next_draw_id: bigint;
   tvl_amount: string;
-  depositors_count: Long;
+  depositors_count: bigint;
   sponsorship_amount: string;
   last_draw_created_at?: Date | undefined;
   last_draw_state: DrawState;
   available_prize_pool: CoinSDKType | undefined;
   state: PoolState;
-  created_at_height: Long;
-  updated_at_height: Long;
+  created_at_height: bigint;
+  updated_at_height: bigint;
   created_at: Date | undefined;
   updated_at: Date | undefined;
 }
@@ -238,7 +238,7 @@ export interface PoolValidatorSDKType {
 }
 function createBasePool(): Pool {
   return {
-    poolId: Long.UZERO,
+    poolId: BigInt(0),
     denom: "",
     nativeDenom: "",
     chainId: "",
@@ -258,23 +258,24 @@ function createBasePool(): Pool {
     localAddress: "",
     icaDepositAddress: "",
     icaPrizepoolAddress: "",
-    nextDrawId: Long.UZERO,
+    nextDrawId: BigInt(0),
     tvlAmount: "",
-    depositorsCount: Long.UZERO,
+    depositorsCount: BigInt(0),
     sponsorshipAmount: "",
     lastDrawCreatedAt: undefined,
     lastDrawState: 0,
     availablePrizePool: Coin.fromPartial({}),
     state: 0,
-    createdAtHeight: Long.ZERO,
-    updatedAtHeight: Long.ZERO,
+    createdAtHeight: BigInt(0),
+    updatedAtHeight: BigInt(0),
     createdAt: new Date(),
     updatedAt: new Date()
   };
 }
 export const Pool = {
-  encode(message: Pool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.Pool",
+  encode(message: Pool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.denom !== "") {
@@ -334,13 +335,13 @@ export const Pool = {
     if (message.icaPrizepoolAddress !== "") {
       writer.uint32(162).string(message.icaPrizepoolAddress);
     }
-    if (!message.nextDrawId.isZero()) {
+    if (message.nextDrawId !== BigInt(0)) {
       writer.uint32(176).uint64(message.nextDrawId);
     }
     if (message.tvlAmount !== "") {
       writer.uint32(186).string(message.tvlAmount);
     }
-    if (!message.depositorsCount.isZero()) {
+    if (message.depositorsCount !== BigInt(0)) {
       writer.uint32(192).uint64(message.depositorsCount);
     }
     if (message.sponsorshipAmount !== "") {
@@ -358,10 +359,10 @@ export const Pool = {
     if (message.state !== 0) {
       writer.uint32(256).int32(message.state);
     }
-    if (!message.createdAtHeight.isZero()) {
+    if (message.createdAtHeight !== BigInt(0)) {
       writer.uint32(264).int64(message.createdAtHeight);
     }
-    if (!message.updatedAtHeight.isZero()) {
+    if (message.updatedAtHeight !== BigInt(0)) {
       writer.uint32(272).int64(message.updatedAtHeight);
     }
     if (message.createdAt !== undefined) {
@@ -372,15 +373,15 @@ export const Pool = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Pool {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Pool {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePool();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.denom = reader.string();
@@ -440,13 +441,13 @@ export const Pool = {
           message.icaPrizepoolAddress = reader.string();
           break;
         case 22:
-          message.nextDrawId = (reader.uint64() as Long);
+          message.nextDrawId = reader.uint64();
           break;
         case 23:
           message.tvlAmount = reader.string();
           break;
         case 24:
-          message.depositorsCount = (reader.uint64() as Long);
+          message.depositorsCount = reader.uint64();
           break;
         case 25:
           message.sponsorshipAmount = reader.string();
@@ -464,10 +465,10 @@ export const Pool = {
           message.state = (reader.int32() as any);
           break;
         case 33:
-          message.createdAtHeight = (reader.int64() as Long);
+          message.createdAtHeight = reader.int64();
           break;
         case 34:
-          message.updatedAtHeight = (reader.int64() as Long);
+          message.updatedAtHeight = reader.int64();
           break;
         case 35:
           message.createdAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
@@ -482,9 +483,9 @@ export const Pool = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Pool>): Pool {
+  fromPartial(object: Partial<Pool>): Pool {
     const message = createBasePool();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.denom = object.denom ?? "";
     message.nativeDenom = object.nativeDenom ?? "";
     message.chainId = object.chainId ?? "";
@@ -504,23 +505,23 @@ export const Pool = {
     message.localAddress = object.localAddress ?? "";
     message.icaDepositAddress = object.icaDepositAddress ?? "";
     message.icaPrizepoolAddress = object.icaPrizepoolAddress ?? "";
-    message.nextDrawId = object.nextDrawId !== undefined && object.nextDrawId !== null ? Long.fromValue(object.nextDrawId) : Long.UZERO;
+    message.nextDrawId = object.nextDrawId !== undefined && object.nextDrawId !== null ? BigInt(object.nextDrawId.toString()) : BigInt(0);
     message.tvlAmount = object.tvlAmount ?? "";
-    message.depositorsCount = object.depositorsCount !== undefined && object.depositorsCount !== null ? Long.fromValue(object.depositorsCount) : Long.UZERO;
+    message.depositorsCount = object.depositorsCount !== undefined && object.depositorsCount !== null ? BigInt(object.depositorsCount.toString()) : BigInt(0);
     message.sponsorshipAmount = object.sponsorshipAmount ?? "";
     message.lastDrawCreatedAt = object.lastDrawCreatedAt ?? undefined;
     message.lastDrawState = object.lastDrawState ?? 0;
     message.availablePrizePool = object.availablePrizePool !== undefined && object.availablePrizePool !== null ? Coin.fromPartial(object.availablePrizePool) : undefined;
     message.state = object.state ?? 0;
-    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? Long.fromValue(object.createdAtHeight) : Long.ZERO;
-    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? Long.fromValue(object.updatedAtHeight) : Long.ZERO;
+    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? BigInt(object.createdAtHeight.toString()) : BigInt(0);
+    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? BigInt(object.updatedAtHeight.toString()) : BigInt(0);
     message.createdAt = object.createdAt ?? undefined;
     message.updatedAt = object.updatedAt ?? undefined;
     return message;
   },
   fromAmino(object: PoolAmino): Pool {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       denom: object.denom,
       nativeDenom: object.native_denom,
       chainId: object.chain_id,
@@ -540,18 +541,18 @@ export const Pool = {
       localAddress: object.local_address,
       icaDepositAddress: object.ica_deposit_address,
       icaPrizepoolAddress: object.ica_prizepool_address,
-      nextDrawId: Long.fromString(object.next_draw_id),
+      nextDrawId: BigInt(object.next_draw_id),
       tvlAmount: object.tvl_amount,
-      depositorsCount: Long.fromString(object.depositors_count),
+      depositorsCount: BigInt(object.depositors_count),
       sponsorshipAmount: object.sponsorship_amount,
-      lastDrawCreatedAt: object?.last_draw_created_at,
+      lastDrawCreatedAt: object?.last_draw_created_at ? fromTimestamp(Timestamp.fromAmino(object.last_draw_created_at)) : undefined,
       lastDrawState: isSet(object.last_draw_state) ? drawStateFromJSON(object.last_draw_state) : -1,
       availablePrizePool: object?.available_prize_pool ? Coin.fromAmino(object.available_prize_pool) : undefined,
       state: isSet(object.state) ? poolStateFromJSON(object.state) : -1,
-      createdAtHeight: Long.fromString(object.created_at_height),
-      updatedAtHeight: Long.fromString(object.updated_at_height),
-      createdAt: object.created_at,
-      updatedAt: object.updated_at
+      createdAtHeight: BigInt(object.created_at_height),
+      updatedAtHeight: BigInt(object.updated_at_height),
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
+      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
     };
   },
   toAmino(message: Pool): PoolAmino {
@@ -584,14 +585,14 @@ export const Pool = {
     obj.tvl_amount = message.tvlAmount;
     obj.depositors_count = message.depositorsCount ? message.depositorsCount.toString() : undefined;
     obj.sponsorship_amount = message.sponsorshipAmount;
-    obj.last_draw_created_at = message.lastDrawCreatedAt;
+    obj.last_draw_created_at = message.lastDrawCreatedAt ? Timestamp.toAmino(toTimestamp(message.lastDrawCreatedAt)) : undefined;
     obj.last_draw_state = message.lastDrawState;
     obj.available_prize_pool = message.availablePrizePool ? Coin.toAmino(message.availablePrizePool) : undefined;
     obj.state = message.state;
     obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
     obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
-    obj.created_at = message.createdAt;
-    obj.updated_at = message.updatedAt;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
+    obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: PoolAminoMsg): Pool {
@@ -618,7 +619,8 @@ function createBasePoolValidator(): PoolValidator {
   };
 }
 export const PoolValidator = {
-  encode(message: PoolValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.PoolValidator",
+  encode(message: PoolValidator, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.operatorAddress !== "") {
       writer.uint32(10).string(message.operatorAddress);
     }
@@ -630,8 +632,8 @@ export const PoolValidator = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PoolValidator {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PoolValidator {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePoolValidator();
     while (reader.pos < end) {
@@ -653,7 +655,7 @@ export const PoolValidator = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PoolValidator>): PoolValidator {
+  fromPartial(object: Partial<PoolValidator>): PoolValidator {
     const message = createBasePoolValidator();
     message.operatorAddress = object.operatorAddress ?? "";
     message.isEnabled = object.isEnabled ?? false;

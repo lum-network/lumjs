@@ -1,6 +1,6 @@
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { Decimal } from "@cosmjs/math";
 export interface Params {
   /**
    * min_deposit_amount the minimum deposit amount accepted by pool
@@ -11,12 +11,12 @@ export interface Params {
    * max_prize_strategy_batches the maximum prize strategy batches accepted by
    * pool configurations
    */
-  maxPrizeStrategyBatches: Long;
+  maxPrizeStrategyBatches: bigint;
   /**
    * max_prize_batch_quantity the maximum prize batch quantity accepted by pool
    * configurations
    */
-  maxPrizeBatchQuantity: Long;
+  maxPrizeBatchQuantity: bigint;
   /**
    * min_draw_schedule_delta the minimum delta between draws accepted by pool
    * configurations
@@ -95,8 +95,8 @@ export interface ParamsAminoMsg {
 }
 export interface ParamsSDKType {
   min_deposit_amount: string;
-  max_prize_strategy_batches: Long;
-  max_prize_batch_quantity: Long;
+  max_prize_strategy_batches: bigint;
+  max_prize_batch_quantity: bigint;
   min_draw_schedule_delta: DurationSDKType | undefined;
   max_draw_schedule_delta: DurationSDKType | undefined;
   prize_expiration_delta: DurationSDKType | undefined;
@@ -106,8 +106,8 @@ export interface ParamsSDKType {
 function createBaseParams(): Params {
   return {
     minDepositAmount: "",
-    maxPrizeStrategyBatches: Long.UZERO,
-    maxPrizeBatchQuantity: Long.UZERO,
+    maxPrizeStrategyBatches: BigInt(0),
+    maxPrizeBatchQuantity: BigInt(0),
     minDrawScheduleDelta: Duration.fromPartial({}),
     maxDrawScheduleDelta: Duration.fromPartial({}),
     prizeExpirationDelta: Duration.fromPartial({}),
@@ -116,14 +116,15 @@ function createBaseParams(): Params {
   };
 }
 export const Params = {
-  encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.Params",
+  encode(message: Params, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.minDepositAmount !== "") {
       writer.uint32(10).string(message.minDepositAmount);
     }
-    if (!message.maxPrizeStrategyBatches.isZero()) {
+    if (message.maxPrizeStrategyBatches !== BigInt(0)) {
       writer.uint32(16).uint64(message.maxPrizeStrategyBatches);
     }
-    if (!message.maxPrizeBatchQuantity.isZero()) {
+    if (message.maxPrizeBatchQuantity !== BigInt(0)) {
       writer.uint32(24).uint64(message.maxPrizeBatchQuantity);
     }
     if (message.minDrawScheduleDelta !== undefined) {
@@ -136,15 +137,15 @@ export const Params = {
       Duration.encode(message.prizeExpirationDelta, writer.uint32(50).fork()).ldelim();
     }
     if (message.feesStakers !== "") {
-      writer.uint32(58).string(message.feesStakers);
+      writer.uint32(58).string(Decimal.fromUserInput(message.feesStakers, 18).atomics);
     }
     if (message.minDepositDrawDelta !== undefined) {
       Duration.encode(message.minDepositDrawDelta, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Params {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
     while (reader.pos < end) {
@@ -154,10 +155,10 @@ export const Params = {
           message.minDepositAmount = reader.string();
           break;
         case 2:
-          message.maxPrizeStrategyBatches = (reader.uint64() as Long);
+          message.maxPrizeStrategyBatches = reader.uint64();
           break;
         case 3:
-          message.maxPrizeBatchQuantity = (reader.uint64() as Long);
+          message.maxPrizeBatchQuantity = reader.uint64();
           break;
         case 4:
           message.minDrawScheduleDelta = Duration.decode(reader, reader.uint32());
@@ -169,7 +170,7 @@ export const Params = {
           message.prizeExpirationDelta = Duration.decode(reader, reader.uint32());
           break;
         case 7:
-          message.feesStakers = reader.string();
+          message.feesStakers = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 8:
           message.minDepositDrawDelta = Duration.decode(reader, reader.uint32());
@@ -181,11 +182,11 @@ export const Params = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Params>): Params {
+  fromPartial(object: Partial<Params>): Params {
     const message = createBaseParams();
     message.minDepositAmount = object.minDepositAmount ?? "";
-    message.maxPrizeStrategyBatches = object.maxPrizeStrategyBatches !== undefined && object.maxPrizeStrategyBatches !== null ? Long.fromValue(object.maxPrizeStrategyBatches) : Long.UZERO;
-    message.maxPrizeBatchQuantity = object.maxPrizeBatchQuantity !== undefined && object.maxPrizeBatchQuantity !== null ? Long.fromValue(object.maxPrizeBatchQuantity) : Long.UZERO;
+    message.maxPrizeStrategyBatches = object.maxPrizeStrategyBatches !== undefined && object.maxPrizeStrategyBatches !== null ? BigInt(object.maxPrizeStrategyBatches.toString()) : BigInt(0);
+    message.maxPrizeBatchQuantity = object.maxPrizeBatchQuantity !== undefined && object.maxPrizeBatchQuantity !== null ? BigInt(object.maxPrizeBatchQuantity.toString()) : BigInt(0);
     message.minDrawScheduleDelta = object.minDrawScheduleDelta !== undefined && object.minDrawScheduleDelta !== null ? Duration.fromPartial(object.minDrawScheduleDelta) : undefined;
     message.maxDrawScheduleDelta = object.maxDrawScheduleDelta !== undefined && object.maxDrawScheduleDelta !== null ? Duration.fromPartial(object.maxDrawScheduleDelta) : undefined;
     message.prizeExpirationDelta = object.prizeExpirationDelta !== undefined && object.prizeExpirationDelta !== null ? Duration.fromPartial(object.prizeExpirationDelta) : undefined;
@@ -196,8 +197,8 @@ export const Params = {
   fromAmino(object: ParamsAmino): Params {
     return {
       minDepositAmount: object.min_deposit_amount,
-      maxPrizeStrategyBatches: Long.fromString(object.max_prize_strategy_batches),
-      maxPrizeBatchQuantity: Long.fromString(object.max_prize_batch_quantity),
+      maxPrizeStrategyBatches: BigInt(object.max_prize_strategy_batches),
+      maxPrizeBatchQuantity: BigInt(object.max_prize_batch_quantity),
       minDrawScheduleDelta: object?.min_draw_schedule_delta ? Duration.fromAmino(object.min_draw_schedule_delta) : undefined,
       maxDrawScheduleDelta: object?.max_draw_schedule_delta ? Duration.fromAmino(object.max_draw_schedule_delta) : undefined,
       prizeExpirationDelta: object?.prize_expiration_delta ? Duration.fromAmino(object.prize_expiration_delta) : undefined,

@@ -3,8 +3,8 @@ import { BoolValue, BoolValueAmino, BoolValueSDKType } from "../../../google/pro
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
 import { DrawSchedule, DrawScheduleAmino, DrawScheduleSDKType } from "./draw_schedule";
 import { PrizeStrategy, PrizeStrategyAmino, PrizeStrategySDKType } from "./prize_strategy";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { Decimal } from "@cosmjs/math";
 export interface MsgUpdateParams {
   minDepositAmount?: string;
   maxPrizeStrategyBatches?: string;
@@ -105,7 +105,7 @@ export interface MsgRegisterPoolSDKType {
   creator_address: string;
 }
 export interface MsgRegisterPoolResponse {
-  poolId: Long;
+  poolId: bigint;
 }
 export interface MsgRegisterPoolResponseProtoMsg {
   typeUrl: "/lum.network.millions.MsgRegisterPoolResponse";
@@ -119,10 +119,10 @@ export interface MsgRegisterPoolResponseAminoMsg {
   value: MsgRegisterPoolResponseAmino;
 }
 export interface MsgRegisterPoolResponseSDKType {
-  pool_id: Long;
+  pool_id: bigint;
 }
 export interface MsgUpdatePool {
-  poolId: Long;
+  poolId: bigint;
   validators?: string[];
   minDepositAmount?: string;
   drawSchedule?: DrawSchedule | undefined;
@@ -146,7 +146,7 @@ export interface MsgUpdatePoolAminoMsg {
   value: MsgUpdatePoolAmino;
 }
 export interface MsgUpdatePoolSDKType {
-  pool_id: Long;
+  pool_id: bigint;
   validators?: string[];
   min_deposit_amount?: string;
   draw_schedule?: DrawScheduleSDKType | undefined;
@@ -165,7 +165,7 @@ export interface MsgUpdatePoolResponseAminoMsg {
 }
 export interface MsgUpdatePoolResponseSDKType {}
 export interface MsgDeposit {
-  poolId: Long;
+  poolId: bigint;
   amount: Coin | undefined;
   depositorAddress: string;
   winnerAddress: string;
@@ -187,14 +187,14 @@ export interface MsgDepositAminoMsg {
   value: MsgDepositAmino;
 }
 export interface MsgDepositSDKType {
-  pool_id: Long;
+  pool_id: bigint;
   amount: CoinSDKType | undefined;
   depositor_address: string;
   winner_address: string;
   is_sponsor: boolean;
 }
 export interface MsgDepositResponse {
-  depositId: Long;
+  depositId: bigint;
 }
 export interface MsgDepositResponseProtoMsg {
   typeUrl: "/lum.network.millions.MsgDepositResponse";
@@ -208,11 +208,11 @@ export interface MsgDepositResponseAminoMsg {
   value: MsgDepositResponseAmino;
 }
 export interface MsgDepositResponseSDKType {
-  deposit_id: Long;
+  deposit_id: bigint;
 }
 export interface MsgDepositRetry {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
   depositorAddress: string;
 }
 export interface MsgDepositRetryProtoMsg {
@@ -229,15 +229,15 @@ export interface MsgDepositRetryAminoMsg {
   value: MsgDepositRetryAmino;
 }
 export interface MsgDepositRetrySDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
   depositor_address: string;
 }
 export interface MsgDepositEdit {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
   winnerAddress: string;
-  isSponsor: BoolValue | undefined;
+  isSponsor?: BoolValue | undefined;
   depositorAddress: string;
 }
 export interface MsgDepositEditProtoMsg {
@@ -256,10 +256,10 @@ export interface MsgDepositEditAminoMsg {
   value: MsgDepositEditAmino;
 }
 export interface MsgDepositEditSDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
   winner_address: string;
-  is_sponsor: BoolValueSDKType | undefined;
+  is_sponsor?: BoolValueSDKType | undefined;
   depositor_address: string;
 }
 export interface MsgDepositEditResponse {}
@@ -285,9 +285,9 @@ export interface MsgDepositRetryResponseAminoMsg {
 }
 export interface MsgDepositRetryResponseSDKType {}
 export interface MsgClaimPrize {
-  poolId: Long;
-  drawId: Long;
-  prizeId: Long;
+  poolId: bigint;
+  drawId: bigint;
+  prizeId: bigint;
   winnerAddress: string;
 }
 export interface MsgClaimPrizeProtoMsg {
@@ -305,9 +305,9 @@ export interface MsgClaimPrizeAminoMsg {
   value: MsgClaimPrizeAmino;
 }
 export interface MsgClaimPrizeSDKType {
-  pool_id: Long;
-  draw_id: Long;
-  prize_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
+  prize_id: bigint;
   winner_address: string;
 }
 export interface MsgClaimPrizeResponse {}
@@ -322,8 +322,8 @@ export interface MsgClaimPrizeResponseAminoMsg {
 }
 export interface MsgClaimPrizeResponseSDKType {}
 export interface MsgWithdrawDeposit {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
   depositorAddress: string;
   toAddress: string;
 }
@@ -342,13 +342,13 @@ export interface MsgWithdrawDepositAminoMsg {
   value: MsgWithdrawDepositAmino;
 }
 export interface MsgWithdrawDepositSDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
   depositor_address: string;
   to_address: string;
 }
 export interface MsgWithdrawDepositResponse {
-  withdrawalId: Long;
+  withdrawalId: bigint;
 }
 export interface MsgWithdrawDepositResponseProtoMsg {
   typeUrl: "/lum.network.millions.MsgWithdrawDepositResponse";
@@ -362,11 +362,11 @@ export interface MsgWithdrawDepositResponseAminoMsg {
   value: MsgWithdrawDepositResponseAmino;
 }
 export interface MsgWithdrawDepositResponseSDKType {
-  withdrawal_id: Long;
+  withdrawal_id: bigint;
 }
 export interface MsgWithdrawDepositRetry {
-  poolId: Long;
-  withdrawalId: Long;
+  poolId: bigint;
+  withdrawalId: bigint;
   depositorAddress: string;
 }
 export interface MsgWithdrawDepositRetryProtoMsg {
@@ -383,8 +383,8 @@ export interface MsgWithdrawDepositRetryAminoMsg {
   value: MsgWithdrawDepositRetryAmino;
 }
 export interface MsgWithdrawDepositRetrySDKType {
-  pool_id: Long;
-  withdrawal_id: Long;
+  pool_id: bigint;
+  withdrawal_id: bigint;
   depositor_address: string;
 }
 export interface MsgWithdrawDepositRetryResponse {}
@@ -399,8 +399,8 @@ export interface MsgWithdrawDepositRetryResponseAminoMsg {
 }
 export interface MsgWithdrawDepositRetryResponseSDKType {}
 export interface MsgDrawRetry {
-  poolId: Long;
-  drawId: Long;
+  poolId: bigint;
+  drawId: bigint;
   drawRetryAddress: string;
 }
 export interface MsgDrawRetryProtoMsg {
@@ -417,8 +417,8 @@ export interface MsgDrawRetryAminoMsg {
   value: MsgDrawRetryAmino;
 }
 export interface MsgDrawRetrySDKType {
-  pool_id: Long;
-  draw_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
   draw_retry_address: string;
 }
 export interface MsgDrawRetryResponse {}
@@ -433,7 +433,7 @@ export interface MsgDrawRetryResponseAminoMsg {
 }
 export interface MsgDrawRetryResponseSDKType {}
 export interface MsgRestoreInterchainAccounts {
-  poolId: Long;
+  poolId: bigint;
   restorerAddress: string;
 }
 export interface MsgRestoreInterchainAccountsProtoMsg {
@@ -449,7 +449,7 @@ export interface MsgRestoreInterchainAccountsAminoMsg {
   value: MsgRestoreInterchainAccountsAmino;
 }
 export interface MsgRestoreInterchainAccountsSDKType {
-  pool_id: Long;
+  pool_id: bigint;
   restorer_address: string;
 }
 export interface MsgRestoreInterchainAccountsResponse {}
@@ -481,7 +481,7 @@ export interface MsgGenerateSeedSDKType {
   requester_address: string;
 }
 export interface MsgGenerateSeedResponse {
-  seed: Long;
+  seed: bigint;
 }
 export interface MsgGenerateSeedResponseProtoMsg {
   typeUrl: "/lum.network.millions.MsgGenerateSeedResponse";
@@ -495,7 +495,7 @@ export interface MsgGenerateSeedResponseAminoMsg {
   value: MsgGenerateSeedResponseAmino;
 }
 export interface MsgGenerateSeedResponseSDKType {
-  seed: Long;
+  seed: bigint;
 }
 function createBaseMsgUpdateParams(): MsgUpdateParams {
   return {
@@ -511,7 +511,8 @@ function createBaseMsgUpdateParams(): MsgUpdateParams {
   };
 }
 export const MsgUpdateParams = {
-  encode(message: MsgUpdateParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgUpdateParams",
+  encode(message: MsgUpdateParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.minDepositAmount !== undefined) {
       writer.uint32(10).string(message.minDepositAmount);
     }
@@ -531,7 +532,7 @@ export const MsgUpdateParams = {
       Duration.encode(message.prizeExpirationDelta, writer.uint32(50).fork()).ldelim();
     }
     if (message.feesStakers !== undefined) {
-      writer.uint32(58).string(message.feesStakers);
+      writer.uint32(58).string(Decimal.fromUserInput(message.feesStakers, 18).atomics);
     }
     if (message.minDepositDrawDelta !== undefined) {
       Duration.encode(message.minDepositDrawDelta, writer.uint32(66).fork()).ldelim();
@@ -541,8 +542,8 @@ export const MsgUpdateParams = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParams();
     while (reader.pos < end) {
@@ -567,7 +568,7 @@ export const MsgUpdateParams = {
           message.prizeExpirationDelta = Duration.decode(reader, reader.uint32());
           break;
         case 7:
-          message.feesStakers = reader.string();
+          message.feesStakers = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 8:
           message.minDepositDrawDelta = Duration.decode(reader, reader.uint32());
@@ -582,7 +583,7 @@ export const MsgUpdateParams = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgUpdateParams>): MsgUpdateParams {
+  fromPartial(object: Partial<MsgUpdateParams>): MsgUpdateParams {
     const message = createBaseMsgUpdateParams();
     message.minDepositAmount = object.minDepositAmount ?? undefined;
     message.maxPrizeStrategyBatches = object.maxPrizeStrategyBatches ?? undefined;
@@ -641,11 +642,12 @@ function createBaseMsgUpdateParamsResponse(): MsgUpdateParamsResponse {
   return {};
 }
 export const MsgUpdateParamsResponse = {
-  encode(_: MsgUpdateParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgUpdateParamsResponse",
+  encode(_: MsgUpdateParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParamsResponse();
     while (reader.pos < end) {
@@ -658,7 +660,7 @@ export const MsgUpdateParamsResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgUpdateParamsResponse>): MsgUpdateParamsResponse {
+  fromPartial(_: Partial<MsgUpdateParamsResponse>): MsgUpdateParamsResponse {
     const message = createBaseMsgUpdateParamsResponse();
     return message;
   },
@@ -701,7 +703,8 @@ function createBaseMsgRegisterPool(): MsgRegisterPool {
   };
 }
 export const MsgRegisterPool = {
-  encode(message: MsgRegisterPool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgRegisterPool",
+  encode(message: MsgRegisterPool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
@@ -737,8 +740,8 @@ export const MsgRegisterPool = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterPool {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgRegisterPool {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRegisterPool();
     while (reader.pos < end) {
@@ -784,7 +787,7 @@ export const MsgRegisterPool = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgRegisterPool>): MsgRegisterPool {
+  fromPartial(object: Partial<MsgRegisterPool>): MsgRegisterPool {
     const message = createBaseMsgRegisterPool();
     message.chainId = object.chainId ?? "";
     message.denom = object.denom ?? "";
@@ -851,25 +854,26 @@ export const MsgRegisterPool = {
 };
 function createBaseMsgRegisterPoolResponse(): MsgRegisterPoolResponse {
   return {
-    poolId: Long.UZERO
+    poolId: BigInt(0)
   };
 }
 export const MsgRegisterPoolResponse = {
-  encode(message: MsgRegisterPoolResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgRegisterPoolResponse",
+  encode(message: MsgRegisterPoolResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterPoolResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgRegisterPoolResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRegisterPoolResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -878,14 +882,14 @@ export const MsgRegisterPoolResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgRegisterPoolResponse>): MsgRegisterPoolResponse {
+  fromPartial(object: Partial<MsgRegisterPoolResponse>): MsgRegisterPoolResponse {
     const message = createBaseMsgRegisterPoolResponse();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgRegisterPoolResponseAmino): MsgRegisterPoolResponse {
     return {
-      poolId: Long.fromString(object.pool_id)
+      poolId: BigInt(object.pool_id)
     };
   },
   toAmino(message: MsgRegisterPoolResponse): MsgRegisterPoolResponseAmino {
@@ -911,8 +915,8 @@ export const MsgRegisterPoolResponse = {
 };
 function createBaseMsgUpdatePool(): MsgUpdatePool {
   return {
-    poolId: Long.UZERO,
-    validators: undefined,
+    poolId: BigInt(0),
+    validators: [],
     minDepositAmount: undefined,
     drawSchedule: undefined,
     prizeStrategy: undefined,
@@ -920,8 +924,9 @@ function createBaseMsgUpdatePool(): MsgUpdatePool {
   };
 }
 export const MsgUpdatePool = {
-  encode(message: MsgUpdatePool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgUpdatePool",
+  encode(message: MsgUpdatePool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     for (const v of message.validators) {
@@ -941,15 +946,15 @@ export const MsgUpdatePool = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdatePool {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdatePool {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdatePool();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.validators.push(reader.string());
@@ -973,9 +978,9 @@ export const MsgUpdatePool = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgUpdatePool>): MsgUpdatePool {
+  fromPartial(object: Partial<MsgUpdatePool>): MsgUpdatePool {
     const message = createBaseMsgUpdatePool();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.validators = object.validators?.map(e => e) || [];
     message.minDepositAmount = object.minDepositAmount ?? undefined;
     message.drawSchedule = object.drawSchedule !== undefined && object.drawSchedule !== null ? DrawSchedule.fromPartial(object.drawSchedule) : undefined;
@@ -985,7 +990,7 @@ export const MsgUpdatePool = {
   },
   fromAmino(object: MsgUpdatePoolAmino): MsgUpdatePool {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       validators: Array.isArray(object?.validators) ? object.validators.map((e: any) => e) : [],
       minDepositAmount: object?.min_deposit_amount,
       drawSchedule: object?.draw_schedule ? DrawSchedule.fromAmino(object.draw_schedule) : undefined,
@@ -1027,11 +1032,12 @@ function createBaseMsgUpdatePoolResponse(): MsgUpdatePoolResponse {
   return {};
 }
 export const MsgUpdatePoolResponse = {
-  encode(_: MsgUpdatePoolResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgUpdatePoolResponse",
+  encode(_: MsgUpdatePoolResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdatePoolResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdatePoolResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdatePoolResponse();
     while (reader.pos < end) {
@@ -1044,7 +1050,7 @@ export const MsgUpdatePoolResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgUpdatePoolResponse>): MsgUpdatePoolResponse {
+  fromPartial(_: Partial<MsgUpdatePoolResponse>): MsgUpdatePoolResponse {
     const message = createBaseMsgUpdatePoolResponse();
     return message;
   },
@@ -1073,7 +1079,7 @@ export const MsgUpdatePoolResponse = {
 };
 function createBaseMsgDeposit(): MsgDeposit {
   return {
-    poolId: Long.UZERO,
+    poolId: BigInt(0),
     amount: Coin.fromPartial({}),
     depositorAddress: "",
     winnerAddress: "",
@@ -1081,8 +1087,9 @@ function createBaseMsgDeposit(): MsgDeposit {
   };
 }
 export const MsgDeposit = {
-  encode(message: MsgDeposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgDeposit",
+  encode(message: MsgDeposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.amount !== undefined) {
@@ -1099,15 +1106,15 @@ export const MsgDeposit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDeposit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDeposit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDeposit();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.amount = Coin.decode(reader, reader.uint32());
@@ -1128,9 +1135,9 @@ export const MsgDeposit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgDeposit>): MsgDeposit {
+  fromPartial(object: Partial<MsgDeposit>): MsgDeposit {
     const message = createBaseMsgDeposit();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     message.depositorAddress = object.depositorAddress ?? "";
     message.winnerAddress = object.winnerAddress ?? "";
@@ -1139,7 +1146,7 @@ export const MsgDeposit = {
   },
   fromAmino(object: MsgDepositAmino): MsgDeposit {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
       depositorAddress: object.depositor_address,
       winnerAddress: object.winner_address,
@@ -1173,25 +1180,26 @@ export const MsgDeposit = {
 };
 function createBaseMsgDepositResponse(): MsgDepositResponse {
   return {
-    depositId: Long.UZERO
+    depositId: BigInt(0)
   };
 }
 export const MsgDepositResponse = {
-  encode(message: MsgDepositResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.depositId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgDepositResponse",
+  encode(message: MsgDepositResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(8).uint64(message.depositId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDepositResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1200,14 +1208,14 @@ export const MsgDepositResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgDepositResponse>): MsgDepositResponse {
+  fromPartial(object: Partial<MsgDepositResponse>): MsgDepositResponse {
     const message = createBaseMsgDepositResponse();
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgDepositResponseAmino): MsgDepositResponse {
     return {
-      depositId: Long.fromString(object.deposit_id)
+      depositId: BigInt(object.deposit_id)
     };
   },
   toAmino(message: MsgDepositResponse): MsgDepositResponseAmino {
@@ -1233,17 +1241,18 @@ export const MsgDepositResponse = {
 };
 function createBaseMsgDepositRetry(): MsgDepositRetry {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO,
+    poolId: BigInt(0),
+    depositId: BigInt(0),
     depositorAddress: ""
   };
 }
 export const MsgDepositRetry = {
-  encode(message: MsgDepositRetry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgDepositRetry",
+  encode(message: MsgDepositRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     if (message.depositorAddress !== "") {
@@ -1251,18 +1260,18 @@ export const MsgDepositRetry = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositRetry {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDepositRetry {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositRetry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         case 3:
           message.depositorAddress = reader.string();
@@ -1274,17 +1283,17 @@ export const MsgDepositRetry = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgDepositRetry>): MsgDepositRetry {
+  fromPartial(object: Partial<MsgDepositRetry>): MsgDepositRetry {
     const message = createBaseMsgDepositRetry();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     message.depositorAddress = object.depositorAddress ?? "";
     return message;
   },
   fromAmino(object: MsgDepositRetryAmino): MsgDepositRetry {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id),
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id),
       depositorAddress: object.depositor_address
     };
   },
@@ -1313,19 +1322,20 @@ export const MsgDepositRetry = {
 };
 function createBaseMsgDepositEdit(): MsgDepositEdit {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO,
+    poolId: BigInt(0),
+    depositId: BigInt(0),
     winnerAddress: "",
-    isSponsor: BoolValue.fromPartial({}),
+    isSponsor: undefined,
     depositorAddress: ""
   };
 }
 export const MsgDepositEdit = {
-  encode(message: MsgDepositEdit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgDepositEdit",
+  encode(message: MsgDepositEdit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     if (message.winnerAddress !== "") {
@@ -1339,18 +1349,18 @@ export const MsgDepositEdit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositEdit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDepositEdit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositEdit();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         case 3:
           message.winnerAddress = reader.string();
@@ -1368,10 +1378,10 @@ export const MsgDepositEdit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgDepositEdit>): MsgDepositEdit {
+  fromPartial(object: Partial<MsgDepositEdit>): MsgDepositEdit {
     const message = createBaseMsgDepositEdit();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     message.winnerAddress = object.winnerAddress ?? "";
     message.isSponsor = object.isSponsor !== undefined && object.isSponsor !== null ? BoolValue.fromPartial(object.isSponsor) : undefined;
     message.depositorAddress = object.depositorAddress ?? "";
@@ -1379,8 +1389,8 @@ export const MsgDepositEdit = {
   },
   fromAmino(object: MsgDepositEditAmino): MsgDepositEdit {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id),
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id),
       winnerAddress: object.winner_address,
       isSponsor: object?.is_sponsor ? BoolValue.fromAmino(object.is_sponsor) : undefined,
       depositorAddress: object.depositor_address
@@ -1415,11 +1425,12 @@ function createBaseMsgDepositEditResponse(): MsgDepositEditResponse {
   return {};
 }
 export const MsgDepositEditResponse = {
-  encode(_: MsgDepositEditResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgDepositEditResponse",
+  encode(_: MsgDepositEditResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositEditResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDepositEditResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositEditResponse();
     while (reader.pos < end) {
@@ -1432,7 +1443,7 @@ export const MsgDepositEditResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgDepositEditResponse>): MsgDepositEditResponse {
+  fromPartial(_: Partial<MsgDepositEditResponse>): MsgDepositEditResponse {
     const message = createBaseMsgDepositEditResponse();
     return message;
   },
@@ -1463,11 +1474,12 @@ function createBaseMsgDepositRetryResponse(): MsgDepositRetryResponse {
   return {};
 }
 export const MsgDepositRetryResponse = {
-  encode(_: MsgDepositRetryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgDepositRetryResponse",
+  encode(_: MsgDepositRetryResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositRetryResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDepositRetryResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositRetryResponse();
     while (reader.pos < end) {
@@ -1480,7 +1492,7 @@ export const MsgDepositRetryResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgDepositRetryResponse>): MsgDepositRetryResponse {
+  fromPartial(_: Partial<MsgDepositRetryResponse>): MsgDepositRetryResponse {
     const message = createBaseMsgDepositRetryResponse();
     return message;
   },
@@ -1509,21 +1521,22 @@ export const MsgDepositRetryResponse = {
 };
 function createBaseMsgClaimPrize(): MsgClaimPrize {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    prizeId: Long.UZERO,
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    prizeId: BigInt(0),
     winnerAddress: ""
   };
 }
 export const MsgClaimPrize = {
-  encode(message: MsgClaimPrize, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgClaimPrize",
+  encode(message: MsgClaimPrize, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
-    if (!message.prizeId.isZero()) {
+    if (message.prizeId !== BigInt(0)) {
       writer.uint32(24).uint64(message.prizeId);
     }
     if (message.winnerAddress !== "") {
@@ -1531,21 +1544,21 @@ export const MsgClaimPrize = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimPrize {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimPrize {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimPrize();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
-          message.prizeId = (reader.uint64() as Long);
+          message.prizeId = reader.uint64();
           break;
         case 4:
           message.winnerAddress = reader.string();
@@ -1557,19 +1570,19 @@ export const MsgClaimPrize = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgClaimPrize>): MsgClaimPrize {
+  fromPartial(object: Partial<MsgClaimPrize>): MsgClaimPrize {
     const message = createBaseMsgClaimPrize();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
-    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? Long.fromValue(object.prizeId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
+    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? BigInt(object.prizeId.toString()) : BigInt(0);
     message.winnerAddress = object.winnerAddress ?? "";
     return message;
   },
   fromAmino(object: MsgClaimPrizeAmino): MsgClaimPrize {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
-      prizeId: Long.fromString(object.prize_id),
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
+      prizeId: BigInt(object.prize_id),
       winnerAddress: object.winner_address
     };
   },
@@ -1601,11 +1614,12 @@ function createBaseMsgClaimPrizeResponse(): MsgClaimPrizeResponse {
   return {};
 }
 export const MsgClaimPrizeResponse = {
-  encode(_: MsgClaimPrizeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgClaimPrizeResponse",
+  encode(_: MsgClaimPrizeResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimPrizeResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimPrizeResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimPrizeResponse();
     while (reader.pos < end) {
@@ -1618,7 +1632,7 @@ export const MsgClaimPrizeResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgClaimPrizeResponse>): MsgClaimPrizeResponse {
+  fromPartial(_: Partial<MsgClaimPrizeResponse>): MsgClaimPrizeResponse {
     const message = createBaseMsgClaimPrizeResponse();
     return message;
   },
@@ -1647,18 +1661,19 @@ export const MsgClaimPrizeResponse = {
 };
 function createBaseMsgWithdrawDeposit(): MsgWithdrawDeposit {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO,
+    poolId: BigInt(0),
+    depositId: BigInt(0),
     depositorAddress: "",
     toAddress: ""
   };
 }
 export const MsgWithdrawDeposit = {
-  encode(message: MsgWithdrawDeposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgWithdrawDeposit",
+  encode(message: MsgWithdrawDeposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     if (message.depositorAddress !== "") {
@@ -1669,18 +1684,18 @@ export const MsgWithdrawDeposit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDeposit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgWithdrawDeposit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawDeposit();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         case 3:
           message.depositorAddress = reader.string();
@@ -1695,18 +1710,18 @@ export const MsgWithdrawDeposit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgWithdrawDeposit>): MsgWithdrawDeposit {
+  fromPartial(object: Partial<MsgWithdrawDeposit>): MsgWithdrawDeposit {
     const message = createBaseMsgWithdrawDeposit();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     message.depositorAddress = object.depositorAddress ?? "";
     message.toAddress = object.toAddress ?? "";
     return message;
   },
   fromAmino(object: MsgWithdrawDepositAmino): MsgWithdrawDeposit {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id),
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id),
       depositorAddress: object.depositor_address,
       toAddress: object.to_address
     };
@@ -1737,25 +1752,26 @@ export const MsgWithdrawDeposit = {
 };
 function createBaseMsgWithdrawDepositResponse(): MsgWithdrawDepositResponse {
   return {
-    withdrawalId: Long.UZERO
+    withdrawalId: BigInt(0)
   };
 }
 export const MsgWithdrawDepositResponse = {
-  encode(message: MsgWithdrawDepositResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.withdrawalId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgWithdrawDepositResponse",
+  encode(message: MsgWithdrawDepositResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.withdrawalId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDepositResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgWithdrawDepositResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawDepositResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1764,14 +1780,14 @@ export const MsgWithdrawDepositResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgWithdrawDepositResponse>): MsgWithdrawDepositResponse {
+  fromPartial(object: Partial<MsgWithdrawDepositResponse>): MsgWithdrawDepositResponse {
     const message = createBaseMsgWithdrawDepositResponse();
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgWithdrawDepositResponseAmino): MsgWithdrawDepositResponse {
     return {
-      withdrawalId: Long.fromString(object.withdrawal_id)
+      withdrawalId: BigInt(object.withdrawal_id)
     };
   },
   toAmino(message: MsgWithdrawDepositResponse): MsgWithdrawDepositResponseAmino {
@@ -1797,17 +1813,18 @@ export const MsgWithdrawDepositResponse = {
 };
 function createBaseMsgWithdrawDepositRetry(): MsgWithdrawDepositRetry {
   return {
-    poolId: Long.UZERO,
-    withdrawalId: Long.UZERO,
+    poolId: BigInt(0),
+    withdrawalId: BigInt(0),
     depositorAddress: ""
   };
 }
 export const MsgWithdrawDepositRetry = {
-  encode(message: MsgWithdrawDepositRetry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgWithdrawDepositRetry",
+  encode(message: MsgWithdrawDepositRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.withdrawalId.isZero()) {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(16).uint64(message.withdrawalId);
     }
     if (message.depositorAddress !== "") {
@@ -1815,18 +1832,18 @@ export const MsgWithdrawDepositRetry = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDepositRetry {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgWithdrawDepositRetry {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawDepositRetry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         case 3:
           message.depositorAddress = reader.string();
@@ -1838,17 +1855,17 @@ export const MsgWithdrawDepositRetry = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgWithdrawDepositRetry>): MsgWithdrawDepositRetry {
+  fromPartial(object: Partial<MsgWithdrawDepositRetry>): MsgWithdrawDepositRetry {
     const message = createBaseMsgWithdrawDepositRetry();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     message.depositorAddress = object.depositorAddress ?? "";
     return message;
   },
   fromAmino(object: MsgWithdrawDepositRetryAmino): MsgWithdrawDepositRetry {
     return {
-      poolId: Long.fromString(object.pool_id),
-      withdrawalId: Long.fromString(object.withdrawal_id),
+      poolId: BigInt(object.pool_id),
+      withdrawalId: BigInt(object.withdrawal_id),
       depositorAddress: object.depositor_address
     };
   },
@@ -1879,11 +1896,12 @@ function createBaseMsgWithdrawDepositRetryResponse(): MsgWithdrawDepositRetryRes
   return {};
 }
 export const MsgWithdrawDepositRetryResponse = {
-  encode(_: MsgWithdrawDepositRetryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgWithdrawDepositRetryResponse",
+  encode(_: MsgWithdrawDepositRetryResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDepositRetryResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgWithdrawDepositRetryResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawDepositRetryResponse();
     while (reader.pos < end) {
@@ -1896,7 +1914,7 @@ export const MsgWithdrawDepositRetryResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgWithdrawDepositRetryResponse>): MsgWithdrawDepositRetryResponse {
+  fromPartial(_: Partial<MsgWithdrawDepositRetryResponse>): MsgWithdrawDepositRetryResponse {
     const message = createBaseMsgWithdrawDepositRetryResponse();
     return message;
   },
@@ -1925,17 +1943,18 @@ export const MsgWithdrawDepositRetryResponse = {
 };
 function createBaseMsgDrawRetry(): MsgDrawRetry {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
+    poolId: BigInt(0),
+    drawId: BigInt(0),
     drawRetryAddress: ""
   };
 }
 export const MsgDrawRetry = {
-  encode(message: MsgDrawRetry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgDrawRetry",
+  encode(message: MsgDrawRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
     if (message.drawRetryAddress !== "") {
@@ -1943,18 +1962,18 @@ export const MsgDrawRetry = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDrawRetry {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDrawRetry {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDrawRetry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
           message.drawRetryAddress = reader.string();
@@ -1966,17 +1985,17 @@ export const MsgDrawRetry = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgDrawRetry>): MsgDrawRetry {
+  fromPartial(object: Partial<MsgDrawRetry>): MsgDrawRetry {
     const message = createBaseMsgDrawRetry();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
     message.drawRetryAddress = object.drawRetryAddress ?? "";
     return message;
   },
   fromAmino(object: MsgDrawRetryAmino): MsgDrawRetry {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
       drawRetryAddress: object.draw_retry_address
     };
   },
@@ -2007,11 +2026,12 @@ function createBaseMsgDrawRetryResponse(): MsgDrawRetryResponse {
   return {};
 }
 export const MsgDrawRetryResponse = {
-  encode(_: MsgDrawRetryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgDrawRetryResponse",
+  encode(_: MsgDrawRetryResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDrawRetryResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDrawRetryResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDrawRetryResponse();
     while (reader.pos < end) {
@@ -2024,7 +2044,7 @@ export const MsgDrawRetryResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgDrawRetryResponse>): MsgDrawRetryResponse {
+  fromPartial(_: Partial<MsgDrawRetryResponse>): MsgDrawRetryResponse {
     const message = createBaseMsgDrawRetryResponse();
     return message;
   },
@@ -2053,13 +2073,14 @@ export const MsgDrawRetryResponse = {
 };
 function createBaseMsgRestoreInterchainAccounts(): MsgRestoreInterchainAccounts {
   return {
-    poolId: Long.UZERO,
+    poolId: BigInt(0),
     restorerAddress: ""
   };
 }
 export const MsgRestoreInterchainAccounts = {
-  encode(message: MsgRestoreInterchainAccounts, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.MsgRestoreInterchainAccounts",
+  encode(message: MsgRestoreInterchainAccounts, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.restorerAddress !== "") {
@@ -2067,15 +2088,15 @@ export const MsgRestoreInterchainAccounts = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRestoreInterchainAccounts {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgRestoreInterchainAccounts {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRestoreInterchainAccounts();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.restorerAddress = reader.string();
@@ -2087,15 +2108,15 @@ export const MsgRestoreInterchainAccounts = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgRestoreInterchainAccounts>): MsgRestoreInterchainAccounts {
+  fromPartial(object: Partial<MsgRestoreInterchainAccounts>): MsgRestoreInterchainAccounts {
     const message = createBaseMsgRestoreInterchainAccounts();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.restorerAddress = object.restorerAddress ?? "";
     return message;
   },
   fromAmino(object: MsgRestoreInterchainAccountsAmino): MsgRestoreInterchainAccounts {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       restorerAddress: object.restorer_address
     };
   },
@@ -2125,11 +2146,12 @@ function createBaseMsgRestoreInterchainAccountsResponse(): MsgRestoreInterchainA
   return {};
 }
 export const MsgRestoreInterchainAccountsResponse = {
-  encode(_: MsgRestoreInterchainAccountsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgRestoreInterchainAccountsResponse",
+  encode(_: MsgRestoreInterchainAccountsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRestoreInterchainAccountsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgRestoreInterchainAccountsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRestoreInterchainAccountsResponse();
     while (reader.pos < end) {
@@ -2142,7 +2164,7 @@ export const MsgRestoreInterchainAccountsResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgRestoreInterchainAccountsResponse>): MsgRestoreInterchainAccountsResponse {
+  fromPartial(_: Partial<MsgRestoreInterchainAccountsResponse>): MsgRestoreInterchainAccountsResponse {
     const message = createBaseMsgRestoreInterchainAccountsResponse();
     return message;
   },
@@ -2175,14 +2197,15 @@ function createBaseMsgGenerateSeed(): MsgGenerateSeed {
   };
 }
 export const MsgGenerateSeed = {
-  encode(message: MsgGenerateSeed, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.MsgGenerateSeed",
+  encode(message: MsgGenerateSeed, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.requesterAddress !== "") {
       writer.uint32(10).string(message.requesterAddress);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgGenerateSeed {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgGenerateSeed {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgGenerateSeed();
     while (reader.pos < end) {
@@ -2198,7 +2221,7 @@ export const MsgGenerateSeed = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgGenerateSeed>): MsgGenerateSeed {
+  fromPartial(object: Partial<MsgGenerateSeed>): MsgGenerateSeed {
     const message = createBaseMsgGenerateSeed();
     message.requesterAddress = object.requesterAddress ?? "";
     return message;
@@ -2231,25 +2254,26 @@ export const MsgGenerateSeed = {
 };
 function createBaseMsgGenerateSeedResponse(): MsgGenerateSeedResponse {
   return {
-    seed: Long.ZERO
+    seed: BigInt(0)
   };
 }
 export const MsgGenerateSeedResponse = {
-  encode(message: MsgGenerateSeedResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.seed.isZero()) {
+  typeUrl: "/lum.network.millions.MsgGenerateSeedResponse",
+  encode(message: MsgGenerateSeedResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.seed !== BigInt(0)) {
       writer.uint32(8).int64(message.seed);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgGenerateSeedResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgGenerateSeedResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgGenerateSeedResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.seed = (reader.int64() as Long);
+          message.seed = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2258,14 +2282,14 @@ export const MsgGenerateSeedResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgGenerateSeedResponse>): MsgGenerateSeedResponse {
+  fromPartial(object: Partial<MsgGenerateSeedResponse>): MsgGenerateSeedResponse {
     const message = createBaseMsgGenerateSeedResponse();
-    message.seed = object.seed !== undefined && object.seed !== null ? Long.fromValue(object.seed) : Long.ZERO;
+    message.seed = object.seed !== undefined && object.seed !== null ? BigInt(object.seed.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgGenerateSeedResponseAmino): MsgGenerateSeedResponse {
     return {
-      seed: Long.fromString(object.seed)
+      seed: BigInt(object.seed)
     };
   },
   toAmino(message: MsgGenerateSeedResponse): MsgGenerateSeedResponseAmino {

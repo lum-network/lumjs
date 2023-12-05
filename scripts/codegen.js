@@ -14,65 +14,47 @@ telescope({
     protoDirs,
     outPath,
     options: {
+        env: 'v-next',
+        removeUnusedImports: true,
         tsDisable: {
-            files: [
-                'cosmos/authz/v1beta1/tx.amino.ts',
-                'cosmos/staking/v1beta1/staking.ts',
-                'cosmos/staking/v1beta1/tx.ts',
-                'cosmos/staking/v1beta1/signing.ts',
-                'cosmos/tx/signing/v1beta1/signing.ts',
-                'lum/network/beam/beam.ts'
-            ],
             patterns: ['**/*amino.ts', '**/*registry.ts']
         },
-
+        interfaces: {
+            enabled: false,
+            useUnionTypes: false
+        },
         prototypes: {
-            includePackageVar: false,
-            removeUnusedImports: true,
-            allowUndefinedTypes: true,
-            interfaces: {
-                enabled: true,
-                useUnionTypes: true
-            },
-            excluded: {
-                packages: [
-                    // 'ibc.applications.fee.v1',
-                    // 'google.api',
-                    'ibc.core.port.v1',
-                    'ibc.core.types.v1'
-                ]
-            },
-            methods: {
-                fromJSON: false,
-                toJSON: false,
-                encode: true,
-                decode: true,
-                fromPartial: true,
-                toAmino: true,
-                fromAmino: true,
-                fromProto: true,
-                toProto: true
-            },
+            enabled: true,
             parser: {
                 keepCase: false
-            }
-        },
-        typingsFormat: {
-            duration: 'duration',
-            timestamp: 'date',
-            useExact: false,
-            useDeepPartial: false,
-            num64: 'bigint',
-            customTypes: {
-                useCosmosSDKDec: true
+            },
+            methods: {
+                encode: true,
+                decode: true,
+                fromJSON: false,
+                toJSON: false,
+                fromPartial: true,
+                fromSDK: false,
+                toSDK: false
+            },
+            includePackageVar: false,
+            allowUndefinedTypes: true,
+            addAminoTypeToObjects: true,
+            typingsFormat: {
+                duration: 'duration',
+                timestamp: 'date',
+                useExact: false,
+                useDeepPartial: false,
+                num64: 'bigint',
+                customTypes: {
+                    useCosmosSDKDec: true
+                }
             }
         },
         aminoEncoding: {
             enabled: true,
-            exceptions: AMINO_MAP,
-            useRecursiveV2encoding: true
+            exceptions: AMINO_MAP
         },
-        addAminoTypeToObjects: true,
         lcdClients: {
             enabled: false
         },
@@ -82,10 +64,10 @@ telescope({
         }
     }
 })
-    .then(() => {
-        console.log('✨ all done!');
-    })
-    .catch((e) => {
-        console.error(e);
-        process.exit(1);
-    });
+.then(() => {
+    console.log('✨ all done!');
+})
+.catch((e) => {
+    console.error(e);
+    process.exit(1);
+});

@@ -1,8 +1,8 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { Decimal } from "@cosmjs/math";
 export interface PrizeBatch {
-  poolPercent: Long;
-  quantity: Long;
+  poolPercent: bigint;
+  quantity: bigint;
   drawProbability: string;
   isUnique: boolean;
 }
@@ -21,50 +21,51 @@ export interface PrizeBatchAminoMsg {
   value: PrizeBatchAmino;
 }
 export interface PrizeBatchSDKType {
-  pool_percent: Long;
-  quantity: Long;
+  pool_percent: bigint;
+  quantity: bigint;
   draw_probability: string;
   is_unique: boolean;
 }
 function createBasePrizeBatch(): PrizeBatch {
   return {
-    poolPercent: Long.UZERO,
-    quantity: Long.UZERO,
+    poolPercent: BigInt(0),
+    quantity: BigInt(0),
     drawProbability: "",
     isUnique: false
   };
 }
 export const PrizeBatch = {
-  encode(message: PrizeBatch, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolPercent.isZero()) {
+  typeUrl: "/lum.network.millions.PrizeBatch",
+  encode(message: PrizeBatch, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolPercent !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolPercent);
     }
-    if (!message.quantity.isZero()) {
+    if (message.quantity !== BigInt(0)) {
       writer.uint32(16).uint64(message.quantity);
     }
     if (message.drawProbability !== "") {
-      writer.uint32(26).string(message.drawProbability);
+      writer.uint32(26).string(Decimal.fromUserInput(message.drawProbability, 18).atomics);
     }
     if (message.isUnique === true) {
       writer.uint32(32).bool(message.isUnique);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PrizeBatch {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PrizeBatch {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrizeBatch();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolPercent = (reader.uint64() as Long);
+          message.poolPercent = reader.uint64();
           break;
         case 2:
-          message.quantity = (reader.uint64() as Long);
+          message.quantity = reader.uint64();
           break;
         case 3:
-          message.drawProbability = reader.string();
+          message.drawProbability = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
           message.isUnique = reader.bool();
@@ -76,18 +77,18 @@ export const PrizeBatch = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PrizeBatch>): PrizeBatch {
+  fromPartial(object: Partial<PrizeBatch>): PrizeBatch {
     const message = createBasePrizeBatch();
-    message.poolPercent = object.poolPercent !== undefined && object.poolPercent !== null ? Long.fromValue(object.poolPercent) : Long.UZERO;
-    message.quantity = object.quantity !== undefined && object.quantity !== null ? Long.fromValue(object.quantity) : Long.UZERO;
+    message.poolPercent = object.poolPercent !== undefined && object.poolPercent !== null ? BigInt(object.poolPercent.toString()) : BigInt(0);
+    message.quantity = object.quantity !== undefined && object.quantity !== null ? BigInt(object.quantity.toString()) : BigInt(0);
     message.drawProbability = object.drawProbability ?? "";
     message.isUnique = object.isUnique ?? false;
     return message;
   },
   fromAmino(object: PrizeBatchAmino): PrizeBatch {
     return {
-      poolPercent: Long.fromString(object.pool_percent),
-      quantity: Long.fromString(object.quantity),
+      poolPercent: BigInt(object.pool_percent),
+      quantity: BigInt(object.quantity),
       drawProbability: object.draw_probability,
       isUnique: object.is_unique
     };

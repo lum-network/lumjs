@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { BeamData, BeamDataAmino, BeamDataSDKType, BeamState, beamStateFromJSON } from "./beam";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, isSet } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export interface MsgOpenBeam {
   id: string;
   creatorAddress: string;
@@ -157,7 +157,8 @@ function createBaseMsgOpenBeam(): MsgOpenBeam {
   };
 }
 export const MsgOpenBeam = {
-  encode(message: MsgOpenBeam, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.MsgOpenBeam",
+  encode(message: MsgOpenBeam, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -187,8 +188,8 @@ export const MsgOpenBeam = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgOpenBeam {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgOpenBeam {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgOpenBeam();
     while (reader.pos < end) {
@@ -228,7 +229,7 @@ export const MsgOpenBeam = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgOpenBeam>): MsgOpenBeam {
+  fromPartial(object: Partial<MsgOpenBeam>): MsgOpenBeam {
     const message = createBaseMsgOpenBeam();
     message.id = object.id ?? "";
     message.creatorAddress = object.creatorAddress ?? "";
@@ -287,11 +288,12 @@ function createBaseMsgOpenBeamResponse(): MsgOpenBeamResponse {
   return {};
 }
 export const MsgOpenBeamResponse = {
-  encode(_: MsgOpenBeamResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.MsgOpenBeamResponse",
+  encode(_: MsgOpenBeamResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgOpenBeamResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgOpenBeamResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgOpenBeamResponse();
     while (reader.pos < end) {
@@ -304,7 +306,7 @@ export const MsgOpenBeamResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgOpenBeamResponse>): MsgOpenBeamResponse {
+  fromPartial(_: Partial<MsgOpenBeamResponse>): MsgOpenBeamResponse {
     const message = createBaseMsgOpenBeamResponse();
     return message;
   },
@@ -346,7 +348,8 @@ function createBaseMsgUpdateBeam(): MsgUpdateBeam {
   };
 }
 export const MsgUpdateBeam = {
-  encode(message: MsgUpdateBeam, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.MsgUpdateBeam",
+  encode(message: MsgUpdateBeam, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -379,8 +382,8 @@ export const MsgUpdateBeam = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateBeam {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateBeam {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateBeam();
     while (reader.pos < end) {
@@ -423,7 +426,7 @@ export const MsgUpdateBeam = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgUpdateBeam>): MsgUpdateBeam {
+  fromPartial(object: Partial<MsgUpdateBeam>): MsgUpdateBeam {
     const message = createBaseMsgUpdateBeam();
     message.id = object.id ?? "";
     message.updaterAddress = object.updaterAddress ?? "";
@@ -485,11 +488,12 @@ function createBaseMsgUpdateBeamResponse(): MsgUpdateBeamResponse {
   return {};
 }
 export const MsgUpdateBeamResponse = {
-  encode(_: MsgUpdateBeamResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.MsgUpdateBeamResponse",
+  encode(_: MsgUpdateBeamResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateBeamResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateBeamResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateBeamResponse();
     while (reader.pos < end) {
@@ -502,7 +506,7 @@ export const MsgUpdateBeamResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgUpdateBeamResponse>): MsgUpdateBeamResponse {
+  fromPartial(_: Partial<MsgUpdateBeamResponse>): MsgUpdateBeamResponse {
     const message = createBaseMsgUpdateBeamResponse();
     return message;
   },
@@ -537,7 +541,8 @@ function createBaseMsgClaimBeam(): MsgClaimBeam {
   };
 }
 export const MsgClaimBeam = {
-  encode(message: MsgClaimBeam, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.MsgClaimBeam",
+  encode(message: MsgClaimBeam, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -549,8 +554,8 @@ export const MsgClaimBeam = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimBeam {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimBeam {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimBeam();
     while (reader.pos < end) {
@@ -572,7 +577,7 @@ export const MsgClaimBeam = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgClaimBeam>): MsgClaimBeam {
+  fromPartial(object: Partial<MsgClaimBeam>): MsgClaimBeam {
     const message = createBaseMsgClaimBeam();
     message.id = object.id ?? "";
     message.claimerAddress = object.claimerAddress ?? "";
@@ -613,11 +618,12 @@ function createBaseMsgClaimBeamResponse(): MsgClaimBeamResponse {
   return {};
 }
 export const MsgClaimBeamResponse = {
-  encode(_: MsgClaimBeamResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.MsgClaimBeamResponse",
+  encode(_: MsgClaimBeamResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimBeamResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimBeamResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimBeamResponse();
     while (reader.pos < end) {
@@ -630,7 +636,7 @@ export const MsgClaimBeamResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgClaimBeamResponse>): MsgClaimBeamResponse {
+  fromPartial(_: Partial<MsgClaimBeamResponse>): MsgClaimBeamResponse {
     const message = createBaseMsgClaimBeamResponse();
     return message;
   },

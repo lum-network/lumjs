@@ -1,6 +1,5 @@
 import { Query, QueryAmino, QuerySDKType } from "./genesis";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface QueryPendingQueriesRequest {}
 export interface QueryPendingQueriesRequestProtoMsg {
   typeUrl: "/stride.interchainquery.v1.QueryPendingQueriesRequest";
@@ -61,11 +60,12 @@ function createBaseQueryPendingQueriesRequest(): QueryPendingQueriesRequest {
   return {};
 }
 export const QueryPendingQueriesRequest = {
-  encode(_: QueryPendingQueriesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.QueryPendingQueriesRequest",
+  encode(_: QueryPendingQueriesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPendingQueriesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPendingQueriesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPendingQueriesRequest();
     while (reader.pos < end) {
@@ -78,7 +78,7 @@ export const QueryPendingQueriesRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryPendingQueriesRequest>): QueryPendingQueriesRequest {
+  fromPartial(_: Partial<QueryPendingQueriesRequest>): QueryPendingQueriesRequest {
     const message = createBaseQueryPendingQueriesRequest();
     return message;
   },
@@ -111,14 +111,15 @@ function createBaseQueryPendingQueriesResponse(): QueryPendingQueriesResponse {
   };
 }
 export const QueryPendingQueriesResponse = {
-  encode(message: QueryPendingQueriesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.QueryPendingQueriesResponse",
+  encode(message: QueryPendingQueriesResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.pendingQueries) {
       Query.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPendingQueriesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPendingQueriesResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPendingQueriesResponse();
     while (reader.pos < end) {
@@ -134,7 +135,7 @@ export const QueryPendingQueriesResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPendingQueriesResponse>): QueryPendingQueriesResponse {
+  fromPartial(object: Partial<QueryPendingQueriesResponse>): QueryPendingQueriesResponse {
     const message = createBaseQueryPendingQueriesResponse();
     message.pendingQueries = object.pendingQueries?.map(e => Query.fromPartial(e)) || [];
     return message;
@@ -173,11 +174,12 @@ function createBaseQueryQueriesRequest(): QueryQueriesRequest {
   return {};
 }
 export const QueryQueriesRequest = {
-  encode(_: QueryQueriesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.QueryQueriesRequest",
+  encode(_: QueryQueriesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryQueriesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryQueriesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryQueriesRequest();
     while (reader.pos < end) {
@@ -190,7 +192,7 @@ export const QueryQueriesRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryQueriesRequest>): QueryQueriesRequest {
+  fromPartial(_: Partial<QueryQueriesRequest>): QueryQueriesRequest {
     const message = createBaseQueryQueriesRequest();
     return message;
   },
@@ -223,14 +225,15 @@ function createBaseQueryQueriesResponse(): QueryQueriesResponse {
   };
 }
 export const QueryQueriesResponse = {
-  encode(message: QueryQueriesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.QueryQueriesResponse",
+  encode(message: QueryQueriesResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.queries) {
       Query.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryQueriesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryQueriesResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryQueriesResponse();
     while (reader.pos < end) {
@@ -246,7 +249,7 @@ export const QueryQueriesResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryQueriesResponse>): QueryQueriesResponse {
+  fromPartial(object: Partial<QueryQueriesResponse>): QueryQueriesResponse {
     const message = createBaseQueryQueriesResponse();
     message.queries = object.queries?.map(e => Query.fromPartial(e)) || [];
     return message;

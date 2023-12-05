@@ -1,8 +1,8 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { PrizeRef, PrizeRefAmino, PrizeRefSDKType } from "./prize_ref";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Long, toTimestamp, fromTimestamp, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 export enum DrawState {
   DRAW_STATE_UNSPECIFIED = 0,
   DRAW_STATE_ICA_WITHDRAWREWARDS = 1,
@@ -67,8 +67,8 @@ export function drawStateToJSON(object: DrawState): string {
 }
 export interface Draw {
   /** Draw IDs */
-  poolId: Long;
-  drawId: Long;
+  poolId: bigint;
+  drawId: bigint;
   /**
    * Draw states
    * error_state is only set in case of failure
@@ -76,16 +76,16 @@ export interface Draw {
   state: DrawState;
   errorState: DrawState;
   /** Draw state done data */
-  randSeed: Long;
+  randSeed: bigint;
   prizePool: Coin | undefined;
   prizePoolFreshAmount: string;
   prizePoolRemainsAmount: string;
   prizesRefs: PrizeRef[];
-  totalWinCount: Long;
+  totalWinCount: bigint;
   totalWinAmount: string;
   /** Draw creation and updates */
-  createdAtHeight: Long;
-  updatedAtHeight: Long;
+  createdAtHeight: bigint;
+  updatedAtHeight: bigint;
   createdAt: Date | undefined;
   updatedAt: Date | undefined;
 }
@@ -114,55 +114,56 @@ export interface DrawAmino {
   /** Draw creation and updates */
   created_at_height: string;
   updated_at_height: string;
-  created_at?: Date | undefined;
-  updated_at?: Date | undefined;
+  created_at?: string | undefined;
+  updated_at?: string | undefined;
 }
 export interface DrawAminoMsg {
   type: "/lum.network.millions.Draw";
   value: DrawAmino;
 }
 export interface DrawSDKType {
-  pool_id: Long;
-  draw_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
   state: DrawState;
   error_state: DrawState;
-  rand_seed: Long;
+  rand_seed: bigint;
   prize_pool: CoinSDKType | undefined;
   prize_pool_fresh_amount: string;
   prize_pool_remains_amount: string;
   prizes_refs: PrizeRefSDKType[];
-  total_win_count: Long;
+  total_win_count: bigint;
   total_win_amount: string;
-  created_at_height: Long;
-  updated_at_height: Long;
+  created_at_height: bigint;
+  updated_at_height: bigint;
   created_at: Date | undefined;
   updated_at: Date | undefined;
 }
 function createBaseDraw(): Draw {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
+    poolId: BigInt(0),
+    drawId: BigInt(0),
     state: 0,
     errorState: 0,
-    randSeed: Long.ZERO,
+    randSeed: BigInt(0),
     prizePool: Coin.fromPartial({}),
     prizePoolFreshAmount: "",
     prizePoolRemainsAmount: "",
     prizesRefs: [],
-    totalWinCount: Long.UZERO,
+    totalWinCount: BigInt(0),
     totalWinAmount: "",
-    createdAtHeight: Long.ZERO,
-    updatedAtHeight: Long.ZERO,
+    createdAtHeight: BigInt(0),
+    updatedAtHeight: BigInt(0),
     createdAt: new Date(),
     updatedAt: new Date()
   };
 }
 export const Draw = {
-  encode(message: Draw, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.Draw",
+  encode(message: Draw, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
     if (message.state !== 0) {
@@ -171,7 +172,7 @@ export const Draw = {
     if (message.errorState !== 0) {
       writer.uint32(32).int32(message.errorState);
     }
-    if (!message.randSeed.isZero()) {
+    if (message.randSeed !== BigInt(0)) {
       writer.uint32(40).int64(message.randSeed);
     }
     if (message.prizePool !== undefined) {
@@ -186,16 +187,16 @@ export const Draw = {
     for (const v of message.prizesRefs) {
       PrizeRef.encode(v!, writer.uint32(90).fork()).ldelim();
     }
-    if (!message.totalWinCount.isZero()) {
+    if (message.totalWinCount !== BigInt(0)) {
       writer.uint32(96).uint64(message.totalWinCount);
     }
     if (message.totalWinAmount !== "") {
       writer.uint32(106).string(message.totalWinAmount);
     }
-    if (!message.createdAtHeight.isZero()) {
+    if (message.createdAtHeight !== BigInt(0)) {
       writer.uint32(120).int64(message.createdAtHeight);
     }
-    if (!message.updatedAtHeight.isZero()) {
+    if (message.updatedAtHeight !== BigInt(0)) {
       writer.uint32(128).int64(message.updatedAtHeight);
     }
     if (message.createdAt !== undefined) {
@@ -206,18 +207,18 @@ export const Draw = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Draw {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Draw {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDraw();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
           message.state = (reader.int32() as any);
@@ -226,7 +227,7 @@ export const Draw = {
           message.errorState = (reader.int32() as any);
           break;
         case 5:
-          message.randSeed = (reader.int64() as Long);
+          message.randSeed = reader.int64();
           break;
         case 6:
           message.prizePool = Coin.decode(reader, reader.uint32());
@@ -241,16 +242,16 @@ export const Draw = {
           message.prizesRefs.push(PrizeRef.decode(reader, reader.uint32()));
           break;
         case 12:
-          message.totalWinCount = (reader.uint64() as Long);
+          message.totalWinCount = reader.uint64();
           break;
         case 13:
           message.totalWinAmount = reader.string();
           break;
         case 15:
-          message.createdAtHeight = (reader.int64() as Long);
+          message.createdAtHeight = reader.int64();
           break;
         case 16:
-          message.updatedAtHeight = (reader.int64() as Long);
+          message.updatedAtHeight = reader.int64();
           break;
         case 17:
           message.createdAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
@@ -265,42 +266,42 @@ export const Draw = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Draw>): Draw {
+  fromPartial(object: Partial<Draw>): Draw {
     const message = createBaseDraw();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
     message.state = object.state ?? 0;
     message.errorState = object.errorState ?? 0;
-    message.randSeed = object.randSeed !== undefined && object.randSeed !== null ? Long.fromValue(object.randSeed) : Long.ZERO;
+    message.randSeed = object.randSeed !== undefined && object.randSeed !== null ? BigInt(object.randSeed.toString()) : BigInt(0);
     message.prizePool = object.prizePool !== undefined && object.prizePool !== null ? Coin.fromPartial(object.prizePool) : undefined;
     message.prizePoolFreshAmount = object.prizePoolFreshAmount ?? "";
     message.prizePoolRemainsAmount = object.prizePoolRemainsAmount ?? "";
     message.prizesRefs = object.prizesRefs?.map(e => PrizeRef.fromPartial(e)) || [];
-    message.totalWinCount = object.totalWinCount !== undefined && object.totalWinCount !== null ? Long.fromValue(object.totalWinCount) : Long.UZERO;
+    message.totalWinCount = object.totalWinCount !== undefined && object.totalWinCount !== null ? BigInt(object.totalWinCount.toString()) : BigInt(0);
     message.totalWinAmount = object.totalWinAmount ?? "";
-    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? Long.fromValue(object.createdAtHeight) : Long.ZERO;
-    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? Long.fromValue(object.updatedAtHeight) : Long.ZERO;
+    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? BigInt(object.createdAtHeight.toString()) : BigInt(0);
+    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? BigInt(object.updatedAtHeight.toString()) : BigInt(0);
     message.createdAt = object.createdAt ?? undefined;
     message.updatedAt = object.updatedAt ?? undefined;
     return message;
   },
   fromAmino(object: DrawAmino): Draw {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
       state: isSet(object.state) ? drawStateFromJSON(object.state) : -1,
       errorState: isSet(object.error_state) ? drawStateFromJSON(object.error_state) : -1,
-      randSeed: Long.fromString(object.rand_seed),
+      randSeed: BigInt(object.rand_seed),
       prizePool: object?.prize_pool ? Coin.fromAmino(object.prize_pool) : undefined,
       prizePoolFreshAmount: object.prize_pool_fresh_amount,
       prizePoolRemainsAmount: object.prize_pool_remains_amount,
       prizesRefs: Array.isArray(object?.prizes_refs) ? object.prizes_refs.map((e: any) => PrizeRef.fromAmino(e)) : [],
-      totalWinCount: Long.fromString(object.total_win_count),
+      totalWinCount: BigInt(object.total_win_count),
       totalWinAmount: object.total_win_amount,
-      createdAtHeight: Long.fromString(object.created_at_height),
-      updatedAtHeight: Long.fromString(object.updated_at_height),
-      createdAt: object.created_at,
-      updatedAt: object.updated_at
+      createdAtHeight: BigInt(object.created_at_height),
+      updatedAtHeight: BigInt(object.updated_at_height),
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
+      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
     };
   },
   toAmino(message: Draw): DrawAmino {
@@ -322,8 +323,8 @@ export const Draw = {
     obj.total_win_amount = message.totalWinAmount;
     obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
     obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
-    obj.created_at = message.createdAt;
-    obj.updated_at = message.updatedAt;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
+    obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: DrawAminoMsg): Draw {

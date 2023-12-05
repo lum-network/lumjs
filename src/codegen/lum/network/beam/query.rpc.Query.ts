@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryGetBeamRequest, QueryGetBeamResponse, QueryFetchBeamsRequest, QueryFetchBeamsResponse, QueryFetchBeamsOpenQueueRequest, QueryFetchBeamsOpenQueueResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -19,19 +19,19 @@ export class QueryClientImpl implements Query {
   beam(request: QueryGetBeamRequest): Promise<QueryGetBeamResponse> {
     const data = QueryGetBeamRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.beam.Query", "Beam", data);
-    return promise.then(data => QueryGetBeamResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetBeamResponse.decode(new BinaryReader(data)));
   }
   beams(request: QueryFetchBeamsRequest): Promise<QueryFetchBeamsResponse> {
     const data = QueryFetchBeamsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.beam.Query", "Beams", data);
-    return promise.then(data => QueryFetchBeamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryFetchBeamsResponse.decode(new BinaryReader(data)));
   }
   beamsOpenQueue(request: QueryFetchBeamsOpenQueueRequest = {
     pagination: undefined
   }): Promise<QueryFetchBeamsOpenQueueResponse> {
     const data = QueryFetchBeamsOpenQueueRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.beam.Query", "BeamsOpenQueue", data);
-    return promise.then(data => QueryFetchBeamsOpenQueueResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryFetchBeamsOpenQueueResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {

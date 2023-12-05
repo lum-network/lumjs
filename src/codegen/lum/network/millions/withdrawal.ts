@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Long, toTimestamp, fromTimestamp, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 export enum WithdrawalState {
   WITHDRAWAL_STATE_UNSPECIFIED = 0,
   WITHDRAWAL_STATE_ICA_UNDELEGATE = 1,
@@ -59,16 +59,16 @@ export function withdrawalStateToJSON(object: WithdrawalState): string {
   }
 }
 export interface Withdrawal {
-  poolId: Long;
-  depositId: Long;
-  withdrawalId: Long;
+  poolId: bigint;
+  depositId: bigint;
+  withdrawalId: bigint;
   state: WithdrawalState;
   errorState: WithdrawalState;
   depositorAddress: string;
   toAddress: string;
   amount: Coin | undefined;
-  createdAtHeight: Long;
-  updatedAtHeight: Long;
+  createdAtHeight: bigint;
+  updatedAtHeight: bigint;
   unbondingEndsAt?: Date | undefined;
   createdAt: Date | undefined;
   updatedAt: Date | undefined;
@@ -88,32 +88,32 @@ export interface WithdrawalAmino {
   amount?: CoinAmino | undefined;
   created_at_height: string;
   updated_at_height: string;
-  unbonding_ends_at?: Date | undefined;
-  created_at?: Date | undefined;
-  updated_at?: Date | undefined;
+  unbonding_ends_at?: string | undefined;
+  created_at?: string | undefined;
+  updated_at?: string | undefined;
 }
 export interface WithdrawalAminoMsg {
   type: "/lum.network.millions.Withdrawal";
   value: WithdrawalAmino;
 }
 export interface WithdrawalSDKType {
-  pool_id: Long;
-  deposit_id: Long;
-  withdrawal_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
+  withdrawal_id: bigint;
   state: WithdrawalState;
   error_state: WithdrawalState;
   depositor_address: string;
   to_address: string;
   amount: CoinSDKType | undefined;
-  created_at_height: Long;
-  updated_at_height: Long;
+  created_at_height: bigint;
+  updated_at_height: bigint;
   unbonding_ends_at?: Date | undefined;
   created_at: Date | undefined;
   updated_at: Date | undefined;
 }
 export interface WithdrawalIDs {
-  poolId: Long;
-  withdrawalId: Long;
+  poolId: bigint;
+  withdrawalId: bigint;
 }
 export interface WithdrawalIDsProtoMsg {
   typeUrl: "/lum.network.millions.WithdrawalIDs";
@@ -128,8 +128,8 @@ export interface WithdrawalIDsAminoMsg {
   value: WithdrawalIDsAmino;
 }
 export interface WithdrawalIDsSDKType {
-  pool_id: Long;
-  withdrawal_id: Long;
+  pool_id: bigint;
+  withdrawal_id: bigint;
 }
 export interface WithdrawalIDsCollection {
   withdrawalsIds: WithdrawalIDs[];
@@ -150,30 +150,31 @@ export interface WithdrawalIDsCollectionSDKType {
 }
 function createBaseWithdrawal(): Withdrawal {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO,
-    withdrawalId: Long.UZERO,
+    poolId: BigInt(0),
+    depositId: BigInt(0),
+    withdrawalId: BigInt(0),
     state: 0,
     errorState: 0,
     depositorAddress: "",
     toAddress: "",
     amount: Coin.fromPartial({}),
-    createdAtHeight: Long.ZERO,
-    updatedAtHeight: Long.ZERO,
+    createdAtHeight: BigInt(0),
+    updatedAtHeight: BigInt(0),
     unbondingEndsAt: undefined,
     createdAt: new Date(),
     updatedAt: new Date()
   };
 }
 export const Withdrawal = {
-  encode(message: Withdrawal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.Withdrawal",
+  encode(message: Withdrawal, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
-    if (!message.withdrawalId.isZero()) {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(24).uint64(message.withdrawalId);
     }
     if (message.state !== 0) {
@@ -191,10 +192,10 @@ export const Withdrawal = {
     if (message.amount !== undefined) {
       Coin.encode(message.amount, writer.uint32(66).fork()).ldelim();
     }
-    if (!message.createdAtHeight.isZero()) {
+    if (message.createdAtHeight !== BigInt(0)) {
       writer.uint32(72).int64(message.createdAtHeight);
     }
-    if (!message.updatedAtHeight.isZero()) {
+    if (message.updatedAtHeight !== BigInt(0)) {
       writer.uint32(80).int64(message.updatedAtHeight);
     }
     if (message.unbondingEndsAt !== undefined) {
@@ -208,21 +209,21 @@ export const Withdrawal = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Withdrawal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Withdrawal {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWithdrawal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         case 3:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         case 4:
           message.state = (reader.int32() as any);
@@ -240,10 +241,10 @@ export const Withdrawal = {
           message.amount = Coin.decode(reader, reader.uint32());
           break;
         case 9:
-          message.createdAtHeight = (reader.int64() as Long);
+          message.createdAtHeight = reader.int64();
           break;
         case 10:
-          message.updatedAtHeight = (reader.int64() as Long);
+          message.updatedAtHeight = reader.int64();
           break;
         case 11:
           message.unbondingEndsAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
@@ -261,18 +262,18 @@ export const Withdrawal = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Withdrawal>): Withdrawal {
+  fromPartial(object: Partial<Withdrawal>): Withdrawal {
     const message = createBaseWithdrawal();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     message.state = object.state ?? 0;
     message.errorState = object.errorState ?? 0;
     message.depositorAddress = object.depositorAddress ?? "";
     message.toAddress = object.toAddress ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
-    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? Long.fromValue(object.createdAtHeight) : Long.ZERO;
-    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? Long.fromValue(object.updatedAtHeight) : Long.ZERO;
+    message.createdAtHeight = object.createdAtHeight !== undefined && object.createdAtHeight !== null ? BigInt(object.createdAtHeight.toString()) : BigInt(0);
+    message.updatedAtHeight = object.updatedAtHeight !== undefined && object.updatedAtHeight !== null ? BigInt(object.updatedAtHeight.toString()) : BigInt(0);
     message.unbondingEndsAt = object.unbondingEndsAt ?? undefined;
     message.createdAt = object.createdAt ?? undefined;
     message.updatedAt = object.updatedAt ?? undefined;
@@ -280,19 +281,19 @@ export const Withdrawal = {
   },
   fromAmino(object: WithdrawalAmino): Withdrawal {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id),
-      withdrawalId: Long.fromString(object.withdrawal_id),
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id),
+      withdrawalId: BigInt(object.withdrawal_id),
       state: isSet(object.state) ? withdrawalStateFromJSON(object.state) : -1,
       errorState: isSet(object.error_state) ? withdrawalStateFromJSON(object.error_state) : -1,
       depositorAddress: object.depositor_address,
       toAddress: object.to_address,
       amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      createdAtHeight: Long.fromString(object.created_at_height),
-      updatedAtHeight: Long.fromString(object.updated_at_height),
-      unbondingEndsAt: object?.unbonding_ends_at,
-      createdAt: object.created_at,
-      updatedAt: object.updated_at
+      createdAtHeight: BigInt(object.created_at_height),
+      updatedAtHeight: BigInt(object.updated_at_height),
+      unbondingEndsAt: object?.unbonding_ends_at ? fromTimestamp(Timestamp.fromAmino(object.unbonding_ends_at)) : undefined,
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
+      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
     };
   },
   toAmino(message: Withdrawal): WithdrawalAmino {
@@ -307,9 +308,9 @@ export const Withdrawal = {
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
     obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
     obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
-    obj.unbonding_ends_at = message.unbondingEndsAt;
-    obj.created_at = message.createdAt;
-    obj.updated_at = message.updatedAt;
+    obj.unbonding_ends_at = message.unbondingEndsAt ? Timestamp.toAmino(toTimestamp(message.unbondingEndsAt)) : undefined;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
+    obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: WithdrawalAminoMsg): Withdrawal {
@@ -330,32 +331,33 @@ export const Withdrawal = {
 };
 function createBaseWithdrawalIDs(): WithdrawalIDs {
   return {
-    poolId: Long.UZERO,
-    withdrawalId: Long.UZERO
+    poolId: BigInt(0),
+    withdrawalId: BigInt(0)
   };
 }
 export const WithdrawalIDs = {
-  encode(message: WithdrawalIDs, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.WithdrawalIDs",
+  encode(message: WithdrawalIDs, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.withdrawalId.isZero()) {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(16).uint64(message.withdrawalId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): WithdrawalIDs {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): WithdrawalIDs {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWithdrawalIDs();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -364,16 +366,16 @@ export const WithdrawalIDs = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<WithdrawalIDs>): WithdrawalIDs {
+  fromPartial(object: Partial<WithdrawalIDs>): WithdrawalIDs {
     const message = createBaseWithdrawalIDs();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: WithdrawalIDsAmino): WithdrawalIDs {
     return {
-      poolId: Long.fromString(object.pool_id),
-      withdrawalId: Long.fromString(object.withdrawal_id)
+      poolId: BigInt(object.pool_id),
+      withdrawalId: BigInt(object.withdrawal_id)
     };
   },
   toAmino(message: WithdrawalIDs): WithdrawalIDsAmino {
@@ -404,14 +406,15 @@ function createBaseWithdrawalIDsCollection(): WithdrawalIDsCollection {
   };
 }
 export const WithdrawalIDsCollection = {
-  encode(message: WithdrawalIDsCollection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.WithdrawalIDsCollection",
+  encode(message: WithdrawalIDsCollection, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.withdrawalsIds) {
       WithdrawalIDs.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): WithdrawalIDsCollection {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): WithdrawalIDsCollection {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWithdrawalIDsCollection();
     while (reader.pos < end) {
@@ -427,7 +430,7 @@ export const WithdrawalIDsCollection = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<WithdrawalIDsCollection>): WithdrawalIDsCollection {
+  fromPartial(object: Partial<WithdrawalIDsCollection>): WithdrawalIDsCollection {
     const message = createBaseWithdrawalIDsCollection();
     message.withdrawalsIds = object.withdrawalsIds?.map(e => WithdrawalIDs.fromPartial(e)) || [];
     return message;

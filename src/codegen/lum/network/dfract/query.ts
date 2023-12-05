@@ -2,8 +2,8 @@ import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageRe
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { Deposit, DepositAmino, DepositSDKType } from "./deposit";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, isSet } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export enum DepositsQueryType {
   PENDING_WITHDRAWAL = 0,
   PENDING_MINT = 1,
@@ -116,7 +116,7 @@ export interface QueryGetDepositsForAddressRequestSDKType {
   address: string;
 }
 export interface QueryFetchDepositsRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
   type: DepositsQueryType;
 }
 export interface QueryFetchDepositsRequestProtoMsg {
@@ -132,13 +132,13 @@ export interface QueryFetchDepositsRequestAminoMsg {
   value: QueryFetchDepositsRequestAmino;
 }
 export interface QueryFetchDepositsRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
   type: DepositsQueryType;
 }
 export interface QueryGetDepositsForAddressResponse {
-  depositsPendingWithdrawal: Deposit | undefined;
-  depositsPendingMint: Deposit | undefined;
-  depositsMinted: Deposit | undefined;
+  depositsPendingWithdrawal?: Deposit | undefined;
+  depositsPendingMint?: Deposit | undefined;
+  depositsMinted?: Deposit | undefined;
 }
 export interface QueryGetDepositsForAddressResponseProtoMsg {
   typeUrl: "/lum.network.dfract.QueryGetDepositsForAddressResponse";
@@ -154,13 +154,13 @@ export interface QueryGetDepositsForAddressResponseAminoMsg {
   value: QueryGetDepositsForAddressResponseAmino;
 }
 export interface QueryGetDepositsForAddressResponseSDKType {
-  deposits_pending_withdrawal: DepositSDKType | undefined;
-  deposits_pending_mint: DepositSDKType | undefined;
-  deposits_minted: DepositSDKType | undefined;
+  deposits_pending_withdrawal?: DepositSDKType | undefined;
+  deposits_pending_mint?: DepositSDKType | undefined;
+  deposits_minted?: DepositSDKType | undefined;
 }
 export interface QueryFetchDepositsResponse {
   deposits: Deposit[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryFetchDepositsResponseProtoMsg {
   typeUrl: "/lum.network.dfract.QueryFetchDepositsResponse";
@@ -176,17 +176,18 @@ export interface QueryFetchDepositsResponseAminoMsg {
 }
 export interface QueryFetchDepositsResponseSDKType {
   deposits: DepositSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 function createBaseQueryModuleAccountBalanceRequest(): QueryModuleAccountBalanceRequest {
   return {};
 }
 export const QueryModuleAccountBalanceRequest = {
-  encode(_: QueryModuleAccountBalanceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryModuleAccountBalanceRequest",
+  encode(_: QueryModuleAccountBalanceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleAccountBalanceRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleAccountBalanceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleAccountBalanceRequest();
     while (reader.pos < end) {
@@ -199,7 +200,7 @@ export const QueryModuleAccountBalanceRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryModuleAccountBalanceRequest>): QueryModuleAccountBalanceRequest {
+  fromPartial(_: Partial<QueryModuleAccountBalanceRequest>): QueryModuleAccountBalanceRequest {
     const message = createBaseQueryModuleAccountBalanceRequest();
     return message;
   },
@@ -232,14 +233,15 @@ function createBaseQueryModuleAccountBalanceResponse(): QueryModuleAccountBalanc
   };
 }
 export const QueryModuleAccountBalanceResponse = {
-  encode(message: QueryModuleAccountBalanceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryModuleAccountBalanceResponse",
+  encode(message: QueryModuleAccountBalanceResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.moduleAccountBalance) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleAccountBalanceResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleAccountBalanceResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleAccountBalanceResponse();
     while (reader.pos < end) {
@@ -255,7 +257,7 @@ export const QueryModuleAccountBalanceResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryModuleAccountBalanceResponse>): QueryModuleAccountBalanceResponse {
+  fromPartial(object: Partial<QueryModuleAccountBalanceResponse>): QueryModuleAccountBalanceResponse {
     const message = createBaseQueryModuleAccountBalanceResponse();
     message.moduleAccountBalance = object.moduleAccountBalance?.map(e => Coin.fromPartial(e)) || [];
     return message;
@@ -294,11 +296,12 @@ function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryParamsRequest",
+  encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -311,7 +314,7 @@ export const QueryParamsRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+  fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
   },
@@ -344,14 +347,15 @@ function createBaseQueryParamsResponse(): QueryParamsResponse {
   };
 }
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryParamsResponse",
+  encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -367,7 +371,7 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
+  fromPartial(object: Partial<QueryParamsResponse>): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
@@ -404,14 +408,15 @@ function createBaseQueryGetDepositsForAddressRequest(): QueryGetDepositsForAddre
   };
 }
 export const QueryGetDepositsForAddressRequest = {
-  encode(message: QueryGetDepositsForAddressRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryGetDepositsForAddressRequest",
+  encode(message: QueryGetDepositsForAddressRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetDepositsForAddressRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetDepositsForAddressRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetDepositsForAddressRequest();
     while (reader.pos < end) {
@@ -427,7 +432,7 @@ export const QueryGetDepositsForAddressRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetDepositsForAddressRequest>): QueryGetDepositsForAddressRequest {
+  fromPartial(object: Partial<QueryGetDepositsForAddressRequest>): QueryGetDepositsForAddressRequest {
     const message = createBaseQueryGetDepositsForAddressRequest();
     message.address = object.address ?? "";
     return message;
@@ -460,12 +465,13 @@ export const QueryGetDepositsForAddressRequest = {
 };
 function createBaseQueryFetchDepositsRequest(): QueryFetchDepositsRequest {
   return {
-    pagination: PageRequest.fromPartial({}),
+    pagination: undefined,
     type: 0
   };
 }
 export const QueryFetchDepositsRequest = {
-  encode(message: QueryFetchDepositsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryFetchDepositsRequest",
+  encode(message: QueryFetchDepositsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
@@ -474,8 +480,8 @@ export const QueryFetchDepositsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryFetchDepositsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryFetchDepositsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryFetchDepositsRequest();
     while (reader.pos < end) {
@@ -494,7 +500,7 @@ export const QueryFetchDepositsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryFetchDepositsRequest>): QueryFetchDepositsRequest {
+  fromPartial(object: Partial<QueryFetchDepositsRequest>): QueryFetchDepositsRequest {
     const message = createBaseQueryFetchDepositsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     message.type = object.type ?? 0;
@@ -530,13 +536,14 @@ export const QueryFetchDepositsRequest = {
 };
 function createBaseQueryGetDepositsForAddressResponse(): QueryGetDepositsForAddressResponse {
   return {
-    depositsPendingWithdrawal: Deposit.fromPartial({}),
-    depositsPendingMint: Deposit.fromPartial({}),
-    depositsMinted: Deposit.fromPartial({})
+    depositsPendingWithdrawal: undefined,
+    depositsPendingMint: undefined,
+    depositsMinted: undefined
   };
 }
 export const QueryGetDepositsForAddressResponse = {
-  encode(message: QueryGetDepositsForAddressResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryGetDepositsForAddressResponse",
+  encode(message: QueryGetDepositsForAddressResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositsPendingWithdrawal !== undefined) {
       Deposit.encode(message.depositsPendingWithdrawal, writer.uint32(10).fork()).ldelim();
     }
@@ -548,8 +555,8 @@ export const QueryGetDepositsForAddressResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetDepositsForAddressResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetDepositsForAddressResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetDepositsForAddressResponse();
     while (reader.pos < end) {
@@ -571,7 +578,7 @@ export const QueryGetDepositsForAddressResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetDepositsForAddressResponse>): QueryGetDepositsForAddressResponse {
+  fromPartial(object: Partial<QueryGetDepositsForAddressResponse>): QueryGetDepositsForAddressResponse {
     const message = createBaseQueryGetDepositsForAddressResponse();
     message.depositsPendingWithdrawal = object.depositsPendingWithdrawal !== undefined && object.depositsPendingWithdrawal !== null ? Deposit.fromPartial(object.depositsPendingWithdrawal) : undefined;
     message.depositsPendingMint = object.depositsPendingMint !== undefined && object.depositsPendingMint !== null ? Deposit.fromPartial(object.depositsPendingMint) : undefined;
@@ -611,11 +618,12 @@ export const QueryGetDepositsForAddressResponse = {
 function createBaseQueryFetchDepositsResponse(): QueryFetchDepositsResponse {
   return {
     deposits: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryFetchDepositsResponse = {
-  encode(message: QueryFetchDepositsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.QueryFetchDepositsResponse",
+  encode(message: QueryFetchDepositsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.deposits) {
       Deposit.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -624,8 +632,8 @@ export const QueryFetchDepositsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryFetchDepositsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryFetchDepositsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryFetchDepositsResponse();
     while (reader.pos < end) {
@@ -644,7 +652,7 @@ export const QueryFetchDepositsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryFetchDepositsResponse>): QueryFetchDepositsResponse {
+  fromPartial(object: Partial<QueryFetchDepositsResponse>): QueryFetchDepositsResponse {
     const message = createBaseQueryFetchDepositsResponse();
     message.deposits = object.deposits?.map(e => Deposit.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;

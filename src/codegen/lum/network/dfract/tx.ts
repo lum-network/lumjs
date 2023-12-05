@@ -1,6 +1,5 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface MsgDeposit {
   depositorAddress: string;
   amount: Coin | undefined;
@@ -34,7 +33,7 @@ export interface MsgDepositResponseAminoMsg {
 export interface MsgDepositResponseSDKType {}
 export interface MsgWithdrawAndMint {
   address: string;
-  microMintRate: Long;
+  microMintRate: bigint;
 }
 export interface MsgWithdrawAndMintProtoMsg {
   typeUrl: "/lum.network.dfract.MsgWithdrawAndMint";
@@ -50,7 +49,7 @@ export interface MsgWithdrawAndMintAminoMsg {
 }
 export interface MsgWithdrawAndMintSDKType {
   address: string;
-  micro_mint_rate: Long;
+  micro_mint_rate: bigint;
 }
 export interface MsgWithdrawAndMintResponse {}
 export interface MsgWithdrawAndMintResponseProtoMsg {
@@ -70,7 +69,8 @@ function createBaseMsgDeposit(): MsgDeposit {
   };
 }
 export const MsgDeposit = {
-  encode(message: MsgDeposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.MsgDeposit",
+  encode(message: MsgDeposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositorAddress !== "") {
       writer.uint32(10).string(message.depositorAddress);
     }
@@ -79,8 +79,8 @@ export const MsgDeposit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDeposit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDeposit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDeposit();
     while (reader.pos < end) {
@@ -99,7 +99,7 @@ export const MsgDeposit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgDeposit>): MsgDeposit {
+  fromPartial(object: Partial<MsgDeposit>): MsgDeposit {
     const message = createBaseMsgDeposit();
     message.depositorAddress = object.depositorAddress ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
@@ -137,11 +137,12 @@ function createBaseMsgDepositResponse(): MsgDepositResponse {
   return {};
 }
 export const MsgDepositResponse = {
-  encode(_: MsgDepositResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.MsgDepositResponse",
+  encode(_: MsgDepositResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgDepositResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositResponse();
     while (reader.pos < end) {
@@ -154,7 +155,7 @@ export const MsgDepositResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgDepositResponse>): MsgDepositResponse {
+  fromPartial(_: Partial<MsgDepositResponse>): MsgDepositResponse {
     const message = createBaseMsgDepositResponse();
     return message;
   },
@@ -184,21 +185,22 @@ export const MsgDepositResponse = {
 function createBaseMsgWithdrawAndMint(): MsgWithdrawAndMint {
   return {
     address: "",
-    microMintRate: Long.ZERO
+    microMintRate: BigInt(0)
   };
 }
 export const MsgWithdrawAndMint = {
-  encode(message: MsgWithdrawAndMint, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.MsgWithdrawAndMint",
+  encode(message: MsgWithdrawAndMint, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
-    if (!message.microMintRate.isZero()) {
+    if (message.microMintRate !== BigInt(0)) {
       writer.uint32(16).int64(message.microMintRate);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawAndMint {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgWithdrawAndMint {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawAndMint();
     while (reader.pos < end) {
@@ -208,7 +210,7 @@ export const MsgWithdrawAndMint = {
           message.address = reader.string();
           break;
         case 2:
-          message.microMintRate = (reader.int64() as Long);
+          message.microMintRate = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -217,16 +219,16 @@ export const MsgWithdrawAndMint = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgWithdrawAndMint>): MsgWithdrawAndMint {
+  fromPartial(object: Partial<MsgWithdrawAndMint>): MsgWithdrawAndMint {
     const message = createBaseMsgWithdrawAndMint();
     message.address = object.address ?? "";
-    message.microMintRate = object.microMintRate !== undefined && object.microMintRate !== null ? Long.fromValue(object.microMintRate) : Long.ZERO;
+    message.microMintRate = object.microMintRate !== undefined && object.microMintRate !== null ? BigInt(object.microMintRate.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgWithdrawAndMintAmino): MsgWithdrawAndMint {
     return {
       address: object.address,
-      microMintRate: Long.fromString(object.micro_mint_rate)
+      microMintRate: BigInt(object.micro_mint_rate)
     };
   },
   toAmino(message: MsgWithdrawAndMint): MsgWithdrawAndMintAmino {
@@ -255,11 +257,12 @@ function createBaseMsgWithdrawAndMintResponse(): MsgWithdrawAndMintResponse {
   return {};
 }
 export const MsgWithdrawAndMintResponse = {
-  encode(_: MsgWithdrawAndMintResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.MsgWithdrawAndMintResponse",
+  encode(_: MsgWithdrawAndMintResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawAndMintResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgWithdrawAndMintResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawAndMintResponse();
     while (reader.pos < end) {
@@ -272,7 +275,7 @@ export const MsgWithdrawAndMintResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgWithdrawAndMintResponse>): MsgWithdrawAndMintResponse {
+  fromPartial(_: Partial<MsgWithdrawAndMintResponse>): MsgWithdrawAndMintResponse {
     const message = createBaseMsgWithdrawAndMintResponse();
     return message;
   },

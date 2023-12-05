@@ -2,8 +2,9 @@ import { DrawSchedule, DrawScheduleAmino, DrawScheduleSDKType } from "./draw_sch
 import { PrizeStrategy, PrizeStrategyAmino, PrizeStrategySDKType } from "./prize_strategy";
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
 import { PoolType, PoolState, poolTypeFromJSON, poolStateFromJSON } from "./pool";
-import { Long, DeepPartial, isSet } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
+import { Decimal } from "@cosmjs/math";
 export interface ProposalRegisterPool {
   title: string;
   description: string;
@@ -69,7 +70,7 @@ export interface ProposalRegisterPoolSDKType {
 export interface ProposalUpdatePool {
   title: string;
   description: string;
-  poolId: Long;
+  poolId: bigint;
   validators?: string[];
   minDepositAmount?: string;
   drawSchedule?: DrawSchedule | undefined;
@@ -101,7 +102,7 @@ export interface ProposalUpdatePoolAminoMsg {
 export interface ProposalUpdatePoolSDKType {
   title: string;
   description: string;
-  pool_id: Long;
+  pool_id: bigint;
   validators?: string[];
   min_deposit_amount?: string;
   draw_schedule?: DrawScheduleSDKType | undefined;
@@ -175,7 +176,8 @@ function createBaseProposalRegisterPool(): ProposalRegisterPool {
   };
 }
 export const ProposalRegisterPool = {
-  encode(message: ProposalRegisterPool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.ProposalRegisterPool",
+  encode(message: ProposalRegisterPool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -226,8 +228,8 @@ export const ProposalRegisterPool = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProposalRegisterPool {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProposalRegisterPool {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposalRegisterPool();
     while (reader.pos < end) {
@@ -288,7 +290,7 @@ export const ProposalRegisterPool = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProposalRegisterPool>): ProposalRegisterPool {
+  fromPartial(object: Partial<ProposalRegisterPool>): ProposalRegisterPool {
     const message = createBaseProposalRegisterPool();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
@@ -372,8 +374,8 @@ function createBaseProposalUpdatePool(): ProposalUpdatePool {
   return {
     title: "",
     description: "",
-    poolId: Long.UZERO,
-    validators: undefined,
+    poolId: BigInt(0),
+    validators: [],
     minDepositAmount: undefined,
     drawSchedule: undefined,
     prizeStrategy: undefined,
@@ -383,14 +385,15 @@ function createBaseProposalUpdatePool(): ProposalUpdatePool {
   };
 }
 export const ProposalUpdatePool = {
-  encode(message: ProposalUpdatePool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.ProposalUpdatePool",
+  encode(message: ProposalUpdatePool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
     if (message.description !== "") {
       writer.uint32(18).string(message.description);
     }
-    if (!message.poolId.isZero()) {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(24).uint64(message.poolId);
     }
     for (const v of message.validators) {
@@ -416,8 +419,8 @@ export const ProposalUpdatePool = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProposalUpdatePool {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProposalUpdatePool {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposalUpdatePool();
     while (reader.pos < end) {
@@ -430,7 +433,7 @@ export const ProposalUpdatePool = {
           message.description = reader.string();
           break;
         case 3:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 4:
           message.validators.push(reader.string());
@@ -460,11 +463,11 @@ export const ProposalUpdatePool = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProposalUpdatePool>): ProposalUpdatePool {
+  fromPartial(object: Partial<ProposalUpdatePool>): ProposalUpdatePool {
     const message = createBaseProposalUpdatePool();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.validators = object.validators?.map(e => e) || [];
     message.minDepositAmount = object.minDepositAmount ?? undefined;
     message.drawSchedule = object.drawSchedule !== undefined && object.drawSchedule !== null ? DrawSchedule.fromPartial(object.drawSchedule) : undefined;
@@ -478,7 +481,7 @@ export const ProposalUpdatePool = {
     return {
       title: object.title,
       description: object.description,
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       validators: Array.isArray(object?.validators) ? object.validators.map((e: any) => e) : [],
       minDepositAmount: object?.min_deposit_amount,
       drawSchedule: object?.draw_schedule ? DrawSchedule.fromAmino(object.draw_schedule) : undefined,
@@ -537,7 +540,8 @@ function createBaseProposalUpdateParams(): ProposalUpdateParams {
   };
 }
 export const ProposalUpdateParams = {
-  encode(message: ProposalUpdateParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.ProposalUpdateParams",
+  encode(message: ProposalUpdateParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -563,15 +567,15 @@ export const ProposalUpdateParams = {
       Duration.encode(message.prizeExpirationDelta, writer.uint32(66).fork()).ldelim();
     }
     if (message.feesStakers !== undefined) {
-      writer.uint32(74).string(message.feesStakers);
+      writer.uint32(74).string(Decimal.fromUserInput(message.feesStakers, 18).atomics);
     }
     if (message.minDepositDrawDelta !== undefined) {
       Duration.encode(message.minDepositDrawDelta, writer.uint32(82).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProposalUpdateParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProposalUpdateParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposalUpdateParams();
     while (reader.pos < end) {
@@ -602,7 +606,7 @@ export const ProposalUpdateParams = {
           message.prizeExpirationDelta = Duration.decode(reader, reader.uint32());
           break;
         case 9:
-          message.feesStakers = reader.string();
+          message.feesStakers = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 10:
           message.minDepositDrawDelta = Duration.decode(reader, reader.uint32());
@@ -614,7 +618,7 @@ export const ProposalUpdateParams = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProposalUpdateParams>): ProposalUpdateParams {
+  fromPartial(object: Partial<ProposalUpdateParams>): ProposalUpdateParams {
     const message = createBaseProposalUpdateParams();
     message.title = object.title ?? "";
     message.description = object.description ?? "";

@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryPoolsRequest, QueryPoolsResponse, QueryPoolRequest, QueryPoolResponse, QueryDepositsRequest, QueryDepositsResponse, QueryPoolDepositsRequest, QueryPoolDepositRequest, QueryDepositResponse, QueryAccountDepositsRequest, QueryAccountPoolDepositsRequest, QueryDrawsRequest, QueryDrawsResponse, QueryPoolDrawsRequest, QueryPoolDrawRequest, QueryDrawResponse, QueryPrizesRequest, QueryPrizesResponse, QueryPoolPrizesRequest, QueryPoolDrawPrizesRequest, QueryPoolDrawPrizeRequest, QueryPrizeResponse, QueryAccountPrizesRequest, QueryAccountPoolPrizesRequest, QueryAccountPoolDrawPrizesRequest, QueryWithdrawalsRequest, QueryWithdrawalsResponse, QueryPoolWithdrawalsRequest, QueryPoolWithdrawalRequest, QueryWithdrawalResponse, QueryAccountWithdrawalsRequest, QueryAccountPoolWithdrawalsRequest } from "./query";
 export interface Query {
@@ -58,127 +58,127 @@ export class QueryClientImpl implements Query {
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   pools(request: QueryPoolsRequest = {
     pagination: undefined
   }): Promise<QueryPoolsResponse> {
     const data = QueryPoolsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Pools", data);
-    return promise.then(data => QueryPoolsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPoolsResponse.decode(new BinaryReader(data)));
   }
   pool(request: QueryPoolRequest): Promise<QueryPoolResponse> {
     const data = QueryPoolRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Pool", data);
-    return promise.then(data => QueryPoolResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPoolResponse.decode(new BinaryReader(data)));
   }
   deposits(request: QueryDepositsRequest = {
     pagination: undefined
   }): Promise<QueryDepositsResponse> {
     const data = QueryDepositsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Deposits", data);
-    return promise.then(data => QueryDepositsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDepositsResponse.decode(new BinaryReader(data)));
   }
   poolDeposits(request: QueryPoolDepositsRequest): Promise<QueryDepositsResponse> {
     const data = QueryPoolDepositsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolDeposits", data);
-    return promise.then(data => QueryDepositsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDepositsResponse.decode(new BinaryReader(data)));
   }
   poolDeposit(request: QueryPoolDepositRequest): Promise<QueryDepositResponse> {
     const data = QueryPoolDepositRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolDeposit", data);
-    return promise.then(data => QueryDepositResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDepositResponse.decode(new BinaryReader(data)));
   }
   accountDeposits(request: QueryAccountDepositsRequest): Promise<QueryDepositsResponse> {
     const data = QueryAccountDepositsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountDeposits", data);
-    return promise.then(data => QueryDepositsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDepositsResponse.decode(new BinaryReader(data)));
   }
   accountPoolDeposits(request: QueryAccountPoolDepositsRequest): Promise<QueryDepositsResponse> {
     const data = QueryAccountPoolDepositsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountPoolDeposits", data);
-    return promise.then(data => QueryDepositsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDepositsResponse.decode(new BinaryReader(data)));
   }
   draws(request: QueryDrawsRequest = {
     pagination: undefined
   }): Promise<QueryDrawsResponse> {
     const data = QueryDrawsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Draws", data);
-    return promise.then(data => QueryDrawsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDrawsResponse.decode(new BinaryReader(data)));
   }
   poolDraws(request: QueryPoolDrawsRequest): Promise<QueryDrawsResponse> {
     const data = QueryPoolDrawsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolDraws", data);
-    return promise.then(data => QueryDrawsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDrawsResponse.decode(new BinaryReader(data)));
   }
   poolDraw(request: QueryPoolDrawRequest): Promise<QueryDrawResponse> {
     const data = QueryPoolDrawRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolDraw", data);
-    return promise.then(data => QueryDrawResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDrawResponse.decode(new BinaryReader(data)));
   }
   prizes(request: QueryPrizesRequest = {
     pagination: undefined
   }): Promise<QueryPrizesResponse> {
     const data = QueryPrizesRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Prizes", data);
-    return promise.then(data => QueryPrizesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizesResponse.decode(new BinaryReader(data)));
   }
   poolPrizes(request: QueryPoolPrizesRequest): Promise<QueryPrizesResponse> {
     const data = QueryPoolPrizesRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolPrizes", data);
-    return promise.then(data => QueryPrizesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizesResponse.decode(new BinaryReader(data)));
   }
   poolDrawPrizes(request: QueryPoolDrawPrizesRequest): Promise<QueryPrizesResponse> {
     const data = QueryPoolDrawPrizesRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolDrawPrizes", data);
-    return promise.then(data => QueryPrizesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizesResponse.decode(new BinaryReader(data)));
   }
   poolDrawPrize(request: QueryPoolDrawPrizeRequest): Promise<QueryPrizeResponse> {
     const data = QueryPoolDrawPrizeRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolDrawPrize", data);
-    return promise.then(data => QueryPrizeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizeResponse.decode(new BinaryReader(data)));
   }
   accountPrizes(request: QueryAccountPrizesRequest): Promise<QueryPrizesResponse> {
     const data = QueryAccountPrizesRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountPrizes", data);
-    return promise.then(data => QueryPrizesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizesResponse.decode(new BinaryReader(data)));
   }
   accountPoolPrizes(request: QueryAccountPoolPrizesRequest): Promise<QueryPrizesResponse> {
     const data = QueryAccountPoolPrizesRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountPoolPrizes", data);
-    return promise.then(data => QueryPrizesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizesResponse.decode(new BinaryReader(data)));
   }
   accountPoolDrawPrizes(request: QueryAccountPoolDrawPrizesRequest): Promise<QueryPrizesResponse> {
     const data = QueryAccountPoolDrawPrizesRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountPoolDrawPrizes", data);
-    return promise.then(data => QueryPrizesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryPrizesResponse.decode(new BinaryReader(data)));
   }
   withdrawals(request: QueryWithdrawalsRequest = {
     pagination: undefined
   }): Promise<QueryWithdrawalsResponse> {
     const data = QueryWithdrawalsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "Withdrawals", data);
-    return promise.then(data => QueryWithdrawalsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryWithdrawalsResponse.decode(new BinaryReader(data)));
   }
   poolWithdrawals(request: QueryPoolWithdrawalsRequest): Promise<QueryWithdrawalsResponse> {
     const data = QueryPoolWithdrawalsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolWithdrawals", data);
-    return promise.then(data => QueryWithdrawalsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryWithdrawalsResponse.decode(new BinaryReader(data)));
   }
   poolWithdrawal(request: QueryPoolWithdrawalRequest): Promise<QueryWithdrawalResponse> {
     const data = QueryPoolWithdrawalRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "PoolWithdrawal", data);
-    return promise.then(data => QueryWithdrawalResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryWithdrawalResponse.decode(new BinaryReader(data)));
   }
   accountWithdrawals(request: QueryAccountWithdrawalsRequest): Promise<QueryWithdrawalsResponse> {
     const data = QueryAccountWithdrawalsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountWithdrawals", data);
-    return promise.then(data => QueryWithdrawalsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryWithdrawalsResponse.decode(new BinaryReader(data)));
   }
   accountPoolWithdrawals(request: QueryAccountPoolWithdrawalsRequest): Promise<QueryWithdrawalsResponse> {
     const data = QueryAccountPoolWithdrawalsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Query", "AccountPoolWithdrawals", data);
-    return promise.then(data => QueryWithdrawalsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryWithdrawalsResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {

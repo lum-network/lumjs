@@ -1,6 +1,5 @@
 import { PrizeBatch, PrizeBatchAmino, PrizeBatchSDKType } from "./prize_batch";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface PrizeStrategy {
   prizeBatches: PrizeBatch[];
 }
@@ -24,14 +23,15 @@ function createBasePrizeStrategy(): PrizeStrategy {
   };
 }
 export const PrizeStrategy = {
-  encode(message: PrizeStrategy, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.PrizeStrategy",
+  encode(message: PrizeStrategy, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.prizeBatches) {
       PrizeBatch.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PrizeStrategy {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PrizeStrategy {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrizeStrategy();
     while (reader.pos < end) {
@@ -47,7 +47,7 @@ export const PrizeStrategy = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<PrizeStrategy>): PrizeStrategy {
+  fromPartial(object: Partial<PrizeStrategy>): PrizeStrategy {
     const message = createBasePrizeStrategy();
     message.prizeBatches = object.prizeBatches?.map(e => PrizeBatch.fromPartial(e)) || [];
     return message;

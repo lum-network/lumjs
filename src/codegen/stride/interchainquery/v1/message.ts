@@ -1,13 +1,12 @@
 import { ProofOps, ProofOpsAmino, ProofOpsSDKType } from "../../../tendermint/crypto/proof";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** MsgSubmitQueryResponse represents a message type to fulfil a query request. */
 export interface MsgSubmitQueryResponse {
   chainId: string;
   queryId: string;
   result: Uint8Array;
-  proofOps: ProofOps | undefined;
-  height: Long;
+  proofOps?: ProofOps | undefined;
+  height: bigint;
   fromAddress: string;
 }
 export interface MsgSubmitQueryResponseProtoMsg {
@@ -32,8 +31,8 @@ export interface MsgSubmitQueryResponseSDKType {
   chain_id: string;
   query_id: string;
   result: Uint8Array;
-  proof_ops: ProofOpsSDKType | undefined;
-  height: Long;
+  proof_ops?: ProofOpsSDKType | undefined;
+  height: bigint;
   from_address: string;
 }
 /**
@@ -64,13 +63,14 @@ function createBaseMsgSubmitQueryResponse(): MsgSubmitQueryResponse {
     chainId: "",
     queryId: "",
     result: new Uint8Array(),
-    proofOps: ProofOps.fromPartial({}),
-    height: Long.ZERO,
+    proofOps: undefined,
+    height: BigInt(0),
     fromAddress: ""
   };
 }
 export const MsgSubmitQueryResponse = {
-  encode(message: MsgSubmitQueryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.MsgSubmitQueryResponse",
+  encode(message: MsgSubmitQueryResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
@@ -83,7 +83,7 @@ export const MsgSubmitQueryResponse = {
     if (message.proofOps !== undefined) {
       ProofOps.encode(message.proofOps, writer.uint32(34).fork()).ldelim();
     }
-    if (!message.height.isZero()) {
+    if (message.height !== BigInt(0)) {
       writer.uint32(40).int64(message.height);
     }
     if (message.fromAddress !== "") {
@@ -91,8 +91,8 @@ export const MsgSubmitQueryResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitQueryResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSubmitQueryResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitQueryResponse();
     while (reader.pos < end) {
@@ -111,7 +111,7 @@ export const MsgSubmitQueryResponse = {
           message.proofOps = ProofOps.decode(reader, reader.uint32());
           break;
         case 5:
-          message.height = (reader.int64() as Long);
+          message.height = reader.int64();
           break;
         case 6:
           message.fromAddress = reader.string();
@@ -123,13 +123,13 @@ export const MsgSubmitQueryResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgSubmitQueryResponse>): MsgSubmitQueryResponse {
+  fromPartial(object: Partial<MsgSubmitQueryResponse>): MsgSubmitQueryResponse {
     const message = createBaseMsgSubmitQueryResponse();
     message.chainId = object.chainId ?? "";
     message.queryId = object.queryId ?? "";
     message.result = object.result ?? new Uint8Array();
     message.proofOps = object.proofOps !== undefined && object.proofOps !== null ? ProofOps.fromPartial(object.proofOps) : undefined;
-    message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.fromAddress = object.fromAddress ?? "";
     return message;
   },
@@ -139,7 +139,7 @@ export const MsgSubmitQueryResponse = {
       queryId: object.query_id,
       result: object.result,
       proofOps: object?.proof_ops ? ProofOps.fromAmino(object.proof_ops) : undefined,
-      height: Long.fromString(object.height),
+      height: BigInt(object.height),
       fromAddress: object.from_address
     };
   },
@@ -173,11 +173,12 @@ function createBaseMsgSubmitQueryResponseResponse(): MsgSubmitQueryResponseRespo
   return {};
 }
 export const MsgSubmitQueryResponseResponse = {
-  encode(_: MsgSubmitQueryResponseResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.MsgSubmitQueryResponseResponse",
+  encode(_: MsgSubmitQueryResponseResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitQueryResponseResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSubmitQueryResponseResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitQueryResponseResponse();
     while (reader.pos < end) {
@@ -190,7 +191,7 @@ export const MsgSubmitQueryResponseResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgSubmitQueryResponseResponse>): MsgSubmitQueryResponseResponse {
+  fromPartial(_: Partial<MsgSubmitQueryResponseResponse>): MsgSubmitQueryResponseResponse {
     const message = createBaseMsgSubmitQueryResponseResponse();
     return message;
   },

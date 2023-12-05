@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
-import { toTimestamp, fromTimestamp, DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export interface Deposit {
   depositorAddress: string;
   amount: Coin | undefined;
@@ -14,7 +14,7 @@ export interface DepositProtoMsg {
 export interface DepositAmino {
   depositor_address: string;
   amount?: CoinAmino | undefined;
-  created_at?: Date | undefined;
+  created_at?: string | undefined;
 }
 export interface DepositAminoMsg {
   type: "/lum.network.dfract.Deposit";
@@ -33,7 +33,8 @@ function createBaseDeposit(): Deposit {
   };
 }
 export const Deposit = {
-  encode(message: Deposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.Deposit",
+  encode(message: Deposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositorAddress !== "") {
       writer.uint32(10).string(message.depositorAddress);
     }
@@ -45,8 +46,8 @@ export const Deposit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Deposit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Deposit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeposit();
     while (reader.pos < end) {
@@ -68,7 +69,7 @@ export const Deposit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Deposit>): Deposit {
+  fromPartial(object: Partial<Deposit>): Deposit {
     const message = createBaseDeposit();
     message.depositorAddress = object.depositorAddress ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
@@ -79,14 +80,14 @@ export const Deposit = {
     return {
       depositorAddress: object.depositor_address,
       amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      createdAt: object.created_at
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined
     };
   },
   toAmino(message: Deposit): DepositAmino {
     const obj: any = {};
     obj.depositor_address = message.depositorAddress;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
-    obj.created_at = message.createdAt;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: DepositAminoMsg): Deposit {

@@ -5,8 +5,7 @@ import { Deposit, DepositAmino, DepositSDKType } from "./deposit";
 import { Draw, DrawAmino, DrawSDKType } from "./draw";
 import { Prize, PrizeAmino, PrizeSDKType } from "./prize";
 import { Withdrawal, WithdrawalAmino, WithdrawalSDKType } from "./withdrawal";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface QueryParamsResponse {
   params: Params | undefined;
 }
@@ -54,7 +53,7 @@ export interface QueryPoolResponseSDKType {
 }
 export interface QueryPoolsResponse {
   pools: Pool[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryPoolsResponseProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolsResponse";
@@ -70,10 +69,10 @@ export interface QueryPoolsResponseAminoMsg {
 }
 export interface QueryPoolsResponseSDKType {
   pools: PoolSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryPoolRequest {
-  poolId: Long;
+  poolId: bigint;
 }
 export interface QueryPoolRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolRequest";
@@ -87,10 +86,10 @@ export interface QueryPoolRequestAminoMsg {
   value: QueryPoolRequestAmino;
 }
 export interface QueryPoolRequestSDKType {
-  pool_id: Long;
+  pool_id: bigint;
 }
 export interface QueryPoolsRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPoolsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolsRequest";
@@ -104,7 +103,7 @@ export interface QueryPoolsRequestAminoMsg {
   value: QueryPoolsRequestAmino;
 }
 export interface QueryPoolsRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryDepositResponse {
   deposit: Deposit | undefined;
@@ -125,7 +124,7 @@ export interface QueryDepositResponseSDKType {
 }
 export interface QueryDepositsResponse {
   deposits: Deposit[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryDepositsResponseProtoMsg {
   typeUrl: "/lum.network.millions.QueryDepositsResponse";
@@ -141,10 +140,10 @@ export interface QueryDepositsResponseAminoMsg {
 }
 export interface QueryDepositsResponseSDKType {
   deposits: DepositSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryDepositsRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryDepositsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryDepositsRequest";
@@ -158,11 +157,11 @@ export interface QueryDepositsRequestAminoMsg {
   value: QueryDepositsRequestAmino;
 }
 export interface QueryDepositsRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryPoolDepositRequest {
-  poolId: Long;
-  depositId: Long;
+  poolId: bigint;
+  depositId: bigint;
 }
 export interface QueryPoolDepositRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolDepositRequest";
@@ -177,12 +176,12 @@ export interface QueryPoolDepositRequestAminoMsg {
   value: QueryPoolDepositRequestAmino;
 }
 export interface QueryPoolDepositRequestSDKType {
-  pool_id: Long;
-  deposit_id: Long;
+  pool_id: bigint;
+  deposit_id: bigint;
 }
 export interface QueryPoolDepositsRequest {
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPoolDepositsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolDepositsRequest";
@@ -197,12 +196,12 @@ export interface QueryPoolDepositsRequestAminoMsg {
   value: QueryPoolDepositsRequestAmino;
 }
 export interface QueryPoolDepositsRequestSDKType {
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountDepositsRequest {
   depositorAddress: string;
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountDepositsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountDepositsRequest";
@@ -218,12 +217,12 @@ export interface QueryAccountDepositsRequestAminoMsg {
 }
 export interface QueryAccountDepositsRequestSDKType {
   depositor_address: string;
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountPoolDepositsRequest {
   depositorAddress: string;
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountPoolDepositsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountPoolDepositsRequest";
@@ -240,11 +239,11 @@ export interface QueryAccountPoolDepositsRequestAminoMsg {
 }
 export interface QueryAccountPoolDepositsRequestSDKType {
   depositor_address: string;
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryDrawResponse {
-  draw: Draw | undefined;
+  draw?: Draw | undefined;
 }
 export interface QueryDrawResponseProtoMsg {
   typeUrl: "/lum.network.millions.QueryDrawResponse";
@@ -258,11 +257,11 @@ export interface QueryDrawResponseAminoMsg {
   value: QueryDrawResponseAmino;
 }
 export interface QueryDrawResponseSDKType {
-  draw: DrawSDKType | undefined;
+  draw?: DrawSDKType | undefined;
 }
 export interface QueryDrawsResponse {
   draws: Draw[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryDrawsResponseProtoMsg {
   typeUrl: "/lum.network.millions.QueryDrawsResponse";
@@ -278,10 +277,10 @@ export interface QueryDrawsResponseAminoMsg {
 }
 export interface QueryDrawsResponseSDKType {
   draws: DrawSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryDrawsRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryDrawsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryDrawsRequest";
@@ -295,11 +294,11 @@ export interface QueryDrawsRequestAminoMsg {
   value: QueryDrawsRequestAmino;
 }
 export interface QueryDrawsRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryPoolDrawsRequest {
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPoolDrawsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolDrawsRequest";
@@ -314,12 +313,12 @@ export interface QueryPoolDrawsRequestAminoMsg {
   value: QueryPoolDrawsRequestAmino;
 }
 export interface QueryPoolDrawsRequestSDKType {
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryPoolDrawRequest {
-  poolId: Long;
-  drawId: Long;
+  poolId: bigint;
+  drawId: bigint;
 }
 export interface QueryPoolDrawRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolDrawRequest";
@@ -334,8 +333,8 @@ export interface QueryPoolDrawRequestAminoMsg {
   value: QueryPoolDrawRequestAmino;
 }
 export interface QueryPoolDrawRequestSDKType {
-  pool_id: Long;
-  draw_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
 }
 export interface QueryPrizeResponse {
   prize: Prize | undefined;
@@ -356,7 +355,7 @@ export interface QueryPrizeResponseSDKType {
 }
 export interface QueryPrizesResponse {
   prizes: Prize[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryPrizesResponseProtoMsg {
   typeUrl: "/lum.network.millions.QueryPrizesResponse";
@@ -372,12 +371,12 @@ export interface QueryPrizesResponseAminoMsg {
 }
 export interface QueryPrizesResponseSDKType {
   prizes: PrizeSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryPoolDrawPrizeRequest {
-  poolId: Long;
-  drawId: Long;
-  prizeId: Long;
+  poolId: bigint;
+  drawId: bigint;
+  prizeId: bigint;
 }
 export interface QueryPoolDrawPrizeRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolDrawPrizeRequest";
@@ -393,12 +392,12 @@ export interface QueryPoolDrawPrizeRequestAminoMsg {
   value: QueryPoolDrawPrizeRequestAmino;
 }
 export interface QueryPoolDrawPrizeRequestSDKType {
-  pool_id: Long;
-  draw_id: Long;
-  prize_id: Long;
+  pool_id: bigint;
+  draw_id: bigint;
+  prize_id: bigint;
 }
 export interface QueryPrizesRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPrizesRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPrizesRequest";
@@ -412,11 +411,11 @@ export interface QueryPrizesRequestAminoMsg {
   value: QueryPrizesRequestAmino;
 }
 export interface QueryPrizesRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryPoolPrizesRequest {
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPoolPrizesRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolPrizesRequest";
@@ -431,13 +430,13 @@ export interface QueryPoolPrizesRequestAminoMsg {
   value: QueryPoolPrizesRequestAmino;
 }
 export interface QueryPoolPrizesRequestSDKType {
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryPoolDrawPrizesRequest {
-  poolId: Long;
-  drawId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  drawId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPoolDrawPrizesRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolDrawPrizesRequest";
@@ -453,13 +452,13 @@ export interface QueryPoolDrawPrizesRequestAminoMsg {
   value: QueryPoolDrawPrizesRequestAmino;
 }
 export interface QueryPoolDrawPrizesRequestSDKType {
-  pool_id: Long;
-  draw_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  draw_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountPrizesRequest {
   winnerAddress: string;
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountPrizesRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountPrizesRequest";
@@ -475,12 +474,12 @@ export interface QueryAccountPrizesRequestAminoMsg {
 }
 export interface QueryAccountPrizesRequestSDKType {
   winner_address: string;
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountPoolPrizesRequest {
   winnerAddress: string;
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountPoolPrizesRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountPoolPrizesRequest";
@@ -497,14 +496,14 @@ export interface QueryAccountPoolPrizesRequestAminoMsg {
 }
 export interface QueryAccountPoolPrizesRequestSDKType {
   winner_address: string;
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountPoolDrawPrizesRequest {
   winnerAddress: string;
-  poolId: Long;
-  drawId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  drawId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountPoolDrawPrizesRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountPoolDrawPrizesRequest";
@@ -522,9 +521,9 @@ export interface QueryAccountPoolDrawPrizesRequestAminoMsg {
 }
 export interface QueryAccountPoolDrawPrizesRequestSDKType {
   winner_address: string;
-  pool_id: Long;
-  draw_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  draw_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryWithdrawalResponse {
   withdrawal: Withdrawal | undefined;
@@ -545,7 +544,7 @@ export interface QueryWithdrawalResponseSDKType {
 }
 export interface QueryWithdrawalsResponse {
   withdrawals: Withdrawal[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryWithdrawalsResponseProtoMsg {
   typeUrl: "/lum.network.millions.QueryWithdrawalsResponse";
@@ -561,11 +560,11 @@ export interface QueryWithdrawalsResponseAminoMsg {
 }
 export interface QueryWithdrawalsResponseSDKType {
   withdrawals: WithdrawalSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryPoolWithdrawalRequest {
-  poolId: Long;
-  withdrawalId: Long;
+  poolId: bigint;
+  withdrawalId: bigint;
 }
 export interface QueryPoolWithdrawalRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolWithdrawalRequest";
@@ -580,11 +579,11 @@ export interface QueryPoolWithdrawalRequestAminoMsg {
   value: QueryPoolWithdrawalRequestAmino;
 }
 export interface QueryPoolWithdrawalRequestSDKType {
-  pool_id: Long;
-  withdrawal_id: Long;
+  pool_id: bigint;
+  withdrawal_id: bigint;
 }
 export interface QueryWithdrawalsRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryWithdrawalsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryWithdrawalsRequest";
@@ -598,11 +597,11 @@ export interface QueryWithdrawalsRequestAminoMsg {
   value: QueryWithdrawalsRequestAmino;
 }
 export interface QueryWithdrawalsRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryPoolWithdrawalsRequest {
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryPoolWithdrawalsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryPoolWithdrawalsRequest";
@@ -617,12 +616,12 @@ export interface QueryPoolWithdrawalsRequestAminoMsg {
   value: QueryPoolWithdrawalsRequestAmino;
 }
 export interface QueryPoolWithdrawalsRequestSDKType {
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountWithdrawalsRequest {
   depositorAddress: string;
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountWithdrawalsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountWithdrawalsRequest";
@@ -638,12 +637,12 @@ export interface QueryAccountWithdrawalsRequestAminoMsg {
 }
 export interface QueryAccountWithdrawalsRequestSDKType {
   depositor_address: string;
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryAccountPoolWithdrawalsRequest {
   depositorAddress: string;
-  poolId: Long;
-  pagination: PageRequest | undefined;
+  poolId: bigint;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryAccountPoolWithdrawalsRequestProtoMsg {
   typeUrl: "/lum.network.millions.QueryAccountPoolWithdrawalsRequest";
@@ -660,8 +659,8 @@ export interface QueryAccountPoolWithdrawalsRequestAminoMsg {
 }
 export interface QueryAccountPoolWithdrawalsRequestSDKType {
   depositor_address: string;
-  pool_id: Long;
-  pagination: PageRequestSDKType | undefined;
+  pool_id: bigint;
+  pagination?: PageRequestSDKType | undefined;
 }
 function createBaseQueryParamsResponse(): QueryParamsResponse {
   return {
@@ -669,14 +668,15 @@ function createBaseQueryParamsResponse(): QueryParamsResponse {
   };
 }
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryParamsResponse",
+  encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -692,7 +692,7 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
+  fromPartial(object: Partial<QueryParamsResponse>): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
@@ -727,11 +727,12 @@ function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryParamsRequest",
+  encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -744,7 +745,7 @@ export const QueryParamsRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+  fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
   },
@@ -777,14 +778,15 @@ function createBaseQueryPoolResponse(): QueryPoolResponse {
   };
 }
 export const QueryPoolResponse = {
-  encode(message: QueryPoolResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryPoolResponse",
+  encode(message: QueryPoolResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pool !== undefined) {
       Pool.encode(message.pool, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolResponse();
     while (reader.pos < end) {
@@ -800,7 +802,7 @@ export const QueryPoolResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolResponse>): QueryPoolResponse {
+  fromPartial(object: Partial<QueryPoolResponse>): QueryPoolResponse {
     const message = createBaseQueryPoolResponse();
     message.pool = object.pool !== undefined && object.pool !== null ? Pool.fromPartial(object.pool) : undefined;
     return message;
@@ -834,11 +836,12 @@ export const QueryPoolResponse = {
 function createBaseQueryPoolsResponse(): QueryPoolsResponse {
   return {
     pools: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryPoolsResponse = {
-  encode(message: QueryPoolsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryPoolsResponse",
+  encode(message: QueryPoolsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.pools) {
       Pool.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -847,8 +850,8 @@ export const QueryPoolsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolsResponse();
     while (reader.pos < end) {
@@ -867,7 +870,7 @@ export const QueryPoolsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolsResponse>): QueryPoolsResponse {
+  fromPartial(object: Partial<QueryPoolsResponse>): QueryPoolsResponse {
     const message = createBaseQueryPoolsResponse();
     message.pools = object.pools?.map(e => Pool.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -907,25 +910,26 @@ export const QueryPoolsResponse = {
 };
 function createBaseQueryPoolRequest(): QueryPoolRequest {
   return {
-    poolId: Long.UZERO
+    poolId: BigInt(0)
   };
 }
 export const QueryPoolRequest = {
-  encode(message: QueryPoolRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolRequest",
+  encode(message: QueryPoolRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -934,14 +938,14 @@ export const QueryPoolRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolRequest>): QueryPoolRequest {
+  fromPartial(object: Partial<QueryPoolRequest>): QueryPoolRequest {
     const message = createBaseQueryPoolRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: QueryPoolRequestAmino): QueryPoolRequest {
     return {
-      poolId: Long.fromString(object.pool_id)
+      poolId: BigInt(object.pool_id)
     };
   },
   toAmino(message: QueryPoolRequest): QueryPoolRequestAmino {
@@ -967,18 +971,19 @@ export const QueryPoolRequest = {
 };
 function createBaseQueryPoolsRequest(): QueryPoolsRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryPoolsRequest = {
-  encode(message: QueryPoolsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryPoolsRequest",
+  encode(message: QueryPoolsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolsRequest();
     while (reader.pos < end) {
@@ -994,7 +999,7 @@ export const QueryPoolsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolsRequest>): QueryPoolsRequest {
+  fromPartial(object: Partial<QueryPoolsRequest>): QueryPoolsRequest {
     const message = createBaseQueryPoolsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -1031,14 +1036,15 @@ function createBaseQueryDepositResponse(): QueryDepositResponse {
   };
 }
 export const QueryDepositResponse = {
-  encode(message: QueryDepositResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryDepositResponse",
+  encode(message: QueryDepositResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.deposit !== undefined) {
       Deposit.encode(message.deposit, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDepositResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositResponse();
     while (reader.pos < end) {
@@ -1054,7 +1060,7 @@ export const QueryDepositResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryDepositResponse>): QueryDepositResponse {
+  fromPartial(object: Partial<QueryDepositResponse>): QueryDepositResponse {
     const message = createBaseQueryDepositResponse();
     message.deposit = object.deposit !== undefined && object.deposit !== null ? Deposit.fromPartial(object.deposit) : undefined;
     return message;
@@ -1088,11 +1094,12 @@ export const QueryDepositResponse = {
 function createBaseQueryDepositsResponse(): QueryDepositsResponse {
   return {
     deposits: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryDepositsResponse = {
-  encode(message: QueryDepositsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryDepositsResponse",
+  encode(message: QueryDepositsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.deposits) {
       Deposit.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -1101,8 +1108,8 @@ export const QueryDepositsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDepositsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositsResponse();
     while (reader.pos < end) {
@@ -1121,7 +1128,7 @@ export const QueryDepositsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryDepositsResponse>): QueryDepositsResponse {
+  fromPartial(object: Partial<QueryDepositsResponse>): QueryDepositsResponse {
     const message = createBaseQueryDepositsResponse();
     message.deposits = object.deposits?.map(e => Deposit.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -1161,18 +1168,19 @@ export const QueryDepositsResponse = {
 };
 function createBaseQueryDepositsRequest(): QueryDepositsRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryDepositsRequest = {
-  encode(message: QueryDepositsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryDepositsRequest",
+  encode(message: QueryDepositsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDepositsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositsRequest();
     while (reader.pos < end) {
@@ -1188,7 +1196,7 @@ export const QueryDepositsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryDepositsRequest>): QueryDepositsRequest {
+  fromPartial(object: Partial<QueryDepositsRequest>): QueryDepositsRequest {
     const message = createBaseQueryDepositsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -1221,32 +1229,33 @@ export const QueryDepositsRequest = {
 };
 function createBaseQueryPoolDepositRequest(): QueryPoolDepositRequest {
   return {
-    poolId: Long.UZERO,
-    depositId: Long.UZERO
+    poolId: BigInt(0),
+    depositId: BigInt(0)
   };
 }
 export const QueryPoolDepositRequest = {
-  encode(message: QueryPoolDepositRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolDepositRequest",
+  encode(message: QueryPoolDepositRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.depositId.isZero()) {
+    if (message.depositId !== BigInt(0)) {
       writer.uint32(16).uint64(message.depositId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolDepositRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolDepositRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolDepositRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.depositId = (reader.uint64() as Long);
+          message.depositId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1255,16 +1264,16 @@ export const QueryPoolDepositRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolDepositRequest>): QueryPoolDepositRequest {
+  fromPartial(object: Partial<QueryPoolDepositRequest>): QueryPoolDepositRequest {
     const message = createBaseQueryPoolDepositRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.depositId = object.depositId !== undefined && object.depositId !== null ? Long.fromValue(object.depositId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.depositId = object.depositId !== undefined && object.depositId !== null ? BigInt(object.depositId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: QueryPoolDepositRequestAmino): QueryPoolDepositRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
-      depositId: Long.fromString(object.deposit_id)
+      poolId: BigInt(object.pool_id),
+      depositId: BigInt(object.deposit_id)
     };
   },
   toAmino(message: QueryPoolDepositRequest): QueryPoolDepositRequestAmino {
@@ -1291,13 +1300,14 @@ export const QueryPoolDepositRequest = {
 };
 function createBaseQueryPoolDepositsRequest(): QueryPoolDepositsRequest {
   return {
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryPoolDepositsRequest = {
-  encode(message: QueryPoolDepositsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolDepositsRequest",
+  encode(message: QueryPoolDepositsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -1305,15 +1315,15 @@ export const QueryPoolDepositsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolDepositsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolDepositsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolDepositsRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -1325,15 +1335,15 @@ export const QueryPoolDepositsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolDepositsRequest>): QueryPoolDepositsRequest {
+  fromPartial(object: Partial<QueryPoolDepositsRequest>): QueryPoolDepositsRequest {
     const message = createBaseQueryPoolDepositsRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryPoolDepositsRequestAmino): QueryPoolDepositsRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -1362,11 +1372,12 @@ export const QueryPoolDepositsRequest = {
 function createBaseQueryAccountDepositsRequest(): QueryAccountDepositsRequest {
   return {
     depositorAddress: "",
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAccountDepositsRequest = {
-  encode(message: QueryAccountDepositsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountDepositsRequest",
+  encode(message: QueryAccountDepositsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositorAddress !== "") {
       writer.uint32(10).string(message.depositorAddress);
     }
@@ -1375,8 +1386,8 @@ export const QueryAccountDepositsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountDepositsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountDepositsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountDepositsRequest();
     while (reader.pos < end) {
@@ -1395,7 +1406,7 @@ export const QueryAccountDepositsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountDepositsRequest>): QueryAccountDepositsRequest {
+  fromPartial(object: Partial<QueryAccountDepositsRequest>): QueryAccountDepositsRequest {
     const message = createBaseQueryAccountDepositsRequest();
     message.depositorAddress = object.depositorAddress ?? "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
@@ -1432,16 +1443,17 @@ export const QueryAccountDepositsRequest = {
 function createBaseQueryAccountPoolDepositsRequest(): QueryAccountPoolDepositsRequest {
   return {
     depositorAddress: "",
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryAccountPoolDepositsRequest = {
-  encode(message: QueryAccountPoolDepositsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountPoolDepositsRequest",
+  encode(message: QueryAccountPoolDepositsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositorAddress !== "") {
       writer.uint32(10).string(message.depositorAddress);
     }
-    if (!message.poolId.isZero()) {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(16).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -1449,8 +1461,8 @@ export const QueryAccountPoolDepositsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountPoolDepositsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountPoolDepositsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountPoolDepositsRequest();
     while (reader.pos < end) {
@@ -1460,7 +1472,7 @@ export const QueryAccountPoolDepositsRequest = {
           message.depositorAddress = reader.string();
           break;
         case 2:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 3:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -1472,17 +1484,17 @@ export const QueryAccountPoolDepositsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountPoolDepositsRequest>): QueryAccountPoolDepositsRequest {
+  fromPartial(object: Partial<QueryAccountPoolDepositsRequest>): QueryAccountPoolDepositsRequest {
     const message = createBaseQueryAccountPoolDepositsRequest();
     message.depositorAddress = object.depositorAddress ?? "";
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryAccountPoolDepositsRequestAmino): QueryAccountPoolDepositsRequest {
     return {
       depositorAddress: object.depositor_address,
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -1511,18 +1523,19 @@ export const QueryAccountPoolDepositsRequest = {
 };
 function createBaseQueryDrawResponse(): QueryDrawResponse {
   return {
-    draw: Draw.fromPartial({})
+    draw: undefined
   };
 }
 export const QueryDrawResponse = {
-  encode(message: QueryDrawResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryDrawResponse",
+  encode(message: QueryDrawResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.draw !== undefined) {
       Draw.encode(message.draw, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDrawResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDrawResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDrawResponse();
     while (reader.pos < end) {
@@ -1538,7 +1551,7 @@ export const QueryDrawResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryDrawResponse>): QueryDrawResponse {
+  fromPartial(object: Partial<QueryDrawResponse>): QueryDrawResponse {
     const message = createBaseQueryDrawResponse();
     message.draw = object.draw !== undefined && object.draw !== null ? Draw.fromPartial(object.draw) : undefined;
     return message;
@@ -1572,11 +1585,12 @@ export const QueryDrawResponse = {
 function createBaseQueryDrawsResponse(): QueryDrawsResponse {
   return {
     draws: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryDrawsResponse = {
-  encode(message: QueryDrawsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryDrawsResponse",
+  encode(message: QueryDrawsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.draws) {
       Draw.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -1585,8 +1599,8 @@ export const QueryDrawsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDrawsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDrawsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDrawsResponse();
     while (reader.pos < end) {
@@ -1605,7 +1619,7 @@ export const QueryDrawsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryDrawsResponse>): QueryDrawsResponse {
+  fromPartial(object: Partial<QueryDrawsResponse>): QueryDrawsResponse {
     const message = createBaseQueryDrawsResponse();
     message.draws = object.draws?.map(e => Draw.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -1645,18 +1659,19 @@ export const QueryDrawsResponse = {
 };
 function createBaseQueryDrawsRequest(): QueryDrawsRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryDrawsRequest = {
-  encode(message: QueryDrawsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryDrawsRequest",
+  encode(message: QueryDrawsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDrawsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDrawsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDrawsRequest();
     while (reader.pos < end) {
@@ -1672,7 +1687,7 @@ export const QueryDrawsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryDrawsRequest>): QueryDrawsRequest {
+  fromPartial(object: Partial<QueryDrawsRequest>): QueryDrawsRequest {
     const message = createBaseQueryDrawsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -1705,13 +1720,14 @@ export const QueryDrawsRequest = {
 };
 function createBaseQueryPoolDrawsRequest(): QueryPoolDrawsRequest {
   return {
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryPoolDrawsRequest = {
-  encode(message: QueryPoolDrawsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolDrawsRequest",
+  encode(message: QueryPoolDrawsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -1719,15 +1735,15 @@ export const QueryPoolDrawsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolDrawsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolDrawsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolDrawsRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -1739,15 +1755,15 @@ export const QueryPoolDrawsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolDrawsRequest>): QueryPoolDrawsRequest {
+  fromPartial(object: Partial<QueryPoolDrawsRequest>): QueryPoolDrawsRequest {
     const message = createBaseQueryPoolDrawsRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryPoolDrawsRequestAmino): QueryPoolDrawsRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -1775,32 +1791,33 @@ export const QueryPoolDrawsRequest = {
 };
 function createBaseQueryPoolDrawRequest(): QueryPoolDrawRequest {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO
+    poolId: BigInt(0),
+    drawId: BigInt(0)
   };
 }
 export const QueryPoolDrawRequest = {
-  encode(message: QueryPoolDrawRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolDrawRequest",
+  encode(message: QueryPoolDrawRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolDrawRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolDrawRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolDrawRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1809,16 +1826,16 @@ export const QueryPoolDrawRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolDrawRequest>): QueryPoolDrawRequest {
+  fromPartial(object: Partial<QueryPoolDrawRequest>): QueryPoolDrawRequest {
     const message = createBaseQueryPoolDrawRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: QueryPoolDrawRequestAmino): QueryPoolDrawRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id)
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id)
     };
   },
   toAmino(message: QueryPoolDrawRequest): QueryPoolDrawRequestAmino {
@@ -1849,14 +1866,15 @@ function createBaseQueryPrizeResponse(): QueryPrizeResponse {
   };
 }
 export const QueryPrizeResponse = {
-  encode(message: QueryPrizeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryPrizeResponse",
+  encode(message: QueryPrizeResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.prize !== undefined) {
       Prize.encode(message.prize, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPrizeResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPrizeResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPrizeResponse();
     while (reader.pos < end) {
@@ -1872,7 +1890,7 @@ export const QueryPrizeResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPrizeResponse>): QueryPrizeResponse {
+  fromPartial(object: Partial<QueryPrizeResponse>): QueryPrizeResponse {
     const message = createBaseQueryPrizeResponse();
     message.prize = object.prize !== undefined && object.prize !== null ? Prize.fromPartial(object.prize) : undefined;
     return message;
@@ -1906,11 +1924,12 @@ export const QueryPrizeResponse = {
 function createBaseQueryPrizesResponse(): QueryPrizesResponse {
   return {
     prizes: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryPrizesResponse = {
-  encode(message: QueryPrizesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryPrizesResponse",
+  encode(message: QueryPrizesResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.prizes) {
       Prize.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -1919,8 +1938,8 @@ export const QueryPrizesResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPrizesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPrizesResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPrizesResponse();
     while (reader.pos < end) {
@@ -1939,7 +1958,7 @@ export const QueryPrizesResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPrizesResponse>): QueryPrizesResponse {
+  fromPartial(object: Partial<QueryPrizesResponse>): QueryPrizesResponse {
     const message = createBaseQueryPrizesResponse();
     message.prizes = object.prizes?.map(e => Prize.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -1979,39 +1998,40 @@ export const QueryPrizesResponse = {
 };
 function createBaseQueryPoolDrawPrizeRequest(): QueryPoolDrawPrizeRequest {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    prizeId: Long.UZERO
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    prizeId: BigInt(0)
   };
 }
 export const QueryPoolDrawPrizeRequest = {
-  encode(message: QueryPoolDrawPrizeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolDrawPrizeRequest",
+  encode(message: QueryPoolDrawPrizeRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
-    if (!message.prizeId.isZero()) {
+    if (message.prizeId !== BigInt(0)) {
       writer.uint32(24).uint64(message.prizeId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolDrawPrizeRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolDrawPrizeRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolDrawPrizeRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
-          message.prizeId = (reader.uint64() as Long);
+          message.prizeId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2020,18 +2040,18 @@ export const QueryPoolDrawPrizeRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolDrawPrizeRequest>): QueryPoolDrawPrizeRequest {
+  fromPartial(object: Partial<QueryPoolDrawPrizeRequest>): QueryPoolDrawPrizeRequest {
     const message = createBaseQueryPoolDrawPrizeRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
-    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? Long.fromValue(object.prizeId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
+    message.prizeId = object.prizeId !== undefined && object.prizeId !== null ? BigInt(object.prizeId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: QueryPoolDrawPrizeRequestAmino): QueryPoolDrawPrizeRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
-      prizeId: Long.fromString(object.prize_id)
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
+      prizeId: BigInt(object.prize_id)
     };
   },
   toAmino(message: QueryPoolDrawPrizeRequest): QueryPoolDrawPrizeRequestAmino {
@@ -2059,18 +2079,19 @@ export const QueryPoolDrawPrizeRequest = {
 };
 function createBaseQueryPrizesRequest(): QueryPrizesRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryPrizesRequest = {
-  encode(message: QueryPrizesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryPrizesRequest",
+  encode(message: QueryPrizesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPrizesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPrizesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPrizesRequest();
     while (reader.pos < end) {
@@ -2086,7 +2107,7 @@ export const QueryPrizesRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPrizesRequest>): QueryPrizesRequest {
+  fromPartial(object: Partial<QueryPrizesRequest>): QueryPrizesRequest {
     const message = createBaseQueryPrizesRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -2119,13 +2140,14 @@ export const QueryPrizesRequest = {
 };
 function createBaseQueryPoolPrizesRequest(): QueryPoolPrizesRequest {
   return {
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryPoolPrizesRequest = {
-  encode(message: QueryPoolPrizesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolPrizesRequest",
+  encode(message: QueryPoolPrizesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -2133,15 +2155,15 @@ export const QueryPoolPrizesRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolPrizesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolPrizesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolPrizesRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -2153,15 +2175,15 @@ export const QueryPoolPrizesRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolPrizesRequest>): QueryPoolPrizesRequest {
+  fromPartial(object: Partial<QueryPoolPrizesRequest>): QueryPoolPrizesRequest {
     const message = createBaseQueryPoolPrizesRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryPoolPrizesRequestAmino): QueryPoolPrizesRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -2189,17 +2211,18 @@ export const QueryPoolPrizesRequest = {
 };
 function createBaseQueryPoolDrawPrizesRequest(): QueryPoolDrawPrizesRequest {
   return {
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryPoolDrawPrizesRequest = {
-  encode(message: QueryPoolDrawPrizesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolDrawPrizesRequest",
+  encode(message: QueryPoolDrawPrizesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(16).uint64(message.drawId);
     }
     if (message.pagination !== undefined) {
@@ -2207,18 +2230,18 @@ export const QueryPoolDrawPrizesRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolDrawPrizesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolDrawPrizesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolDrawPrizesRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 3:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -2230,17 +2253,17 @@ export const QueryPoolDrawPrizesRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolDrawPrizesRequest>): QueryPoolDrawPrizesRequest {
+  fromPartial(object: Partial<QueryPoolDrawPrizesRequest>): QueryPoolDrawPrizesRequest {
     const message = createBaseQueryPoolDrawPrizesRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryPoolDrawPrizesRequestAmino): QueryPoolDrawPrizesRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -2270,11 +2293,12 @@ export const QueryPoolDrawPrizesRequest = {
 function createBaseQueryAccountPrizesRequest(): QueryAccountPrizesRequest {
   return {
     winnerAddress: "",
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAccountPrizesRequest = {
-  encode(message: QueryAccountPrizesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountPrizesRequest",
+  encode(message: QueryAccountPrizesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.winnerAddress !== "") {
       writer.uint32(10).string(message.winnerAddress);
     }
@@ -2283,8 +2307,8 @@ export const QueryAccountPrizesRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountPrizesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountPrizesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountPrizesRequest();
     while (reader.pos < end) {
@@ -2303,7 +2327,7 @@ export const QueryAccountPrizesRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountPrizesRequest>): QueryAccountPrizesRequest {
+  fromPartial(object: Partial<QueryAccountPrizesRequest>): QueryAccountPrizesRequest {
     const message = createBaseQueryAccountPrizesRequest();
     message.winnerAddress = object.winnerAddress ?? "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
@@ -2340,16 +2364,17 @@ export const QueryAccountPrizesRequest = {
 function createBaseQueryAccountPoolPrizesRequest(): QueryAccountPoolPrizesRequest {
   return {
     winnerAddress: "",
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryAccountPoolPrizesRequest = {
-  encode(message: QueryAccountPoolPrizesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountPoolPrizesRequest",
+  encode(message: QueryAccountPoolPrizesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.winnerAddress !== "") {
       writer.uint32(10).string(message.winnerAddress);
     }
-    if (!message.poolId.isZero()) {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(16).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -2357,8 +2382,8 @@ export const QueryAccountPoolPrizesRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountPoolPrizesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountPoolPrizesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountPoolPrizesRequest();
     while (reader.pos < end) {
@@ -2368,7 +2393,7 @@ export const QueryAccountPoolPrizesRequest = {
           message.winnerAddress = reader.string();
           break;
         case 2:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 3:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -2380,17 +2405,17 @@ export const QueryAccountPoolPrizesRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountPoolPrizesRequest>): QueryAccountPoolPrizesRequest {
+  fromPartial(object: Partial<QueryAccountPoolPrizesRequest>): QueryAccountPoolPrizesRequest {
     const message = createBaseQueryAccountPoolPrizesRequest();
     message.winnerAddress = object.winnerAddress ?? "";
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryAccountPoolPrizesRequestAmino): QueryAccountPoolPrizesRequest {
     return {
       winnerAddress: object.winner_address,
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -2420,20 +2445,21 @@ export const QueryAccountPoolPrizesRequest = {
 function createBaseQueryAccountPoolDrawPrizesRequest(): QueryAccountPoolDrawPrizesRequest {
   return {
     winnerAddress: "",
-    poolId: Long.UZERO,
-    drawId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    drawId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryAccountPoolDrawPrizesRequest = {
-  encode(message: QueryAccountPoolDrawPrizesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountPoolDrawPrizesRequest",
+  encode(message: QueryAccountPoolDrawPrizesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.winnerAddress !== "") {
       writer.uint32(10).string(message.winnerAddress);
     }
-    if (!message.poolId.isZero()) {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(16).uint64(message.poolId);
     }
-    if (!message.drawId.isZero()) {
+    if (message.drawId !== BigInt(0)) {
       writer.uint32(24).uint64(message.drawId);
     }
     if (message.pagination !== undefined) {
@@ -2441,8 +2467,8 @@ export const QueryAccountPoolDrawPrizesRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountPoolDrawPrizesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountPoolDrawPrizesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountPoolDrawPrizesRequest();
     while (reader.pos < end) {
@@ -2452,10 +2478,10 @@ export const QueryAccountPoolDrawPrizesRequest = {
           message.winnerAddress = reader.string();
           break;
         case 2:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 3:
-          message.drawId = (reader.uint64() as Long);
+          message.drawId = reader.uint64();
           break;
         case 4:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -2467,19 +2493,19 @@ export const QueryAccountPoolDrawPrizesRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountPoolDrawPrizesRequest>): QueryAccountPoolDrawPrizesRequest {
+  fromPartial(object: Partial<QueryAccountPoolDrawPrizesRequest>): QueryAccountPoolDrawPrizesRequest {
     const message = createBaseQueryAccountPoolDrawPrizesRequest();
     message.winnerAddress = object.winnerAddress ?? "";
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.drawId = object.drawId !== undefined && object.drawId !== null ? Long.fromValue(object.drawId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.drawId = object.drawId !== undefined && object.drawId !== null ? BigInt(object.drawId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryAccountPoolDrawPrizesRequestAmino): QueryAccountPoolDrawPrizesRequest {
     return {
       winnerAddress: object.winner_address,
-      poolId: Long.fromString(object.pool_id),
-      drawId: Long.fromString(object.draw_id),
+      poolId: BigInt(object.pool_id),
+      drawId: BigInt(object.draw_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -2513,14 +2539,15 @@ function createBaseQueryWithdrawalResponse(): QueryWithdrawalResponse {
   };
 }
 export const QueryWithdrawalResponse = {
-  encode(message: QueryWithdrawalResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryWithdrawalResponse",
+  encode(message: QueryWithdrawalResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.withdrawal !== undefined) {
       Withdrawal.encode(message.withdrawal, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryWithdrawalResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryWithdrawalResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryWithdrawalResponse();
     while (reader.pos < end) {
@@ -2536,7 +2563,7 @@ export const QueryWithdrawalResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryWithdrawalResponse>): QueryWithdrawalResponse {
+  fromPartial(object: Partial<QueryWithdrawalResponse>): QueryWithdrawalResponse {
     const message = createBaseQueryWithdrawalResponse();
     message.withdrawal = object.withdrawal !== undefined && object.withdrawal !== null ? Withdrawal.fromPartial(object.withdrawal) : undefined;
     return message;
@@ -2570,11 +2597,12 @@ export const QueryWithdrawalResponse = {
 function createBaseQueryWithdrawalsResponse(): QueryWithdrawalsResponse {
   return {
     withdrawals: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryWithdrawalsResponse = {
-  encode(message: QueryWithdrawalsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryWithdrawalsResponse",
+  encode(message: QueryWithdrawalsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.withdrawals) {
       Withdrawal.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -2583,8 +2611,8 @@ export const QueryWithdrawalsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryWithdrawalsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryWithdrawalsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryWithdrawalsResponse();
     while (reader.pos < end) {
@@ -2603,7 +2631,7 @@ export const QueryWithdrawalsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryWithdrawalsResponse>): QueryWithdrawalsResponse {
+  fromPartial(object: Partial<QueryWithdrawalsResponse>): QueryWithdrawalsResponse {
     const message = createBaseQueryWithdrawalsResponse();
     message.withdrawals = object.withdrawals?.map(e => Withdrawal.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -2643,32 +2671,33 @@ export const QueryWithdrawalsResponse = {
 };
 function createBaseQueryPoolWithdrawalRequest(): QueryPoolWithdrawalRequest {
   return {
-    poolId: Long.UZERO,
-    withdrawalId: Long.UZERO
+    poolId: BigInt(0),
+    withdrawalId: BigInt(0)
   };
 }
 export const QueryPoolWithdrawalRequest = {
-  encode(message: QueryPoolWithdrawalRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolWithdrawalRequest",
+  encode(message: QueryPoolWithdrawalRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
-    if (!message.withdrawalId.isZero()) {
+    if (message.withdrawalId !== BigInt(0)) {
       writer.uint32(16).uint64(message.withdrawalId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolWithdrawalRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolWithdrawalRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolWithdrawalRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
-          message.withdrawalId = (reader.uint64() as Long);
+          message.withdrawalId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2677,16 +2706,16 @@ export const QueryPoolWithdrawalRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolWithdrawalRequest>): QueryPoolWithdrawalRequest {
+  fromPartial(object: Partial<QueryPoolWithdrawalRequest>): QueryPoolWithdrawalRequest {
     const message = createBaseQueryPoolWithdrawalRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
-    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? Long.fromValue(object.withdrawalId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.withdrawalId = object.withdrawalId !== undefined && object.withdrawalId !== null ? BigInt(object.withdrawalId.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: QueryPoolWithdrawalRequestAmino): QueryPoolWithdrawalRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
-      withdrawalId: Long.fromString(object.withdrawal_id)
+      poolId: BigInt(object.pool_id),
+      withdrawalId: BigInt(object.withdrawal_id)
     };
   },
   toAmino(message: QueryPoolWithdrawalRequest): QueryPoolWithdrawalRequestAmino {
@@ -2713,18 +2742,19 @@ export const QueryPoolWithdrawalRequest = {
 };
 function createBaseQueryWithdrawalsRequest(): QueryWithdrawalsRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryWithdrawalsRequest = {
-  encode(message: QueryWithdrawalsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryWithdrawalsRequest",
+  encode(message: QueryWithdrawalsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryWithdrawalsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryWithdrawalsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryWithdrawalsRequest();
     while (reader.pos < end) {
@@ -2740,7 +2770,7 @@ export const QueryWithdrawalsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryWithdrawalsRequest>): QueryWithdrawalsRequest {
+  fromPartial(object: Partial<QueryWithdrawalsRequest>): QueryWithdrawalsRequest {
     const message = createBaseQueryWithdrawalsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -2773,13 +2803,14 @@ export const QueryWithdrawalsRequest = {
 };
 function createBaseQueryPoolWithdrawalsRequest(): QueryPoolWithdrawalsRequest {
   return {
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryPoolWithdrawalsRequest = {
-  encode(message: QueryPoolWithdrawalsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.poolId.isZero()) {
+  typeUrl: "/lum.network.millions.QueryPoolWithdrawalsRequest",
+  encode(message: QueryPoolWithdrawalsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -2787,15 +2818,15 @@ export const QueryPoolWithdrawalsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryPoolWithdrawalsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryPoolWithdrawalsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryPoolWithdrawalsRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -2807,15 +2838,15 @@ export const QueryPoolWithdrawalsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryPoolWithdrawalsRequest>): QueryPoolWithdrawalsRequest {
+  fromPartial(object: Partial<QueryPoolWithdrawalsRequest>): QueryPoolWithdrawalsRequest {
     const message = createBaseQueryPoolWithdrawalsRequest();
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryPoolWithdrawalsRequestAmino): QueryPoolWithdrawalsRequest {
     return {
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },
@@ -2844,11 +2875,12 @@ export const QueryPoolWithdrawalsRequest = {
 function createBaseQueryAccountWithdrawalsRequest(): QueryAccountWithdrawalsRequest {
   return {
     depositorAddress: "",
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAccountWithdrawalsRequest = {
-  encode(message: QueryAccountWithdrawalsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountWithdrawalsRequest",
+  encode(message: QueryAccountWithdrawalsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositorAddress !== "") {
       writer.uint32(10).string(message.depositorAddress);
     }
@@ -2857,8 +2889,8 @@ export const QueryAccountWithdrawalsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountWithdrawalsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountWithdrawalsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountWithdrawalsRequest();
     while (reader.pos < end) {
@@ -2877,7 +2909,7 @@ export const QueryAccountWithdrawalsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountWithdrawalsRequest>): QueryAccountWithdrawalsRequest {
+  fromPartial(object: Partial<QueryAccountWithdrawalsRequest>): QueryAccountWithdrawalsRequest {
     const message = createBaseQueryAccountWithdrawalsRequest();
     message.depositorAddress = object.depositorAddress ?? "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
@@ -2914,16 +2946,17 @@ export const QueryAccountWithdrawalsRequest = {
 function createBaseQueryAccountPoolWithdrawalsRequest(): QueryAccountPoolWithdrawalsRequest {
   return {
     depositorAddress: "",
-    poolId: Long.UZERO,
-    pagination: PageRequest.fromPartial({})
+    poolId: BigInt(0),
+    pagination: undefined
   };
 }
 export const QueryAccountPoolWithdrawalsRequest = {
-  encode(message: QueryAccountPoolWithdrawalsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.QueryAccountPoolWithdrawalsRequest",
+  encode(message: QueryAccountPoolWithdrawalsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.depositorAddress !== "") {
       writer.uint32(10).string(message.depositorAddress);
     }
-    if (!message.poolId.isZero()) {
+    if (message.poolId !== BigInt(0)) {
       writer.uint32(16).uint64(message.poolId);
     }
     if (message.pagination !== undefined) {
@@ -2931,8 +2964,8 @@ export const QueryAccountPoolWithdrawalsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountPoolWithdrawalsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountPoolWithdrawalsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountPoolWithdrawalsRequest();
     while (reader.pos < end) {
@@ -2942,7 +2975,7 @@ export const QueryAccountPoolWithdrawalsRequest = {
           message.depositorAddress = reader.string();
           break;
         case 2:
-          message.poolId = (reader.uint64() as Long);
+          message.poolId = reader.uint64();
           break;
         case 3:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -2954,17 +2987,17 @@ export const QueryAccountPoolWithdrawalsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAccountPoolWithdrawalsRequest>): QueryAccountPoolWithdrawalsRequest {
+  fromPartial(object: Partial<QueryAccountPoolWithdrawalsRequest>): QueryAccountPoolWithdrawalsRequest {
     const message = createBaseQueryAccountPoolWithdrawalsRequest();
     message.depositorAddress = object.depositorAddress ?? "";
-    message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
   fromAmino(object: QueryAccountPoolWithdrawalsRequestAmino): QueryAccountPoolWithdrawalsRequest {
     return {
       depositorAddress: object.depositor_address,
-      poolId: Long.fromString(object.pool_id),
+      poolId: BigInt(object.pool_id),
       pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
     };
   },

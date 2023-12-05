@@ -1,8 +1,7 @@
-//@ts-nocheck
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, toTimestamp, fromTimestamp, isSet } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 export enum BeamState {
   UNSPECIFIED = 0,
   OPEN = 1,
@@ -182,9 +181,9 @@ export interface BeamMerchantReview {
   reviewUrl: string;
   collectionMethod: string;
   timestamp: string;
-  ratings: BeamMerchantReview_BeamMerchantReviewRating | undefined;
+  ratings?: BeamMerchantReview_BeamMerchantReviewRating | undefined;
   title: string;
-  content: BeamMerchantReview_BeamMerchantReviewContent | undefined;
+  content?: BeamMerchantReview_BeamMerchantReviewContent | undefined;
 }
 export interface BeamMerchantReviewProtoMsg {
   typeUrl: "/lum.network.beam.BeamMerchantReview";
@@ -214,9 +213,9 @@ export interface BeamMerchantReviewSDKType {
   review_url: string;
   collection_method: string;
   timestamp: string;
-  ratings: BeamMerchantReview_BeamMerchantReviewRatingSDKType | undefined;
+  ratings?: BeamMerchantReview_BeamMerchantReviewRatingSDKType | undefined;
   title: string;
-  content: BeamMerchantReview_BeamMerchantReviewContentSDKType | undefined;
+  content?: BeamMerchantReview_BeamMerchantReviewContentSDKType | undefined;
 }
 export interface BeamMerchantReview_BeamMerchantReviewRating {
   overall: number;
@@ -268,9 +267,9 @@ export interface BeamProductReview {
   reviewUrl: string;
   collectionMethod: string;
   timestamp: string;
-  ratings: BeamProductReview_BeamProductReviewRating | undefined;
+  ratings?: BeamProductReview_BeamProductReviewRating | undefined;
   title: string;
-  content: BeamProductReview_BeamProductReviewContent | undefined;
+  content?: BeamProductReview_BeamProductReviewContent | undefined;
   medias: BeamMedia[];
   products: BeamProductReview_BeamProduct[];
 }
@@ -302,9 +301,9 @@ export interface BeamProductReviewSDKType {
   review_url: string;
   collection_method: string;
   timestamp: string;
-  ratings: BeamProductReview_BeamProductReviewRatingSDKType | undefined;
+  ratings?: BeamProductReview_BeamProductReviewRatingSDKType | undefined;
   title: string;
-  content: BeamProductReview_BeamProductReviewContentSDKType | undefined;
+  content?: BeamProductReview_BeamProductReviewContentSDKType | undefined;
   medias: BeamMediaSDKType[];
   products: BeamProductReview_BeamProductSDKType[];
 }
@@ -355,7 +354,7 @@ export interface BeamProductReview_BeamProduct {
   name: string;
   url: string;
   urls: string[];
-  ids: BeamProductReview_BeamProduct_BeamProductIds | undefined;
+  ids?: BeamProductReview_BeamProduct_BeamProductIds | undefined;
 }
 export interface BeamProductReview_BeamProductProtoMsg {
   typeUrl: "/lum.network.beam.BeamProduct";
@@ -375,7 +374,7 @@ export interface BeamProductReview_BeamProductSDKType {
   name: string;
   url: string;
   urls: string[];
-  ids: BeamProductReview_BeamProduct_BeamProductIdsSDKType | undefined;
+  ids?: BeamProductReview_BeamProduct_BeamProductIdsSDKType | undefined;
 }
 export interface BeamProductReview_BeamProduct_BeamProductIds {
   gtins: string[];
@@ -404,10 +403,10 @@ export interface BeamProductReview_BeamProduct_BeamProductIdsSDKType {
   asins: string[];
 }
 export interface BeamData {
-  reward: BeamReward | undefined;
-  verifier: BeamVerifier | undefined;
-  reviewer: BeamReviewer | undefined;
-  merchantReview: BeamMerchantReview | undefined;
+  reward?: BeamReward | undefined;
+  verifier?: BeamVerifier | undefined;
+  reviewer?: BeamReviewer | undefined;
+  merchantReview?: BeamMerchantReview | undefined;
   productsReviews: BeamProductReview[];
 }
 export interface BeamDataProtoMsg {
@@ -426,10 +425,10 @@ export interface BeamDataAminoMsg {
   value: BeamDataAmino;
 }
 export interface BeamDataSDKType {
-  reward: BeamRewardSDKType | undefined;
-  verifier: BeamVerifierSDKType | undefined;
-  reviewer: BeamReviewerSDKType | undefined;
-  merchant_review: BeamMerchantReviewSDKType | undefined;
+  reward?: BeamRewardSDKType | undefined;
+  verifier?: BeamVerifierSDKType | undefined;
+  reviewer?: BeamReviewerSDKType | undefined;
+  merchant_review?: BeamMerchantReviewSDKType | undefined;
   products_reviews: BeamProductReviewSDKType[];
 }
 export interface Beam {
@@ -444,7 +443,7 @@ export interface Beam {
   cancelReason: string;
   hideContent: boolean;
   schema: string;
-  data: BeamData | undefined;
+  data?: BeamData | undefined;
   claimExpiresAtBlock: number;
   closesAtBlock: number;
   createdAt: Date | undefined;
@@ -469,8 +468,8 @@ export interface BeamAmino {
   data?: BeamDataAmino | undefined;
   claim_expires_at_block: number;
   closes_at_block: number;
-  created_at?: Date | undefined;
-  closed_at?: Date | undefined;
+  created_at?: string | undefined;
+  closed_at?: string | undefined;
 }
 export interface BeamAminoMsg {
   type: "/lum.network.beam.Beam";
@@ -488,7 +487,7 @@ export interface BeamSDKType {
   cancel_reason: string;
   hide_content: boolean;
   schema: string;
-  data: BeamDataSDKType | undefined;
+  data?: BeamDataSDKType | undefined;
   claim_expires_at_block: number;
   closes_at_block: number;
   created_at: Date | undefined;
@@ -502,7 +501,8 @@ function createBaseBeamMedia(): BeamMedia {
   };
 }
 export const BeamMedia = {
-  encode(message: BeamMedia, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamMedia",
+  encode(message: BeamMedia, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.mimetype !== "") {
       writer.uint32(10).string(message.mimetype);
     }
@@ -514,8 +514,8 @@ export const BeamMedia = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamMedia {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamMedia {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamMedia();
     while (reader.pos < end) {
@@ -537,7 +537,7 @@ export const BeamMedia = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamMedia>): BeamMedia {
+  fromPartial(object: Partial<BeamMedia>): BeamMedia {
     const message = createBaseBeamMedia();
     message.mimetype = object.mimetype ?? "";
     message.url = object.url ?? "";
@@ -582,7 +582,8 @@ function createBaseBeamReviewer(): BeamReviewer {
   };
 }
 export const BeamReviewer = {
-  encode(message: BeamReviewer, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamReviewer",
+  encode(message: BeamReviewer, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.reviewerId !== "") {
       writer.uint32(10).string(message.reviewerId);
     }
@@ -594,8 +595,8 @@ export const BeamReviewer = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamReviewer {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamReviewer {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamReviewer();
     while (reader.pos < end) {
@@ -617,7 +618,7 @@ export const BeamReviewer = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamReviewer>): BeamReviewer {
+  fromPartial(object: Partial<BeamReviewer>): BeamReviewer {
     const message = createBaseBeamReviewer();
     message.reviewerId = object.reviewerId ?? "";
     message.name = object.name ?? "";
@@ -662,7 +663,8 @@ function createBaseBeamVerifier(): BeamVerifier {
   };
 }
 export const BeamVerifier = {
-  encode(message: BeamVerifier, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamVerifier",
+  encode(message: BeamVerifier, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -674,8 +676,8 @@ export const BeamVerifier = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamVerifier {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamVerifier {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamVerifier();
     while (reader.pos < end) {
@@ -697,7 +699,7 @@ export const BeamVerifier = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamVerifier>): BeamVerifier {
+  fromPartial(object: Partial<BeamVerifier>): BeamVerifier {
     const message = createBaseBeamVerifier();
     message.name = object.name ?? "";
     message.url = object.url ?? "";
@@ -745,7 +747,8 @@ function createBaseBeamReward(): BeamReward {
   };
 }
 export const BeamReward = {
-  encode(message: BeamReward, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamReward",
+  encode(message: BeamReward, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.trigger !== "") {
       writer.uint32(10).string(message.trigger);
     }
@@ -766,8 +769,8 @@ export const BeamReward = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamReward {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamReward {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamReward();
     while (reader.pos < end) {
@@ -798,7 +801,7 @@ export const BeamReward = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamReward>): BeamReward {
+  fromPartial(object: Partial<BeamReward>): BeamReward {
     const message = createBaseBeamReward();
     message.trigger = object.trigger ?? "";
     message.amount = object.amount ?? 0;
@@ -857,7 +860,8 @@ function createBaseBeamReward_BeamRewardDetails(): BeamReward_BeamRewardDetails 
   };
 }
 export const BeamReward_BeamRewardDetails = {
-  encode(message: BeamReward_BeamRewardDetails, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamRewardDetails",
+  encode(message: BeamReward_BeamRewardDetails, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -872,8 +876,8 @@ export const BeamReward_BeamRewardDetails = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamReward_BeamRewardDetails {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamReward_BeamRewardDetails {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamReward_BeamRewardDetails();
     while (reader.pos < end) {
@@ -898,7 +902,7 @@ export const BeamReward_BeamRewardDetails = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamReward_BeamRewardDetails>): BeamReward_BeamRewardDetails {
+  fromPartial(object: Partial<BeamReward_BeamRewardDetails>): BeamReward_BeamRewardDetails {
     const message = createBaseBeamReward_BeamRewardDetails();
     message.type = object.type ?? "";
     message.amount = object.amount ?? 0;
@@ -947,13 +951,14 @@ function createBaseBeamMerchantReview(): BeamMerchantReview {
     reviewUrl: "",
     collectionMethod: "",
     timestamp: "",
-    ratings: BeamMerchantReviewRating.fromPartial({}),
+    ratings: undefined,
     title: "",
-    content: BeamMerchantReviewContent.fromPartial({})
+    content: undefined
   };
 }
 export const BeamMerchantReview = {
-  encode(message: BeamMerchantReview, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamMerchantReview",
+  encode(message: BeamMerchantReview, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.orderId !== "") {
       writer.uint32(10).string(message.orderId);
     }
@@ -986,8 +991,8 @@ export const BeamMerchantReview = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamMerchantReview {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamMerchantReview {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamMerchantReview();
     while (reader.pos < end) {
@@ -1030,7 +1035,7 @@ export const BeamMerchantReview = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamMerchantReview>): BeamMerchantReview {
+  fromPartial(object: Partial<BeamMerchantReview>): BeamMerchantReview {
     const message = createBaseBeamMerchantReview();
     message.orderId = object.orderId ?? "";
     message.reviewId = object.reviewId ?? "";
@@ -1096,7 +1101,8 @@ function createBaseBeamMerchantReview_BeamMerchantReviewRating(): BeamMerchantRe
   };
 }
 export const BeamMerchantReview_BeamMerchantReviewRating = {
-  encode(message: BeamMerchantReview_BeamMerchantReviewRating, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamMerchantReviewRating",
+  encode(message: BeamMerchantReview_BeamMerchantReviewRating, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.overall !== 0) {
       writer.uint32(13).float(message.overall);
     }
@@ -1108,8 +1114,8 @@ export const BeamMerchantReview_BeamMerchantReviewRating = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamMerchantReview_BeamMerchantReviewRating {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamMerchantReview_BeamMerchantReviewRating {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamMerchantReview_BeamMerchantReviewRating();
     while (reader.pos < end) {
@@ -1131,7 +1137,7 @@ export const BeamMerchantReview_BeamMerchantReviewRating = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamMerchantReview_BeamMerchantReviewRating>): BeamMerchantReview_BeamMerchantReviewRating {
+  fromPartial(object: Partial<BeamMerchantReview_BeamMerchantReviewRating>): BeamMerchantReview_BeamMerchantReviewRating {
     const message = createBaseBeamMerchantReview_BeamMerchantReviewRating();
     message.overall = object.overall ?? 0;
     message.customerService = object.customerService ?? 0;
@@ -1175,7 +1181,8 @@ function createBaseBeamMerchantReview_BeamMerchantReviewContent(): BeamMerchantR
   };
 }
 export const BeamMerchantReview_BeamMerchantReviewContent = {
-  encode(message: BeamMerchantReview_BeamMerchantReviewContent, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamMerchantReviewContent",
+  encode(message: BeamMerchantReview_BeamMerchantReviewContent, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.overall !== "") {
       writer.uint32(10).string(message.overall);
     }
@@ -1184,8 +1191,8 @@ export const BeamMerchantReview_BeamMerchantReviewContent = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamMerchantReview_BeamMerchantReviewContent {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamMerchantReview_BeamMerchantReviewContent {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamMerchantReview_BeamMerchantReviewContent();
     while (reader.pos < end) {
@@ -1204,7 +1211,7 @@ export const BeamMerchantReview_BeamMerchantReviewContent = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamMerchantReview_BeamMerchantReviewContent>): BeamMerchantReview_BeamMerchantReviewContent {
+  fromPartial(object: Partial<BeamMerchantReview_BeamMerchantReviewContent>): BeamMerchantReview_BeamMerchantReviewContent {
     const message = createBaseBeamMerchantReview_BeamMerchantReviewContent();
     message.overall = object.overall ?? "";
     message.customerService = object.customerService ?? "";
@@ -1246,15 +1253,16 @@ function createBaseBeamProductReview(): BeamProductReview {
     reviewUrl: "",
     collectionMethod: "",
     timestamp: "",
-    ratings: BeamProductReviewRating.fromPartial({}),
+    ratings: undefined,
     title: "",
-    content: BeamProductReviewContent.fromPartial({}),
+    content: undefined,
     medias: [],
     products: []
   };
 }
 export const BeamProductReview = {
-  encode(message: BeamProductReview, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamProductReview",
+  encode(message: BeamProductReview, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.orderId !== "") {
       writer.uint32(10).string(message.orderId);
     }
@@ -1290,8 +1298,8 @@ export const BeamProductReview = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamProductReview {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamProductReview {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamProductReview();
     while (reader.pos < end) {
@@ -1337,7 +1345,7 @@ export const BeamProductReview = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamProductReview>): BeamProductReview {
+  fromPartial(object: Partial<BeamProductReview>): BeamProductReview {
     const message = createBaseBeamProductReview();
     message.orderId = object.orderId ?? "";
     message.reviewId = object.reviewId ?? "";
@@ -1413,7 +1421,8 @@ function createBaseBeamProductReview_BeamProductReviewRating(): BeamProductRevie
   };
 }
 export const BeamProductReview_BeamProductReviewRating = {
-  encode(message: BeamProductReview_BeamProductReviewRating, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamProductReviewRating",
+  encode(message: BeamProductReview_BeamProductReviewRating, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.overall !== 0) {
       writer.uint32(13).float(message.overall);
     }
@@ -1422,8 +1431,8 @@ export const BeamProductReview_BeamProductReviewRating = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamProductReview_BeamProductReviewRating {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamProductReview_BeamProductReviewRating {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamProductReview_BeamProductReviewRating();
     while (reader.pos < end) {
@@ -1442,7 +1451,7 @@ export const BeamProductReview_BeamProductReviewRating = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamProductReview_BeamProductReviewRating>): BeamProductReview_BeamProductReviewRating {
+  fromPartial(object: Partial<BeamProductReview_BeamProductReviewRating>): BeamProductReview_BeamProductReviewRating {
     const message = createBaseBeamProductReview_BeamProductReviewRating();
     message.overall = object.overall ?? 0;
     message.quality = object.quality ?? 0;
@@ -1484,7 +1493,8 @@ function createBaseBeamProductReview_BeamProductReviewContent(): BeamProductRevi
   };
 }
 export const BeamProductReview_BeamProductReviewContent = {
-  encode(message: BeamProductReview_BeamProductReviewContent, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamProductReviewContent",
+  encode(message: BeamProductReview_BeamProductReviewContent, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.overall !== "") {
       writer.uint32(10).string(message.overall);
     }
@@ -1496,8 +1506,8 @@ export const BeamProductReview_BeamProductReviewContent = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamProductReview_BeamProductReviewContent {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamProductReview_BeamProductReviewContent {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamProductReview_BeamProductReviewContent();
     while (reader.pos < end) {
@@ -1519,7 +1529,7 @@ export const BeamProductReview_BeamProductReviewContent = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamProductReview_BeamProductReviewContent>): BeamProductReview_BeamProductReviewContent {
+  fromPartial(object: Partial<BeamProductReview_BeamProductReviewContent>): BeamProductReview_BeamProductReviewContent {
     const message = createBaseBeamProductReview_BeamProductReviewContent();
     message.overall = object.overall ?? "";
     message.pros = object.pros ?? "";
@@ -1561,11 +1571,12 @@ function createBaseBeamProductReview_BeamProduct(): BeamProductReview_BeamProduc
     name: "",
     url: "",
     urls: [],
-    ids: BeamProductIds.fromPartial({})
+    ids: undefined
   };
 }
 export const BeamProductReview_BeamProduct = {
-  encode(message: BeamProductReview_BeamProduct, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamProduct",
+  encode(message: BeamProductReview_BeamProduct, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -1580,8 +1591,8 @@ export const BeamProductReview_BeamProduct = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamProductReview_BeamProduct {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamProductReview_BeamProduct {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamProductReview_BeamProduct();
     while (reader.pos < end) {
@@ -1606,7 +1617,7 @@ export const BeamProductReview_BeamProduct = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamProductReview_BeamProduct>): BeamProductReview_BeamProduct {
+  fromPartial(object: Partial<BeamProductReview_BeamProduct>): BeamProductReview_BeamProduct {
     const message = createBaseBeamProductReview_BeamProduct();
     message.name = object.name ?? "";
     message.url = object.url ?? "";
@@ -1659,7 +1670,8 @@ function createBaseBeamProductReview_BeamProduct_BeamProductIds(): BeamProductRe
   };
 }
 export const BeamProductReview_BeamProduct_BeamProductIds = {
-  encode(message: BeamProductReview_BeamProduct_BeamProductIds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamProductIds",
+  encode(message: BeamProductReview_BeamProduct_BeamProductIds, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.gtins) {
       writer.uint32(10).string(v!);
     }
@@ -1674,8 +1686,8 @@ export const BeamProductReview_BeamProduct_BeamProductIds = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamProductReview_BeamProduct_BeamProductIds {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamProductReview_BeamProduct_BeamProductIds {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamProductReview_BeamProduct_BeamProductIds();
     while (reader.pos < end) {
@@ -1700,7 +1712,7 @@ export const BeamProductReview_BeamProduct_BeamProductIds = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamProductReview_BeamProduct_BeamProductIds>): BeamProductReview_BeamProduct_BeamProductIds {
+  fromPartial(object: Partial<BeamProductReview_BeamProduct_BeamProductIds>): BeamProductReview_BeamProduct_BeamProductIds {
     const message = createBaseBeamProductReview_BeamProduct_BeamProductIds();
     message.gtins = object.gtins?.map(e => e) || [];
     message.mpns = object.mpns?.map(e => e) || [];
@@ -1758,15 +1770,16 @@ export const BeamProductReview_BeamProduct_BeamProductIds = {
 };
 function createBaseBeamData(): BeamData {
   return {
-    reward: BeamReward.fromPartial({}),
-    verifier: BeamVerifier.fromPartial({}),
-    reviewer: BeamReviewer.fromPartial({}),
-    merchantReview: BeamMerchantReview.fromPartial({}),
+    reward: undefined,
+    verifier: undefined,
+    reviewer: undefined,
+    merchantReview: undefined,
     productsReviews: []
   };
 }
 export const BeamData = {
-  encode(message: BeamData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.BeamData",
+  encode(message: BeamData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.reward !== undefined) {
       BeamReward.encode(message.reward, writer.uint32(10).fork()).ldelim();
     }
@@ -1784,8 +1797,8 @@ export const BeamData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BeamData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BeamData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeamData();
     while (reader.pos < end) {
@@ -1813,7 +1826,7 @@ export const BeamData = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BeamData>): BeamData {
+  fromPartial(object: Partial<BeamData>): BeamData {
     const message = createBaseBeamData();
     message.reward = object.reward !== undefined && object.reward !== null ? BeamReward.fromPartial(object.reward) : undefined;
     message.verifier = object.verifier !== undefined && object.verifier !== null ? BeamVerifier.fromPartial(object.verifier) : undefined;
@@ -1873,7 +1886,7 @@ function createBaseBeam(): Beam {
     cancelReason: "",
     hideContent: false,
     schema: "",
-    data: BeamData.fromPartial({}),
+    data: undefined,
     claimExpiresAtBlock: 0,
     closesAtBlock: 0,
     createdAt: new Date(),
@@ -1881,7 +1894,8 @@ function createBaseBeam(): Beam {
   };
 }
 export const Beam = {
-  encode(message: Beam, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.Beam",
+  encode(message: Beam, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.creatorAddress !== "") {
       writer.uint32(10).string(message.creatorAddress);
     }
@@ -1932,8 +1946,8 @@ export const Beam = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Beam {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Beam {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBeam();
     while (reader.pos < end) {
@@ -1994,7 +2008,7 @@ export const Beam = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Beam>): Beam {
+  fromPartial(object: Partial<Beam>): Beam {
     const message = createBaseBeam();
     message.creatorAddress = object.creatorAddress ?? "";
     message.id = object.id ?? "";
@@ -2030,8 +2044,8 @@ export const Beam = {
       data: object?.data ? BeamData.fromAmino(object.data) : undefined,
       claimExpiresAtBlock: object.claim_expires_at_block,
       closesAtBlock: object.closes_at_block,
-      createdAt: object.created_at,
-      closedAt: object.closed_at
+      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
+      closedAt: object?.closed_at ? fromTimestamp(Timestamp.fromAmino(object.closed_at)) : undefined
     };
   },
   toAmino(message: Beam): BeamAmino {
@@ -2050,8 +2064,8 @@ export const Beam = {
     obj.data = message.data ? BeamData.toAmino(message.data) : undefined;
     obj.claim_expires_at_block = message.claimExpiresAtBlock;
     obj.closes_at_block = message.closesAtBlock;
-    obj.created_at = message.createdAt;
-    obj.closed_at = message.closedAt;
+    obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
+    obj.closed_at = message.closedAt ? Timestamp.toAmino(toTimestamp(message.closedAt)) : undefined;
     return obj;
   },
   fromAminoMsg(object: BeamAminoMsg): Beam {

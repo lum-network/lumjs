@@ -1,15 +1,58 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
+export enum TimeoutPolicy {
+  REJECT_QUERY_RESPONSE = 0,
+  RETRY_QUERY_REQUEST = 1,
+  EXECUTE_QUERY_CALLBACK = 2,
+  UNRECOGNIZED = -1,
+}
+export const TimeoutPolicySDKType = TimeoutPolicy;
+export const TimeoutPolicyAmino = TimeoutPolicy;
+export function timeoutPolicyFromJSON(object: any): TimeoutPolicy {
+  switch (object) {
+    case 0:
+    case "REJECT_QUERY_RESPONSE":
+      return TimeoutPolicy.REJECT_QUERY_RESPONSE;
+    case 1:
+    case "RETRY_QUERY_REQUEST":
+      return TimeoutPolicy.RETRY_QUERY_REQUEST;
+    case 2:
+    case "EXECUTE_QUERY_CALLBACK":
+      return TimeoutPolicy.EXECUTE_QUERY_CALLBACK;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return TimeoutPolicy.UNRECOGNIZED;
+  }
+}
+export function timeoutPolicyToJSON(object: TimeoutPolicy): string {
+  switch (object) {
+    case TimeoutPolicy.REJECT_QUERY_RESPONSE:
+      return "REJECT_QUERY_RESPONSE";
+    case TimeoutPolicy.RETRY_QUERY_REQUEST:
+      return "RETRY_QUERY_REQUEST";
+    case TimeoutPolicy.EXECUTE_QUERY_CALLBACK:
+      return "EXECUTE_QUERY_CALLBACK";
+    case TimeoutPolicy.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
 export interface Query {
   id: string;
   connectionId: string;
   chainId: string;
   queryType: string;
   request: Uint8Array;
+  callbackModuleName: string;
   callbackId: string;
-  ttl: Long;
+  timeoutTimestamp: bigint;
   requestSent: boolean;
   extraId: string;
+  timeoutPolicy: TimeoutPolicy;
+  timeoutDuration: Duration | undefined;
+  submissionHeight: bigint;
 }
 export interface QueryProtoMsg {
   typeUrl: "/stride.interchainquery.v1.Query";
@@ -21,10 +64,14 @@ export interface QueryAmino {
   chain_id: string;
   query_type: string;
   request: Uint8Array;
+  callback_module_name: string;
   callback_id: string;
-  ttl: string;
+  timeout_timestamp: string;
   request_sent: boolean;
   extra_id: string;
+  timeout_policy: TimeoutPolicy;
+  timeout_duration?: DurationAmino | undefined;
+  submission_height: string;
 }
 export interface QueryAminoMsg {
   type: "/stride.interchainquery.v1.Query";
@@ -36,10 +83,14 @@ export interface QuerySDKType {
   chain_id: string;
   query_type: string;
   request: Uint8Array;
+  callback_module_name: string;
   callback_id: string;
-  ttl: Long;
+  timeout_timestamp: bigint;
   request_sent: boolean;
   extra_id: string;
+  timeout_policy: TimeoutPolicy;
+  timeout_duration: DurationSDKType | undefined;
+  submission_height: bigint;
 }
 export interface DataPoint {
   id: string;
@@ -94,14 +145,19 @@ function createBaseQuery(): Query {
     chainId: "",
     queryType: "",
     request: new Uint8Array(),
+    callbackModuleName: "",
     callbackId: "",
-    ttl: Long.UZERO,
+    timeoutTimestamp: BigInt(0),
     requestSent: false,
-    extraId: ""
+    extraId: "",
+    timeoutPolicy: 0,
+    timeoutDuration: Duration.fromPartial({}),
+    submissionHeight: BigInt(0)
   };
 }
 export const Query = {
-  encode(message: Query, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.Query",
+  encode(message: Query, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -117,11 +173,14 @@ export const Query = {
     if (message.request.length !== 0) {
       writer.uint32(42).bytes(message.request);
     }
+    if (message.callbackModuleName !== "") {
+      writer.uint32(58).string(message.callbackModuleName);
+    }
     if (message.callbackId !== "") {
       writer.uint32(66).string(message.callbackId);
     }
-    if (!message.ttl.isZero()) {
-      writer.uint32(72).uint64(message.ttl);
+    if (message.timeoutTimestamp !== BigInt(0)) {
+      writer.uint32(72).uint64(message.timeoutTimestamp);
     }
     if (message.requestSent === true) {
       writer.uint32(88).bool(message.requestSent);
@@ -129,10 +188,19 @@ export const Query = {
     if (message.extraId !== "") {
       writer.uint32(98).string(message.extraId);
     }
+    if (message.timeoutPolicy !== 0) {
+      writer.uint32(104).int32(message.timeoutPolicy);
+    }
+    if (message.timeoutDuration !== undefined) {
+      Duration.encode(message.timeoutDuration, writer.uint32(114).fork()).ldelim();
+    }
+    if (message.submissionHeight !== BigInt(0)) {
+      writer.uint32(120).uint64(message.submissionHeight);
+    }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Query {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Query {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQuery();
     while (reader.pos < end) {
@@ -153,17 +221,29 @@ export const Query = {
         case 5:
           message.request = reader.bytes();
           break;
+        case 7:
+          message.callbackModuleName = reader.string();
+          break;
         case 8:
           message.callbackId = reader.string();
           break;
         case 9:
-          message.ttl = (reader.uint64() as Long);
+          message.timeoutTimestamp = reader.uint64();
           break;
         case 11:
           message.requestSent = reader.bool();
           break;
         case 12:
           message.extraId = reader.string();
+          break;
+        case 13:
+          message.timeoutPolicy = (reader.int32() as any);
+          break;
+        case 14:
+          message.timeoutDuration = Duration.decode(reader, reader.uint32());
+          break;
+        case 15:
+          message.submissionHeight = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -172,17 +252,21 @@ export const Query = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Query>): Query {
+  fromPartial(object: Partial<Query>): Query {
     const message = createBaseQuery();
     message.id = object.id ?? "";
     message.connectionId = object.connectionId ?? "";
     message.chainId = object.chainId ?? "";
     message.queryType = object.queryType ?? "";
     message.request = object.request ?? new Uint8Array();
+    message.callbackModuleName = object.callbackModuleName ?? "";
     message.callbackId = object.callbackId ?? "";
-    message.ttl = object.ttl !== undefined && object.ttl !== null ? Long.fromValue(object.ttl) : Long.UZERO;
+    message.timeoutTimestamp = object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null ? BigInt(object.timeoutTimestamp.toString()) : BigInt(0);
     message.requestSent = object.requestSent ?? false;
     message.extraId = object.extraId ?? "";
+    message.timeoutPolicy = object.timeoutPolicy ?? 0;
+    message.timeoutDuration = object.timeoutDuration !== undefined && object.timeoutDuration !== null ? Duration.fromPartial(object.timeoutDuration) : undefined;
+    message.submissionHeight = object.submissionHeight !== undefined && object.submissionHeight !== null ? BigInt(object.submissionHeight.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: QueryAmino): Query {
@@ -192,10 +276,14 @@ export const Query = {
       chainId: object.chain_id,
       queryType: object.query_type,
       request: object.request,
+      callbackModuleName: object.callback_module_name,
       callbackId: object.callback_id,
-      ttl: Long.fromString(object.ttl),
+      timeoutTimestamp: BigInt(object.timeout_timestamp),
       requestSent: object.request_sent,
-      extraId: object.extra_id
+      extraId: object.extra_id,
+      timeoutPolicy: isSet(object.timeout_policy) ? timeoutPolicyFromJSON(object.timeout_policy) : -1,
+      timeoutDuration: object?.timeout_duration ? Duration.fromAmino(object.timeout_duration) : undefined,
+      submissionHeight: BigInt(object.submission_height)
     };
   },
   toAmino(message: Query): QueryAmino {
@@ -205,10 +293,14 @@ export const Query = {
     obj.chain_id = message.chainId;
     obj.query_type = message.queryType;
     obj.request = message.request;
+    obj.callback_module_name = message.callbackModuleName;
     obj.callback_id = message.callbackId;
-    obj.ttl = message.ttl ? message.ttl.toString() : undefined;
+    obj.timeout_timestamp = message.timeoutTimestamp ? message.timeoutTimestamp.toString() : undefined;
     obj.request_sent = message.requestSent;
     obj.extra_id = message.extraId;
+    obj.timeout_policy = message.timeoutPolicy;
+    obj.timeout_duration = message.timeoutDuration ? Duration.toAmino(message.timeoutDuration) : undefined;
+    obj.submission_height = message.submissionHeight ? message.submissionHeight.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryAminoMsg): Query {
@@ -236,7 +328,8 @@ function createBaseDataPoint(): DataPoint {
   };
 }
 export const DataPoint = {
-  encode(message: DataPoint, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.DataPoint",
+  encode(message: DataPoint, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -251,8 +344,8 @@ export const DataPoint = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): DataPoint {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): DataPoint {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDataPoint();
     while (reader.pos < end) {
@@ -277,7 +370,7 @@ export const DataPoint = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<DataPoint>): DataPoint {
+  fromPartial(object: Partial<DataPoint>): DataPoint {
     const message = createBaseDataPoint();
     message.id = object.id ?? "";
     message.remoteHeight = object.remoteHeight ?? "";
@@ -323,14 +416,15 @@ function createBaseGenesisState(): GenesisState {
   };
 }
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/stride.interchainquery.v1.GenesisState",
+  encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.queries) {
       Query.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -346,7 +440,7 @@ export const GenesisState = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
+  fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.queries = object.queries?.map(e => Query.fromPartial(e)) || [];
     return message;

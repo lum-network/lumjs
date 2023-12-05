@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgDeposit, MsgDepositResponse, MsgDepositRetry, MsgDepositRetryResponse, MsgDepositEdit, MsgDepositEditResponse, MsgClaimPrize, MsgClaimPrizeResponse, MsgWithdrawDeposit, MsgWithdrawDepositResponse, MsgWithdrawDepositRetry, MsgWithdrawDepositRetryResponse, MsgDrawRetry, MsgDrawRetryResponse, MsgRestoreInterchainAccounts, MsgRestoreInterchainAccountsResponse, MsgGenerateSeed, MsgGenerateSeedResponse } from "./tx";
 export interface Msg {
   deposit(request: MsgDeposit): Promise<MsgDepositResponse>;
@@ -29,46 +29,49 @@ export class MsgClientImpl implements Msg {
   deposit(request: MsgDeposit): Promise<MsgDepositResponse> {
     const data = MsgDeposit.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "Deposit", data);
-    return promise.then(data => MsgDepositResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDepositResponse.decode(new BinaryReader(data)));
   }
   depositRetry(request: MsgDepositRetry): Promise<MsgDepositRetryResponse> {
     const data = MsgDepositRetry.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "DepositRetry", data);
-    return promise.then(data => MsgDepositRetryResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDepositRetryResponse.decode(new BinaryReader(data)));
   }
   depositEdit(request: MsgDepositEdit): Promise<MsgDepositEditResponse> {
     const data = MsgDepositEdit.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "DepositEdit", data);
-    return promise.then(data => MsgDepositEditResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDepositEditResponse.decode(new BinaryReader(data)));
   }
   claimPrize(request: MsgClaimPrize): Promise<MsgClaimPrizeResponse> {
     const data = MsgClaimPrize.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "ClaimPrize", data);
-    return promise.then(data => MsgClaimPrizeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgClaimPrizeResponse.decode(new BinaryReader(data)));
   }
   withdrawDeposit(request: MsgWithdrawDeposit): Promise<MsgWithdrawDepositResponse> {
     const data = MsgWithdrawDeposit.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "WithdrawDeposit", data);
-    return promise.then(data => MsgWithdrawDepositResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgWithdrawDepositResponse.decode(new BinaryReader(data)));
   }
   withdrawDepositRetry(request: MsgWithdrawDepositRetry): Promise<MsgWithdrawDepositRetryResponse> {
     const data = MsgWithdrawDepositRetry.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "WithdrawDepositRetry", data);
-    return promise.then(data => MsgWithdrawDepositRetryResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgWithdrawDepositRetryResponse.decode(new BinaryReader(data)));
   }
   drawRetry(request: MsgDrawRetry): Promise<MsgDrawRetryResponse> {
     const data = MsgDrawRetry.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "DrawRetry", data);
-    return promise.then(data => MsgDrawRetryResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDrawRetryResponse.decode(new BinaryReader(data)));
   }
   restoreInterchainAccounts(request: MsgRestoreInterchainAccounts): Promise<MsgRestoreInterchainAccountsResponse> {
     const data = MsgRestoreInterchainAccounts.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "RestoreInterchainAccounts", data);
-    return promise.then(data => MsgRestoreInterchainAccountsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRestoreInterchainAccountsResponse.decode(new BinaryReader(data)));
   }
   generateSeed(request: MsgGenerateSeed): Promise<MsgGenerateSeedResponse> {
     const data = MsgGenerateSeed.encode(request).finish();
     const promise = this.rpc.request("lum.network.millions.Msg", "GenerateSeed", data);
-    return promise.then(data => MsgGenerateSeedResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgGenerateSeedResponse.decode(new BinaryReader(data)));
   }
 }
+export const createClientImpl = (rpc: Rpc) => {
+  return new MsgClientImpl(rpc);
+};

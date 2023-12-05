@@ -1,7 +1,7 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
 import { BeamState, Beam, BeamAmino, BeamSDKType, beamStateFromJSON } from "./beam";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, isSet } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export interface QueryGetBeamRequest {
   id: string;
 }
@@ -20,7 +20,7 @@ export interface QueryGetBeamRequestSDKType {
   id: string;
 }
 export interface QueryGetBeamResponse {
-  beam: Beam | undefined;
+  beam?: Beam | undefined;
 }
 export interface QueryGetBeamResponseProtoMsg {
   typeUrl: "/lum.network.beam.QueryGetBeamResponse";
@@ -34,10 +34,10 @@ export interface QueryGetBeamResponseAminoMsg {
   value: QueryGetBeamResponseAmino;
 }
 export interface QueryGetBeamResponseSDKType {
-  beam: BeamSDKType | undefined;
+  beam?: BeamSDKType | undefined;
 }
 export interface QueryFetchBeamsRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
   state: BeamState;
 }
 export interface QueryFetchBeamsRequestProtoMsg {
@@ -53,12 +53,12 @@ export interface QueryFetchBeamsRequestAminoMsg {
   value: QueryFetchBeamsRequestAmino;
 }
 export interface QueryFetchBeamsRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
   state: BeamState;
 }
 export interface QueryFetchBeamsResponse {
   beams: Beam[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryFetchBeamsResponseProtoMsg {
   typeUrl: "/lum.network.beam.QueryFetchBeamsResponse";
@@ -74,10 +74,10 @@ export interface QueryFetchBeamsResponseAminoMsg {
 }
 export interface QueryFetchBeamsResponseSDKType {
   beams: BeamSDKType[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryFetchBeamsOpenQueueRequest {
-  pagination: PageRequest | undefined;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryFetchBeamsOpenQueueRequestProtoMsg {
   typeUrl: "/lum.network.beam.QueryFetchBeamsOpenQueueRequest";
@@ -91,11 +91,11 @@ export interface QueryFetchBeamsOpenQueueRequestAminoMsg {
   value: QueryFetchBeamsOpenQueueRequestAmino;
 }
 export interface QueryFetchBeamsOpenQueueRequestSDKType {
-  pagination: PageRequestSDKType | undefined;
+  pagination?: PageRequestSDKType | undefined;
 }
 export interface QueryFetchBeamsOpenQueueResponse {
   beamIds: string[];
-  pagination: PageResponse | undefined;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryFetchBeamsOpenQueueResponseProtoMsg {
   typeUrl: "/lum.network.beam.QueryFetchBeamsOpenQueueResponse";
@@ -111,7 +111,7 @@ export interface QueryFetchBeamsOpenQueueResponseAminoMsg {
 }
 export interface QueryFetchBeamsOpenQueueResponseSDKType {
   beam_ids: string[];
-  pagination: PageResponseSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 function createBaseQueryGetBeamRequest(): QueryGetBeamRequest {
   return {
@@ -119,14 +119,15 @@ function createBaseQueryGetBeamRequest(): QueryGetBeamRequest {
   };
 }
 export const QueryGetBeamRequest = {
-  encode(message: QueryGetBeamRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.QueryGetBeamRequest",
+  encode(message: QueryGetBeamRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetBeamRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetBeamRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetBeamRequest();
     while (reader.pos < end) {
@@ -142,7 +143,7 @@ export const QueryGetBeamRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetBeamRequest>): QueryGetBeamRequest {
+  fromPartial(object: Partial<QueryGetBeamRequest>): QueryGetBeamRequest {
     const message = createBaseQueryGetBeamRequest();
     message.id = object.id ?? "";
     return message;
@@ -175,18 +176,19 @@ export const QueryGetBeamRequest = {
 };
 function createBaseQueryGetBeamResponse(): QueryGetBeamResponse {
   return {
-    beam: Beam.fromPartial({})
+    beam: undefined
   };
 }
 export const QueryGetBeamResponse = {
-  encode(message: QueryGetBeamResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.QueryGetBeamResponse",
+  encode(message: QueryGetBeamResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.beam !== undefined) {
       Beam.encode(message.beam, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetBeamResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetBeamResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetBeamResponse();
     while (reader.pos < end) {
@@ -202,7 +204,7 @@ export const QueryGetBeamResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetBeamResponse>): QueryGetBeamResponse {
+  fromPartial(object: Partial<QueryGetBeamResponse>): QueryGetBeamResponse {
     const message = createBaseQueryGetBeamResponse();
     message.beam = object.beam !== undefined && object.beam !== null ? Beam.fromPartial(object.beam) : undefined;
     return message;
@@ -235,12 +237,13 @@ export const QueryGetBeamResponse = {
 };
 function createBaseQueryFetchBeamsRequest(): QueryFetchBeamsRequest {
   return {
-    pagination: PageRequest.fromPartial({}),
+    pagination: undefined,
     state: 0
   };
 }
 export const QueryFetchBeamsRequest = {
-  encode(message: QueryFetchBeamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.QueryFetchBeamsRequest",
+  encode(message: QueryFetchBeamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
@@ -249,8 +252,8 @@ export const QueryFetchBeamsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryFetchBeamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryFetchBeamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryFetchBeamsRequest();
     while (reader.pos < end) {
@@ -269,7 +272,7 @@ export const QueryFetchBeamsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryFetchBeamsRequest>): QueryFetchBeamsRequest {
+  fromPartial(object: Partial<QueryFetchBeamsRequest>): QueryFetchBeamsRequest {
     const message = createBaseQueryFetchBeamsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     message.state = object.state ?? 0;
@@ -306,11 +309,12 @@ export const QueryFetchBeamsRequest = {
 function createBaseQueryFetchBeamsResponse(): QueryFetchBeamsResponse {
   return {
     beams: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryFetchBeamsResponse = {
-  encode(message: QueryFetchBeamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.QueryFetchBeamsResponse",
+  encode(message: QueryFetchBeamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.beams) {
       Beam.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -319,8 +323,8 @@ export const QueryFetchBeamsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryFetchBeamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryFetchBeamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryFetchBeamsResponse();
     while (reader.pos < end) {
@@ -339,7 +343,7 @@ export const QueryFetchBeamsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryFetchBeamsResponse>): QueryFetchBeamsResponse {
+  fromPartial(object: Partial<QueryFetchBeamsResponse>): QueryFetchBeamsResponse {
     const message = createBaseQueryFetchBeamsResponse();
     message.beams = object.beams?.map(e => Beam.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -379,18 +383,19 @@ export const QueryFetchBeamsResponse = {
 };
 function createBaseQueryFetchBeamsOpenQueueRequest(): QueryFetchBeamsOpenQueueRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryFetchBeamsOpenQueueRequest = {
-  encode(message: QueryFetchBeamsOpenQueueRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.QueryFetchBeamsOpenQueueRequest",
+  encode(message: QueryFetchBeamsOpenQueueRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryFetchBeamsOpenQueueRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryFetchBeamsOpenQueueRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryFetchBeamsOpenQueueRequest();
     while (reader.pos < end) {
@@ -406,7 +411,7 @@ export const QueryFetchBeamsOpenQueueRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryFetchBeamsOpenQueueRequest>): QueryFetchBeamsOpenQueueRequest {
+  fromPartial(object: Partial<QueryFetchBeamsOpenQueueRequest>): QueryFetchBeamsOpenQueueRequest {
     const message = createBaseQueryFetchBeamsOpenQueueRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -440,11 +445,12 @@ export const QueryFetchBeamsOpenQueueRequest = {
 function createBaseQueryFetchBeamsOpenQueueResponse(): QueryFetchBeamsOpenQueueResponse {
   return {
     beamIds: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryFetchBeamsOpenQueueResponse = {
-  encode(message: QueryFetchBeamsOpenQueueResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.beam.QueryFetchBeamsOpenQueueResponse",
+  encode(message: QueryFetchBeamsOpenQueueResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.beamIds) {
       writer.uint32(10).string(v!);
     }
@@ -453,8 +459,8 @@ export const QueryFetchBeamsOpenQueueResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryFetchBeamsOpenQueueResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryFetchBeamsOpenQueueResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryFetchBeamsOpenQueueResponse();
     while (reader.pos < end) {
@@ -473,7 +479,7 @@ export const QueryFetchBeamsOpenQueueResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryFetchBeamsOpenQueueResponse>): QueryFetchBeamsOpenQueueResponse {
+  fromPartial(object: Partial<QueryFetchBeamsOpenQueueResponse>): QueryFetchBeamsOpenQueueResponse {
     const message = createBaseQueryFetchBeamsOpenQueueResponse();
     message.beamIds = object.beamIds?.map(e => e) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;

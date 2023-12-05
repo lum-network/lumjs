@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface IcacallbacksPacketData {
   noData?: NoData | undefined;
 }
@@ -34,14 +33,15 @@ function createBaseIcacallbacksPacketData(): IcacallbacksPacketData {
   };
 }
 export const IcacallbacksPacketData = {
-  encode(message: IcacallbacksPacketData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.IcacallbacksPacketData",
+  encode(message: IcacallbacksPacketData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.noData !== undefined) {
       NoData.encode(message.noData, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): IcacallbacksPacketData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): IcacallbacksPacketData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseIcacallbacksPacketData();
     while (reader.pos < end) {
@@ -57,7 +57,7 @@ export const IcacallbacksPacketData = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<IcacallbacksPacketData>): IcacallbacksPacketData {
+  fromPartial(object: Partial<IcacallbacksPacketData>): IcacallbacksPacketData {
     const message = createBaseIcacallbacksPacketData();
     message.noData = object.noData !== undefined && object.noData !== null ? NoData.fromPartial(object.noData) : undefined;
     return message;
@@ -92,11 +92,12 @@ function createBaseNoData(): NoData {
   return {};
 }
 export const NoData = {
-  encode(_: NoData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.icacallbacks.NoData",
+  encode(_: NoData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): NoData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): NoData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNoData();
     while (reader.pos < end) {
@@ -109,7 +110,7 @@ export const NoData = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<NoData>): NoData {
+  fromPartial(_: Partial<NoData>): NoData {
     const message = createBaseNoData();
     return message;
   },

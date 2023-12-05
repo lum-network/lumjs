@@ -69,6 +69,7 @@ export const createRPCQueryClient = async ({
         airdrop: (await import("./network/airdrop/query.rpc.Query")).createRpcQueryExtension(client),
         beam: (await import("./network/beam/query.rpc.Query")).createRpcQueryExtension(client),
         dfract: (await import("./network/dfract/query.rpc.Query")).createRpcQueryExtension(client),
+        epochs: (await import("./network/epochs/query.rpc.Query")).createRpcQueryExtension(client),
         icacallbacks: (await import("./network/icacallbacks/query.rpc.Query")).createRpcQueryExtension(client),
         millions: (await import("./network/millions/query.rpc.Query")).createRpcQueryExtension(client)
       }

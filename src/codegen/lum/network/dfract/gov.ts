@@ -1,11 +1,10 @@
 import { BoolValue, BoolValueAmino, BoolValueSDKType } from "../../../google/protobuf/wrappers";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface ProposalUpdateParams {
   title: string;
   description: string;
   withdrawalAddress: string;
-  isDepositEnabled: BoolValue | undefined;
+  isDepositEnabled?: BoolValue | undefined;
   depositDenoms?: string[];
   minDepositAmount?: string;
 }
@@ -29,7 +28,7 @@ export interface ProposalUpdateParamsSDKType {
   title: string;
   description: string;
   withdrawal_address: string;
-  is_deposit_enabled: BoolValueSDKType | undefined;
+  is_deposit_enabled?: BoolValueSDKType | undefined;
   deposit_denoms?: string[];
   min_deposit_amount?: string;
 }
@@ -38,13 +37,14 @@ function createBaseProposalUpdateParams(): ProposalUpdateParams {
     title: "",
     description: "",
     withdrawalAddress: "",
-    isDepositEnabled: BoolValue.fromPartial({}),
-    depositDenoms: undefined,
+    isDepositEnabled: undefined,
+    depositDenoms: [],
     minDepositAmount: undefined
   };
 }
 export const ProposalUpdateParams = {
-  encode(message: ProposalUpdateParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.ProposalUpdateParams",
+  encode(message: ProposalUpdateParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -65,8 +65,8 @@ export const ProposalUpdateParams = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProposalUpdateParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProposalUpdateParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposalUpdateParams();
     while (reader.pos < end) {
@@ -97,7 +97,7 @@ export const ProposalUpdateParams = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProposalUpdateParams>): ProposalUpdateParams {
+  fromPartial(object: Partial<ProposalUpdateParams>): ProposalUpdateParams {
     const message = createBaseProposalUpdateParams();
     message.title = object.title ?? "";
     message.description = object.description ?? "";

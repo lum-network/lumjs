@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryModuleAccountBalanceRequest, QueryModuleAccountBalanceResponse, QueryParamsRequest, QueryParamsResponse, QueryGetDepositsForAddressRequest, QueryGetDepositsForAddressResponse, QueryFetchDepositsRequest, QueryFetchDepositsResponse } from "./query";
 export interface Query {
@@ -20,22 +20,22 @@ export class QueryClientImpl implements Query {
   moduleAccountBalance(request: QueryModuleAccountBalanceRequest = {}): Promise<QueryModuleAccountBalanceResponse> {
     const data = QueryModuleAccountBalanceRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.dfract.Query", "ModuleAccountBalance", data);
-    return promise.then(data => QueryModuleAccountBalanceResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryModuleAccountBalanceResponse.decode(new BinaryReader(data)));
   }
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.dfract.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   getDepositsForAddress(request: QueryGetDepositsForAddressRequest): Promise<QueryGetDepositsForAddressResponse> {
     const data = QueryGetDepositsForAddressRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.dfract.Query", "GetDepositsForAddress", data);
-    return promise.then(data => QueryGetDepositsForAddressResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetDepositsForAddressResponse.decode(new BinaryReader(data)));
   }
   fetchDeposits(request: QueryFetchDepositsRequest): Promise<QueryFetchDepositsResponse> {
     const data = QueryFetchDepositsRequest.encode(request).finish();
     const promise = this.rpc.request("lum.network.dfract.Query", "FetchDeposits", data);
-    return promise.then(data => QueryFetchDepositsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryFetchDepositsResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {

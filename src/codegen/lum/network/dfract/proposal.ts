@@ -1,5 +1,4 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /**
  * DEPRECATED:
  * For easier management, we moved the WithdrawAndMintProposal to tx based
@@ -11,7 +10,7 @@ export interface WithdrawAndMintProposal {
   title: string;
   description: string;
   withdrawalAddress: string;
-  microMintRate: Long;
+  microMintRate: bigint;
 }
 export interface WithdrawAndMintProposalProtoMsg {
   typeUrl: "/lum.network.dfract.WithdrawAndMintProposal";
@@ -45,18 +44,19 @@ export interface WithdrawAndMintProposalSDKType {
   title: string;
   description: string;
   withdrawal_address: string;
-  micro_mint_rate: Long;
+  micro_mint_rate: bigint;
 }
 function createBaseWithdrawAndMintProposal(): WithdrawAndMintProposal {
   return {
     title: "",
     description: "",
     withdrawalAddress: "",
-    microMintRate: Long.ZERO
+    microMintRate: BigInt(0)
   };
 }
 export const WithdrawAndMintProposal = {
-  encode(message: WithdrawAndMintProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.dfract.WithdrawAndMintProposal",
+  encode(message: WithdrawAndMintProposal, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -66,13 +66,13 @@ export const WithdrawAndMintProposal = {
     if (message.withdrawalAddress !== "") {
       writer.uint32(26).string(message.withdrawalAddress);
     }
-    if (!message.microMintRate.isZero()) {
+    if (message.microMintRate !== BigInt(0)) {
       writer.uint32(32).int64(message.microMintRate);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): WithdrawAndMintProposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): WithdrawAndMintProposal {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWithdrawAndMintProposal();
     while (reader.pos < end) {
@@ -88,7 +88,7 @@ export const WithdrawAndMintProposal = {
           message.withdrawalAddress = reader.string();
           break;
         case 4:
-          message.microMintRate = (reader.int64() as Long);
+          message.microMintRate = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -97,12 +97,12 @@ export const WithdrawAndMintProposal = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<WithdrawAndMintProposal>): WithdrawAndMintProposal {
+  fromPartial(object: Partial<WithdrawAndMintProposal>): WithdrawAndMintProposal {
     const message = createBaseWithdrawAndMintProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
     message.withdrawalAddress = object.withdrawalAddress ?? "";
-    message.microMintRate = object.microMintRate !== undefined && object.microMintRate !== null ? Long.fromValue(object.microMintRate) : Long.ZERO;
+    message.microMintRate = object.microMintRate !== undefined && object.microMintRate !== null ? BigInt(object.microMintRate.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: WithdrawAndMintProposalAmino): WithdrawAndMintProposal {
@@ -110,7 +110,7 @@ export const WithdrawAndMintProposal = {
       title: object.title,
       description: object.description,
       withdrawalAddress: object.withdrawal_address,
-      microMintRate: Long.fromString(object.micro_mint_rate)
+      microMintRate: BigInt(object.micro_mint_rate)
     };
   },
   toAmino(message: WithdrawAndMintProposal): WithdrawAndMintProposalAmino {

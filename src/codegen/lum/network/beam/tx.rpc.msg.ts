@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgOpenBeam, MsgOpenBeamResponse, MsgUpdateBeam, MsgUpdateBeamResponse, MsgClaimBeam, MsgClaimBeamResponse } from "./tx";
 export interface Msg {
   openBeam(request: MsgOpenBeam): Promise<MsgOpenBeamResponse>;
@@ -17,16 +17,19 @@ export class MsgClientImpl implements Msg {
   openBeam(request: MsgOpenBeam): Promise<MsgOpenBeamResponse> {
     const data = MsgOpenBeam.encode(request).finish();
     const promise = this.rpc.request("lum.network.beam.Msg", "OpenBeam", data);
-    return promise.then(data => MsgOpenBeamResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgOpenBeamResponse.decode(new BinaryReader(data)));
   }
   updateBeam(request: MsgUpdateBeam): Promise<MsgUpdateBeamResponse> {
     const data = MsgUpdateBeam.encode(request).finish();
     const promise = this.rpc.request("lum.network.beam.Msg", "UpdateBeam", data);
-    return promise.then(data => MsgUpdateBeamResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateBeamResponse.decode(new BinaryReader(data)));
   }
   claimBeam(request: MsgClaimBeam): Promise<MsgClaimBeamResponse> {
     const data = MsgClaimBeam.encode(request).finish();
     const promise = this.rpc.request("lum.network.beam.Msg", "ClaimBeam", data);
-    return promise.then(data => MsgClaimBeamResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgClaimBeamResponse.decode(new BinaryReader(data)));
   }
 }
+export const createClientImpl = (rpc: Rpc) => {
+  return new MsgClientImpl(rpc);
+};

@@ -1,7 +1,7 @@
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
-import * as _m0 from "protobufjs/minimal";
-import { toTimestamp, fromTimestamp, DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export interface DrawSchedule {
   initialDrawAt: Date | undefined;
   drawDelta: Duration | undefined;
@@ -11,7 +11,7 @@ export interface DrawScheduleProtoMsg {
   value: Uint8Array;
 }
 export interface DrawScheduleAmino {
-  initial_draw_at?: Date | undefined;
+  initial_draw_at?: string | undefined;
   draw_delta?: DurationAmino | undefined;
 }
 export interface DrawScheduleAminoMsg {
@@ -29,7 +29,8 @@ function createBaseDrawSchedule(): DrawSchedule {
   };
 }
 export const DrawSchedule = {
-  encode(message: DrawSchedule, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lum.network.millions.DrawSchedule",
+  encode(message: DrawSchedule, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.initialDrawAt !== undefined) {
       Timestamp.encode(toTimestamp(message.initialDrawAt), writer.uint32(10).fork()).ldelim();
     }
@@ -38,8 +39,8 @@ export const DrawSchedule = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): DrawSchedule {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): DrawSchedule {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDrawSchedule();
     while (reader.pos < end) {
@@ -58,7 +59,7 @@ export const DrawSchedule = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<DrawSchedule>): DrawSchedule {
+  fromPartial(object: Partial<DrawSchedule>): DrawSchedule {
     const message = createBaseDrawSchedule();
     message.initialDrawAt = object.initialDrawAt ?? undefined;
     message.drawDelta = object.drawDelta !== undefined && object.drawDelta !== null ? Duration.fromPartial(object.drawDelta) : undefined;
@@ -66,13 +67,13 @@ export const DrawSchedule = {
   },
   fromAmino(object: DrawScheduleAmino): DrawSchedule {
     return {
-      initialDrawAt: object.initial_draw_at,
+      initialDrawAt: object?.initial_draw_at ? fromTimestamp(Timestamp.fromAmino(object.initial_draw_at)) : undefined,
       drawDelta: object?.draw_delta ? Duration.fromAmino(object.draw_delta) : undefined
     };
   },
   toAmino(message: DrawSchedule): DrawScheduleAmino {
     const obj: any = {};
-    obj.initial_draw_at = message.initialDrawAt;
+    obj.initial_draw_at = message.initialDrawAt ? Timestamp.toAmino(toTimestamp(message.initialDrawAt)) : undefined;
     obj.draw_delta = message.drawDelta ? Duration.toAmino(message.drawDelta) : undefined;
     return obj;
   },
