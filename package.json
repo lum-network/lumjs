@@ -16,9 +16,9 @@
         "!CHANGELOG.md"
     ],
     "scripts": {
-        "build:cjs": "yarn tsc -p tsconfig.json --outDir build --module commonjs || true",
-        "build:mjs": "yarn tsc -p tsconfig.json --outDir mjs --module es2022 --declaration false || true",
-        "build:lib": "tsc",
+        "build:cjs": "npx tsc -p ./tsconfig.json --outDir build --module commonjs || true",
+        "build:mjs": "npx tsc -p ./tsconfig.json --outDir mjs --module es2022 --declaration false || true",
+        "build:lib": "npx tsc",
         "build:docs": "rimraf docs/lib && typedoc --entryPoints src/helpers --excludeExternals --readme none --out docs/lib --disableSources",
         "clean:mjs": "rimraf mjs",
         "clean:build": "rimraf build",
