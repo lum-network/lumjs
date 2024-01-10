@@ -1,7 +1,7 @@
 import { Uint64 } from '@cosmjs/math';
 import { Account } from '../types';
 import { Coin } from '../codegen/cosmos/base/v1beta1/coin';
-import { MicroLumDenom } from '../constants';
+import { MICRO_LUM_DENOM } from './constants';
 
 const uint64ProtoToDate = (input: bigint): Date => {
     return new Date(Number(input) * 1000);
@@ -17,7 +17,7 @@ const uint64ProtoToDate = (input: bigint): Date => {
 export const estimatedVesting = (
     account: Account,
     t?: Date,
-    denom = MicroLumDenom,
+    denom = MICRO_LUM_DENOM,
 ): {
     startsAt: Date;
     endsAt: Date;

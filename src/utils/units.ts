@@ -1,4 +1,4 @@
-import { LumExponent } from '../constants';
+import { LUM_EXPONENT } from './constants';
 import { Coin } from '../codegen/cosmos/base/v1beta1/coin';
 
 /**
@@ -25,18 +25,18 @@ export const convertUnit = (coin: Coin, toDenom: string): string => {
             throw new Error('Micro units cannot have floating precision');
         }
         let res = parts[0];
-        for (let i = res.length; res.length <= LumExponent; i++) {
+        for (let i = res.length; res.length <= LUM_EXPONENT; i++) {
             res = '0' + res;
         }
-        const floatIdx = res.length - LumExponent;
+        const floatIdx = res.length - LUM_EXPONENT;
         return (res.substring(0, floatIdx) + '.' + res.substring(floatIdx)).replace(/0+$/, '');
     } else if (toDenom.startsWith('u') && toDenom.endsWith(coin.denom)) {
         // form base to micro
-        if (parts.length === 2 && parts[1].length > LumExponent) {
-            throw new Error(`Floating precision cannot exceed ${LumExponent} digits`);
+        if (parts.length === 2 && parts[1].length > LUM_EXPONENT) {
+            throw new Error(`Floating precision cannot exceed ${LUM_EXPONENT} digits`);
         }
         let res = parts[0] + (parts[1] || '');
-        for (let i = parts.length === 2 ? parts[1].length : 0; i < LumExponent; i++) {
+        for (let i = parts.length === 2 ? parts[1].length : 0; i < LUM_EXPONENT; i++) {
             res += '0';
         }
         return res.replace(/^0+/, '');
