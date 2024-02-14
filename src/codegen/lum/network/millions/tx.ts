@@ -21,15 +21,15 @@ export interface MsgUpdateParamsProtoMsg {
   value: Uint8Array;
 }
 export interface MsgUpdateParamsAmino {
-  min_deposit_amount: string;
-  max_prize_strategy_batches: string;
-  max_prize_batch_quantity: string;
+  min_deposit_amount?: string;
+  max_prize_strategy_batches?: string;
+  max_prize_batch_quantity?: string;
   min_draw_schedule_delta?: DurationAmino | undefined;
   max_draw_schedule_delta?: DurationAmino | undefined;
   prize_expiration_delta?: DurationAmino | undefined;
-  fees_stakers: string;
+  fees_stakers?: string;
   min_deposit_draw_delta?: DurationAmino | undefined;
-  updater_address: string;
+  updater_address?: string;
 }
 export interface MsgUpdateParamsAminoMsg {
   type: "/lum.network.millions.MsgUpdateParams";
@@ -75,17 +75,17 @@ export interface MsgRegisterPoolProtoMsg {
   value: Uint8Array;
 }
 export interface MsgRegisterPoolAmino {
-  chain_id: string;
-  denom: string;
-  native_denom: string;
-  connection_id: string;
-  validators: string[];
-  min_deposit_amount: string;
+  chain_id?: string;
+  denom?: string;
+  native_denom?: string;
+  connection_id?: string;
+  validators?: string[];
+  min_deposit_amount?: string;
   draw_schedule?: DrawScheduleAmino | undefined;
   prize_strategy?: PrizeStrategyAmino | undefined;
-  bech32_prefix_acc_addr: string;
-  bech32_prefix_val_addr: string;
-  creator_address: string;
+  bech32_prefix_acc_addr?: string;
+  bech32_prefix_val_addr?: string;
+  creator_address?: string;
 }
 export interface MsgRegisterPoolAminoMsg {
   type: "/lum.network.millions.MsgRegisterPool";
@@ -112,7 +112,7 @@ export interface MsgRegisterPoolResponseProtoMsg {
   value: Uint8Array;
 }
 export interface MsgRegisterPoolResponseAmino {
-  pool_id: string;
+  pool_id?: string;
 }
 export interface MsgRegisterPoolResponseAminoMsg {
   type: "/lum.network.millions.MsgRegisterPoolResponse";
@@ -134,12 +134,12 @@ export interface MsgUpdatePoolProtoMsg {
   value: Uint8Array;
 }
 export interface MsgUpdatePoolAmino {
-  pool_id: string;
-  validators: string[];
-  min_deposit_amount: string;
+  pool_id?: string;
+  validators?: string[];
+  min_deposit_amount?: string;
   draw_schedule?: DrawScheduleAmino | undefined;
   prize_strategy?: PrizeStrategyAmino | undefined;
-  updater_address: string;
+  updater_address?: string;
 }
 export interface MsgUpdatePoolAminoMsg {
   type: "/lum.network.millions.MsgUpdatePool";
@@ -176,11 +176,11 @@ export interface MsgDepositProtoMsg {
   value: Uint8Array;
 }
 export interface MsgDepositAmino {
-  pool_id: string;
+  pool_id?: string;
   amount?: CoinAmino | undefined;
-  depositor_address: string;
-  winner_address: string;
-  is_sponsor: boolean;
+  depositor_address?: string;
+  winner_address?: string;
+  is_sponsor?: boolean;
 }
 export interface MsgDepositAminoMsg {
   type: "/lum.network.millions.MsgDeposit";
@@ -201,7 +201,7 @@ export interface MsgDepositResponseProtoMsg {
   value: Uint8Array;
 }
 export interface MsgDepositResponseAmino {
-  deposit_id: string;
+  deposit_id?: string;
 }
 export interface MsgDepositResponseAminoMsg {
   type: "/lum.network.millions.MsgDepositResponse";
@@ -220,9 +220,9 @@ export interface MsgDepositRetryProtoMsg {
   value: Uint8Array;
 }
 export interface MsgDepositRetryAmino {
-  pool_id: string;
-  deposit_id: string;
-  depositor_address: string;
+  pool_id?: string;
+  deposit_id?: string;
+  depositor_address?: string;
 }
 export interface MsgDepositRetryAminoMsg {
   type: "/lum.network.millions.MsgDepositRetry";
@@ -245,11 +245,11 @@ export interface MsgDepositEditProtoMsg {
   value: Uint8Array;
 }
 export interface MsgDepositEditAmino {
-  pool_id: string;
-  deposit_id: string;
-  winner_address: string;
+  pool_id?: string;
+  deposit_id?: string;
+  winner_address?: string;
   is_sponsor?: BoolValueAmino | undefined;
-  depositor_address: string;
+  depositor_address?: string;
 }
 export interface MsgDepositEditAminoMsg {
   type: "/lum.network.millions.MsgDepositEdit";
@@ -295,10 +295,10 @@ export interface MsgClaimPrizeProtoMsg {
   value: Uint8Array;
 }
 export interface MsgClaimPrizeAmino {
-  pool_id: string;
-  draw_id: string;
-  prize_id: string;
-  winner_address: string;
+  pool_id?: string;
+  draw_id?: string;
+  prize_id?: string;
+  winner_address?: string;
 }
 export interface MsgClaimPrizeAminoMsg {
   type: "/lum.network.millions.MsgClaimPrize";
@@ -332,10 +332,10 @@ export interface MsgWithdrawDepositProtoMsg {
   value: Uint8Array;
 }
 export interface MsgWithdrawDepositAmino {
-  pool_id: string;
-  deposit_id: string;
-  depositor_address: string;
-  to_address: string;
+  pool_id?: string;
+  deposit_id?: string;
+  depositor_address?: string;
+  to_address?: string;
 }
 export interface MsgWithdrawDepositAminoMsg {
   type: "/lum.network.millions.MsgWithdrawDeposit";
@@ -355,7 +355,7 @@ export interface MsgWithdrawDepositResponseProtoMsg {
   value: Uint8Array;
 }
 export interface MsgWithdrawDepositResponseAmino {
-  withdrawal_id: string;
+  withdrawal_id?: string;
 }
 export interface MsgWithdrawDepositResponseAminoMsg {
   type: "/lum.network.millions.MsgWithdrawDepositResponse";
@@ -374,9 +374,9 @@ export interface MsgWithdrawDepositRetryProtoMsg {
   value: Uint8Array;
 }
 export interface MsgWithdrawDepositRetryAmino {
-  pool_id: string;
-  withdrawal_id: string;
-  depositor_address: string;
+  pool_id?: string;
+  withdrawal_id?: string;
+  depositor_address?: string;
 }
 export interface MsgWithdrawDepositRetryAminoMsg {
   type: "/lum.network.millions.MsgWithdrawDepositRetry";
@@ -408,9 +408,9 @@ export interface MsgDrawRetryProtoMsg {
   value: Uint8Array;
 }
 export interface MsgDrawRetryAmino {
-  pool_id: string;
-  draw_id: string;
-  draw_retry_address: string;
+  pool_id?: string;
+  draw_id?: string;
+  draw_retry_address?: string;
 }
 export interface MsgDrawRetryAminoMsg {
   type: "/lum.network.millions.MsgDrawRetry";
@@ -441,8 +441,8 @@ export interface MsgRestoreInterchainAccountsProtoMsg {
   value: Uint8Array;
 }
 export interface MsgRestoreInterchainAccountsAmino {
-  pool_id: string;
-  restorer_address: string;
+  pool_id?: string;
+  restorer_address?: string;
 }
 export interface MsgRestoreInterchainAccountsAminoMsg {
   type: "/lum.network.millions.MsgRestoreInterchainAccounts";
@@ -471,7 +471,7 @@ export interface MsgGenerateSeedProtoMsg {
   value: Uint8Array;
 }
 export interface MsgGenerateSeedAmino {
-  requester_address: string;
+  requester_address?: string;
 }
 export interface MsgGenerateSeedAminoMsg {
   type: "/lum.network.millions.MsgGenerateSeed";
@@ -488,7 +488,7 @@ export interface MsgGenerateSeedResponseProtoMsg {
   value: Uint8Array;
 }
 export interface MsgGenerateSeedResponseAmino {
-  seed: string;
+  seed?: string;
 }
 export interface MsgGenerateSeedResponseAminoMsg {
   type: "/lum.network.millions.MsgGenerateSeedResponse";
@@ -597,17 +597,35 @@ export const MsgUpdateParams = {
     return message;
   },
   fromAmino(object: MsgUpdateParamsAmino): MsgUpdateParams {
-    return {
-      minDepositAmount: object?.min_deposit_amount,
-      maxPrizeStrategyBatches: object?.max_prize_strategy_batches,
-      maxPrizeBatchQuantity: object?.max_prize_batch_quantity,
-      minDrawScheduleDelta: object?.min_draw_schedule_delta ? Duration.fromAmino(object.min_draw_schedule_delta) : undefined,
-      maxDrawScheduleDelta: object?.max_draw_schedule_delta ? Duration.fromAmino(object.max_draw_schedule_delta) : undefined,
-      prizeExpirationDelta: object?.prize_expiration_delta ? Duration.fromAmino(object.prize_expiration_delta) : undefined,
-      feesStakers: object?.fees_stakers,
-      minDepositDrawDelta: object?.min_deposit_draw_delta ? Duration.fromAmino(object.min_deposit_draw_delta) : undefined,
-      updaterAddress: object.updater_address
-    };
+    const message = createBaseMsgUpdateParams();
+    if (object.min_deposit_amount !== undefined && object.min_deposit_amount !== null) {
+      message.minDepositAmount = object.min_deposit_amount;
+    }
+    if (object.max_prize_strategy_batches !== undefined && object.max_prize_strategy_batches !== null) {
+      message.maxPrizeStrategyBatches = object.max_prize_strategy_batches;
+    }
+    if (object.max_prize_batch_quantity !== undefined && object.max_prize_batch_quantity !== null) {
+      message.maxPrizeBatchQuantity = object.max_prize_batch_quantity;
+    }
+    if (object.min_draw_schedule_delta !== undefined && object.min_draw_schedule_delta !== null) {
+      message.minDrawScheduleDelta = Duration.fromAmino(object.min_draw_schedule_delta);
+    }
+    if (object.max_draw_schedule_delta !== undefined && object.max_draw_schedule_delta !== null) {
+      message.maxDrawScheduleDelta = Duration.fromAmino(object.max_draw_schedule_delta);
+    }
+    if (object.prize_expiration_delta !== undefined && object.prize_expiration_delta !== null) {
+      message.prizeExpirationDelta = Duration.fromAmino(object.prize_expiration_delta);
+    }
+    if (object.fees_stakers !== undefined && object.fees_stakers !== null) {
+      message.feesStakers = object.fees_stakers;
+    }
+    if (object.min_deposit_draw_delta !== undefined && object.min_deposit_draw_delta !== null) {
+      message.minDepositDrawDelta = Duration.fromAmino(object.min_deposit_draw_delta);
+    }
+    if (object.updater_address !== undefined && object.updater_address !== null) {
+      message.updaterAddress = object.updater_address;
+    }
+    return message;
   },
   toAmino(message: MsgUpdateParams): MsgUpdateParamsAmino {
     const obj: any = {};
@@ -665,7 +683,8 @@ export const MsgUpdateParamsResponse = {
     return message;
   },
   fromAmino(_: MsgUpdateParamsResponseAmino): MsgUpdateParamsResponse {
-    return {};
+    const message = createBaseMsgUpdateParamsResponse();
+    return message;
   },
   toAmino(_: MsgUpdateParamsResponse): MsgUpdateParamsResponseAmino {
     const obj: any = {};
@@ -803,19 +822,39 @@ export const MsgRegisterPool = {
     return message;
   },
   fromAmino(object: MsgRegisterPoolAmino): MsgRegisterPool {
-    return {
-      chainId: object.chain_id,
-      denom: object.denom,
-      nativeDenom: object.native_denom,
-      connectionId: object.connection_id,
-      validators: Array.isArray(object?.validators) ? object.validators.map((e: any) => e) : [],
-      minDepositAmount: object.min_deposit_amount,
-      drawSchedule: object?.draw_schedule ? DrawSchedule.fromAmino(object.draw_schedule) : undefined,
-      prizeStrategy: object?.prize_strategy ? PrizeStrategy.fromAmino(object.prize_strategy) : undefined,
-      bech32PrefixAccAddr: object.bech32_prefix_acc_addr,
-      bech32PrefixValAddr: object.bech32_prefix_val_addr,
-      creatorAddress: object.creator_address
-    };
+    const message = createBaseMsgRegisterPool();
+    if (object.chain_id !== undefined && object.chain_id !== null) {
+      message.chainId = object.chain_id;
+    }
+    if (object.denom !== undefined && object.denom !== null) {
+      message.denom = object.denom;
+    }
+    if (object.native_denom !== undefined && object.native_denom !== null) {
+      message.nativeDenom = object.native_denom;
+    }
+    if (object.connection_id !== undefined && object.connection_id !== null) {
+      message.connectionId = object.connection_id;
+    }
+    message.validators = object.validators?.map(e => e) || [];
+    if (object.min_deposit_amount !== undefined && object.min_deposit_amount !== null) {
+      message.minDepositAmount = object.min_deposit_amount;
+    }
+    if (object.draw_schedule !== undefined && object.draw_schedule !== null) {
+      message.drawSchedule = DrawSchedule.fromAmino(object.draw_schedule);
+    }
+    if (object.prize_strategy !== undefined && object.prize_strategy !== null) {
+      message.prizeStrategy = PrizeStrategy.fromAmino(object.prize_strategy);
+    }
+    if (object.bech32_prefix_acc_addr !== undefined && object.bech32_prefix_acc_addr !== null) {
+      message.bech32PrefixAccAddr = object.bech32_prefix_acc_addr;
+    }
+    if (object.bech32_prefix_val_addr !== undefined && object.bech32_prefix_val_addr !== null) {
+      message.bech32PrefixValAddr = object.bech32_prefix_val_addr;
+    }
+    if (object.creator_address !== undefined && object.creator_address !== null) {
+      message.creatorAddress = object.creator_address;
+    }
+    return message;
   },
   toAmino(message: MsgRegisterPool): MsgRegisterPoolAmino {
     const obj: any = {};
@@ -888,9 +927,11 @@ export const MsgRegisterPoolResponse = {
     return message;
   },
   fromAmino(object: MsgRegisterPoolResponseAmino): MsgRegisterPoolResponse {
-    return {
-      poolId: BigInt(object.pool_id)
-    };
+    const message = createBaseMsgRegisterPoolResponse();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    return message;
   },
   toAmino(message: MsgRegisterPoolResponse): MsgRegisterPoolResponseAmino {
     const obj: any = {};
@@ -989,14 +1030,24 @@ export const MsgUpdatePool = {
     return message;
   },
   fromAmino(object: MsgUpdatePoolAmino): MsgUpdatePool {
-    return {
-      poolId: BigInt(object.pool_id),
-      validators: Array.isArray(object?.validators) ? object.validators.map((e: any) => e) : [],
-      minDepositAmount: object?.min_deposit_amount,
-      drawSchedule: object?.draw_schedule ? DrawSchedule.fromAmino(object.draw_schedule) : undefined,
-      prizeStrategy: object?.prize_strategy ? PrizeStrategy.fromAmino(object.prize_strategy) : undefined,
-      updaterAddress: object.updater_address
-    };
+    const message = createBaseMsgUpdatePool();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    message.validators = object.validators?.map(e => e) || [];
+    if (object.min_deposit_amount !== undefined && object.min_deposit_amount !== null) {
+      message.minDepositAmount = object.min_deposit_amount;
+    }
+    if (object.draw_schedule !== undefined && object.draw_schedule !== null) {
+      message.drawSchedule = DrawSchedule.fromAmino(object.draw_schedule);
+    }
+    if (object.prize_strategy !== undefined && object.prize_strategy !== null) {
+      message.prizeStrategy = PrizeStrategy.fromAmino(object.prize_strategy);
+    }
+    if (object.updater_address !== undefined && object.updater_address !== null) {
+      message.updaterAddress = object.updater_address;
+    }
+    return message;
   },
   toAmino(message: MsgUpdatePool): MsgUpdatePoolAmino {
     const obj: any = {};
@@ -1055,7 +1106,8 @@ export const MsgUpdatePoolResponse = {
     return message;
   },
   fromAmino(_: MsgUpdatePoolResponseAmino): MsgUpdatePoolResponse {
-    return {};
+    const message = createBaseMsgUpdatePoolResponse();
+    return message;
   },
   toAmino(_: MsgUpdatePoolResponse): MsgUpdatePoolResponseAmino {
     const obj: any = {};
@@ -1145,13 +1197,23 @@ export const MsgDeposit = {
     return message;
   },
   fromAmino(object: MsgDepositAmino): MsgDeposit {
-    return {
-      poolId: BigInt(object.pool_id),
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      depositorAddress: object.depositor_address,
-      winnerAddress: object.winner_address,
-      isSponsor: object.is_sponsor
-    };
+    const message = createBaseMsgDeposit();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.is_sponsor !== undefined && object.is_sponsor !== null) {
+      message.isSponsor = object.is_sponsor;
+    }
+    return message;
   },
   toAmino(message: MsgDeposit): MsgDepositAmino {
     const obj: any = {};
@@ -1214,9 +1276,11 @@ export const MsgDepositResponse = {
     return message;
   },
   fromAmino(object: MsgDepositResponseAmino): MsgDepositResponse {
-    return {
-      depositId: BigInt(object.deposit_id)
-    };
+    const message = createBaseMsgDepositResponse();
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    return message;
   },
   toAmino(message: MsgDepositResponse): MsgDepositResponseAmino {
     const obj: any = {};
@@ -1291,11 +1355,17 @@ export const MsgDepositRetry = {
     return message;
   },
   fromAmino(object: MsgDepositRetryAmino): MsgDepositRetry {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id),
-      depositorAddress: object.depositor_address
-    };
+    const message = createBaseMsgDepositRetry();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    return message;
   },
   toAmino(message: MsgDepositRetry): MsgDepositRetryAmino {
     const obj: any = {};
@@ -1388,13 +1458,23 @@ export const MsgDepositEdit = {
     return message;
   },
   fromAmino(object: MsgDepositEditAmino): MsgDepositEdit {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id),
-      winnerAddress: object.winner_address,
-      isSponsor: object?.is_sponsor ? BoolValue.fromAmino(object.is_sponsor) : undefined,
-      depositorAddress: object.depositor_address
-    };
+    const message = createBaseMsgDepositEdit();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.is_sponsor !== undefined && object.is_sponsor !== null) {
+      message.isSponsor = BoolValue.fromAmino(object.is_sponsor);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    return message;
   },
   toAmino(message: MsgDepositEdit): MsgDepositEditAmino {
     const obj: any = {};
@@ -1448,7 +1528,8 @@ export const MsgDepositEditResponse = {
     return message;
   },
   fromAmino(_: MsgDepositEditResponseAmino): MsgDepositEditResponse {
-    return {};
+    const message = createBaseMsgDepositEditResponse();
+    return message;
   },
   toAmino(_: MsgDepositEditResponse): MsgDepositEditResponseAmino {
     const obj: any = {};
@@ -1497,7 +1578,8 @@ export const MsgDepositRetryResponse = {
     return message;
   },
   fromAmino(_: MsgDepositRetryResponseAmino): MsgDepositRetryResponse {
-    return {};
+    const message = createBaseMsgDepositRetryResponse();
+    return message;
   },
   toAmino(_: MsgDepositRetryResponse): MsgDepositRetryResponseAmino {
     const obj: any = {};
@@ -1579,12 +1661,20 @@ export const MsgClaimPrize = {
     return message;
   },
   fromAmino(object: MsgClaimPrizeAmino): MsgClaimPrize {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      prizeId: BigInt(object.prize_id),
-      winnerAddress: object.winner_address
-    };
+    const message = createBaseMsgClaimPrize();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.prize_id !== undefined && object.prize_id !== null) {
+      message.prizeId = BigInt(object.prize_id);
+    }
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    return message;
   },
   toAmino(message: MsgClaimPrize): MsgClaimPrizeAmino {
     const obj: any = {};
@@ -1637,7 +1727,8 @@ export const MsgClaimPrizeResponse = {
     return message;
   },
   fromAmino(_: MsgClaimPrizeResponseAmino): MsgClaimPrizeResponse {
-    return {};
+    const message = createBaseMsgClaimPrizeResponse();
+    return message;
   },
   toAmino(_: MsgClaimPrizeResponse): MsgClaimPrizeResponseAmino {
     const obj: any = {};
@@ -1719,12 +1810,20 @@ export const MsgWithdrawDeposit = {
     return message;
   },
   fromAmino(object: MsgWithdrawDepositAmino): MsgWithdrawDeposit {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id),
-      depositorAddress: object.depositor_address,
-      toAddress: object.to_address
-    };
+    const message = createBaseMsgWithdrawDeposit();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.to_address !== undefined && object.to_address !== null) {
+      message.toAddress = object.to_address;
+    }
+    return message;
   },
   toAmino(message: MsgWithdrawDeposit): MsgWithdrawDepositAmino {
     const obj: any = {};
@@ -1786,9 +1885,11 @@ export const MsgWithdrawDepositResponse = {
     return message;
   },
   fromAmino(object: MsgWithdrawDepositResponseAmino): MsgWithdrawDepositResponse {
-    return {
-      withdrawalId: BigInt(object.withdrawal_id)
-    };
+    const message = createBaseMsgWithdrawDepositResponse();
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    return message;
   },
   toAmino(message: MsgWithdrawDepositResponse): MsgWithdrawDepositResponseAmino {
     const obj: any = {};
@@ -1863,11 +1964,17 @@ export const MsgWithdrawDepositRetry = {
     return message;
   },
   fromAmino(object: MsgWithdrawDepositRetryAmino): MsgWithdrawDepositRetry {
-    return {
-      poolId: BigInt(object.pool_id),
-      withdrawalId: BigInt(object.withdrawal_id),
-      depositorAddress: object.depositor_address
-    };
+    const message = createBaseMsgWithdrawDepositRetry();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    return message;
   },
   toAmino(message: MsgWithdrawDepositRetry): MsgWithdrawDepositRetryAmino {
     const obj: any = {};
@@ -1919,7 +2026,8 @@ export const MsgWithdrawDepositRetryResponse = {
     return message;
   },
   fromAmino(_: MsgWithdrawDepositRetryResponseAmino): MsgWithdrawDepositRetryResponse {
-    return {};
+    const message = createBaseMsgWithdrawDepositRetryResponse();
+    return message;
   },
   toAmino(_: MsgWithdrawDepositRetryResponse): MsgWithdrawDepositRetryResponseAmino {
     const obj: any = {};
@@ -1993,11 +2101,17 @@ export const MsgDrawRetry = {
     return message;
   },
   fromAmino(object: MsgDrawRetryAmino): MsgDrawRetry {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      drawRetryAddress: object.draw_retry_address
-    };
+    const message = createBaseMsgDrawRetry();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.draw_retry_address !== undefined && object.draw_retry_address !== null) {
+      message.drawRetryAddress = object.draw_retry_address;
+    }
+    return message;
   },
   toAmino(message: MsgDrawRetry): MsgDrawRetryAmino {
     const obj: any = {};
@@ -2049,7 +2163,8 @@ export const MsgDrawRetryResponse = {
     return message;
   },
   fromAmino(_: MsgDrawRetryResponseAmino): MsgDrawRetryResponse {
-    return {};
+    const message = createBaseMsgDrawRetryResponse();
+    return message;
   },
   toAmino(_: MsgDrawRetryResponse): MsgDrawRetryResponseAmino {
     const obj: any = {};
@@ -2115,10 +2230,14 @@ export const MsgRestoreInterchainAccounts = {
     return message;
   },
   fromAmino(object: MsgRestoreInterchainAccountsAmino): MsgRestoreInterchainAccounts {
-    return {
-      poolId: BigInt(object.pool_id),
-      restorerAddress: object.restorer_address
-    };
+    const message = createBaseMsgRestoreInterchainAccounts();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.restorer_address !== undefined && object.restorer_address !== null) {
+      message.restorerAddress = object.restorer_address;
+    }
+    return message;
   },
   toAmino(message: MsgRestoreInterchainAccounts): MsgRestoreInterchainAccountsAmino {
     const obj: any = {};
@@ -2169,7 +2288,8 @@ export const MsgRestoreInterchainAccountsResponse = {
     return message;
   },
   fromAmino(_: MsgRestoreInterchainAccountsResponseAmino): MsgRestoreInterchainAccountsResponse {
-    return {};
+    const message = createBaseMsgRestoreInterchainAccountsResponse();
+    return message;
   },
   toAmino(_: MsgRestoreInterchainAccountsResponse): MsgRestoreInterchainAccountsResponseAmino {
     const obj: any = {};
@@ -2227,9 +2347,11 @@ export const MsgGenerateSeed = {
     return message;
   },
   fromAmino(object: MsgGenerateSeedAmino): MsgGenerateSeed {
-    return {
-      requesterAddress: object.requester_address
-    };
+    const message = createBaseMsgGenerateSeed();
+    if (object.requester_address !== undefined && object.requester_address !== null) {
+      message.requesterAddress = object.requester_address;
+    }
+    return message;
   },
   toAmino(message: MsgGenerateSeed): MsgGenerateSeedAmino {
     const obj: any = {};
@@ -2288,9 +2410,11 @@ export const MsgGenerateSeedResponse = {
     return message;
   },
   fromAmino(object: MsgGenerateSeedResponseAmino): MsgGenerateSeedResponse {
-    return {
-      seed: BigInt(object.seed)
-    };
+    const message = createBaseMsgGenerateSeedResponse();
+    if (object.seed !== undefined && object.seed !== null) {
+      message.seed = BigInt(object.seed);
+    }
+    return message;
   },
   toAmino(message: MsgGenerateSeedResponse): MsgGenerateSeedResponseAmino {
     const obj: any = {};

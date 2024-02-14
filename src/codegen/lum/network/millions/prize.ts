@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export enum PrizeState {
   PRIZE_STATE_UNSPECIFIED = 0,
   PRIZE_STATE_PENDING = 1,
@@ -52,14 +52,14 @@ export interface PrizeProtoMsg {
   value: Uint8Array;
 }
 export interface PrizeAmino {
-  pool_id: string;
-  draw_id: string;
-  prize_id: string;
-  state: PrizeState;
-  winner_address: string;
+  pool_id?: string;
+  draw_id?: string;
+  prize_id?: string;
+  state?: PrizeState;
+  winner_address?: string;
   amount?: CoinAmino | undefined;
-  created_at_height: string;
-  updated_at_height: string;
+  created_at_height?: string;
+  updated_at_height?: string;
   expires_at?: string | undefined;
   created_at?: string | undefined;
   updated_at?: string | undefined;
@@ -91,9 +91,9 @@ export interface PrizeIDsProtoMsg {
   value: Uint8Array;
 }
 export interface PrizeIDsAmino {
-  pool_id: string;
-  draw_id: string;
-  prize_id: string;
+  pool_id?: string;
+  draw_id?: string;
+  prize_id?: string;
 }
 export interface PrizeIDsAminoMsg {
   type: "/lum.network.millions.PrizeIDs";
@@ -112,7 +112,7 @@ export interface PrizeIDsCollectionProtoMsg {
   value: Uint8Array;
 }
 export interface PrizeIDsCollectionAmino {
-  prizes_ids: PrizeIDsAmino[];
+  prizes_ids?: PrizeIDsAmino[];
 }
 export interface PrizeIDsCollectionAminoMsg {
   type: "/lum.network.millions.PrizeIDsCollection";
@@ -237,19 +237,41 @@ export const Prize = {
     return message;
   },
   fromAmino(object: PrizeAmino): Prize {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      prizeId: BigInt(object.prize_id),
-      state: isSet(object.state) ? prizeStateFromJSON(object.state) : -1,
-      winnerAddress: object.winner_address,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      createdAtHeight: BigInt(object.created_at_height),
-      updatedAtHeight: BigInt(object.updated_at_height),
-      expiresAt: object?.expires_at ? fromTimestamp(Timestamp.fromAmino(object.expires_at)) : undefined,
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
-      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
-    };
+    const message = createBasePrize();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.prize_id !== undefined && object.prize_id !== null) {
+      message.prizeId = BigInt(object.prize_id);
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = prizeStateFromJSON(object.state);
+    }
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.created_at_height !== undefined && object.created_at_height !== null) {
+      message.createdAtHeight = BigInt(object.created_at_height);
+    }
+    if (object.updated_at_height !== undefined && object.updated_at_height !== null) {
+      message.updatedAtHeight = BigInt(object.updated_at_height);
+    }
+    if (object.expires_at !== undefined && object.expires_at !== null) {
+      message.expiresAt = fromTimestamp(Timestamp.fromAmino(object.expires_at));
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    if (object.updated_at !== undefined && object.updated_at !== null) {
+      message.updatedAt = fromTimestamp(Timestamp.fromAmino(object.updated_at));
+    }
+    return message;
   },
   toAmino(message: Prize): PrizeAmino {
     const obj: any = {};
@@ -334,11 +356,17 @@ export const PrizeIDs = {
     return message;
   },
   fromAmino(object: PrizeIDsAmino): PrizeIDs {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      prizeId: BigInt(object.prize_id)
-    };
+    const message = createBasePrizeIDs();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.prize_id !== undefined && object.prize_id !== null) {
+      message.prizeId = BigInt(object.prize_id);
+    }
+    return message;
   },
   toAmino(message: PrizeIDs): PrizeIDsAmino {
     const obj: any = {};
@@ -399,9 +427,9 @@ export const PrizeIDsCollection = {
     return message;
   },
   fromAmino(object: PrizeIDsCollectionAmino): PrizeIDsCollection {
-    return {
-      prizesIds: Array.isArray(object?.prizes_ids) ? object.prizes_ids.map((e: any) => PrizeIDs.fromAmino(e)) : []
-    };
+    const message = createBasePrizeIDsCollection();
+    message.prizesIds = object.prizes_ids?.map(e => PrizeIDs.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: PrizeIDsCollection): PrizeIDsCollectionAmino {
     const obj: any = {};

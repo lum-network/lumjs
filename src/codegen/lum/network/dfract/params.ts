@@ -10,10 +10,10 @@ export interface ParamsProtoMsg {
   value: Uint8Array;
 }
 export interface ParamsAmino {
-  deposit_denoms: string[];
-  min_deposit_amount: string;
-  withdrawal_address: string;
-  is_deposit_enabled: boolean;
+  deposit_denoms?: string[];
+  min_deposit_amount?: string;
+  withdrawal_address?: string;
+  is_deposit_enabled?: boolean;
 }
 export interface ParamsAminoMsg {
   type: "/lum.network.dfract.Params";
@@ -85,12 +85,18 @@ export const Params = {
     return message;
   },
   fromAmino(object: ParamsAmino): Params {
-    return {
-      depositDenoms: Array.isArray(object?.deposit_denoms) ? object.deposit_denoms.map((e: any) => e) : [],
-      minDepositAmount: object.min_deposit_amount,
-      withdrawalAddress: object.withdrawal_address,
-      isDepositEnabled: object.is_deposit_enabled
-    };
+    const message = createBaseParams();
+    message.depositDenoms = object.deposit_denoms?.map(e => e) || [];
+    if (object.min_deposit_amount !== undefined && object.min_deposit_amount !== null) {
+      message.minDepositAmount = object.min_deposit_amount;
+    }
+    if (object.withdrawal_address !== undefined && object.withdrawal_address !== null) {
+      message.withdrawalAddress = object.withdrawal_address;
+    }
+    if (object.is_deposit_enabled !== undefined && object.is_deposit_enabled !== null) {
+      message.isDepositEnabled = object.is_deposit_enabled;
+    }
+    return message;
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};

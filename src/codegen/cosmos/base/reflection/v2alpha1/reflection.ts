@@ -74,9 +74,9 @@ export interface TxDescriptorAmino {
    * it is not meant to support polymorphism of transaction types, it is supposed to be used by
    * reflection clients to understand if they can handle a specific transaction type in an application.
    */
-  fullname: string;
+  fullname?: string;
   /** msgs lists the accepted application messages (sdk.Msg) */
-  msgs: MsgDescriptorAmino[];
+  msgs?: MsgDescriptorAmino[];
 }
 export interface TxDescriptorAminoMsg {
   type: "cosmos-sdk/TxDescriptor";
@@ -105,7 +105,7 @@ export interface AuthnDescriptorProtoMsg {
  */
 export interface AuthnDescriptorAmino {
   /** sign_modes defines the supported signature algorithm */
-  sign_modes: SigningModeDescriptorAmino[];
+  sign_modes?: SigningModeDescriptorAmino[];
 }
 export interface AuthnDescriptorAminoMsg {
   type: "cosmos-sdk/AuthnDescriptor";
@@ -147,14 +147,14 @@ export interface SigningModeDescriptorProtoMsg {
  */
 export interface SigningModeDescriptorAmino {
   /** name defines the unique name of the signing mode */
-  name: string;
+  name?: string;
   /** number is the unique int32 identifier for the sign_mode enum */
-  number: number;
+  number?: number;
   /**
    * authn_info_provider_method_fullname defines the fullname of the method to call to get
    * the metadata required to authenticate using the provided sign_modes
    */
-  authn_info_provider_method_fullname: string;
+  authn_info_provider_method_fullname?: string;
 }
 export interface SigningModeDescriptorAminoMsg {
   type: "cosmos-sdk/SigningModeDescriptor";
@@ -183,7 +183,7 @@ export interface ChainDescriptorProtoMsg {
 /** ChainDescriptor describes chain information of the application */
 export interface ChainDescriptorAmino {
   /** id is the chain id */
-  id: string;
+  id?: string;
 }
 export interface ChainDescriptorAminoMsg {
   type: "cosmos-sdk/ChainDescriptor";
@@ -205,7 +205,7 @@ export interface CodecDescriptorProtoMsg {
 /** CodecDescriptor describes the registered interfaces and provides metadata information on the types */
 export interface CodecDescriptorAmino {
   /** interfaces is a list of the registerted interfaces descriptors */
-  interfaces: InterfaceDescriptorAmino[];
+  interfaces?: InterfaceDescriptorAmino[];
 }
 export interface CodecDescriptorAminoMsg {
   type: "cosmos-sdk/CodecDescriptor";
@@ -234,14 +234,14 @@ export interface InterfaceDescriptorProtoMsg {
 /** InterfaceDescriptor describes the implementation of an interface */
 export interface InterfaceDescriptorAmino {
   /** fullname is the name of the interface */
-  fullname: string;
+  fullname?: string;
   /**
    * interface_accepting_messages contains information regarding the proto messages which contain the interface as
    * google.protobuf.Any field
    */
-  interface_accepting_messages: InterfaceAcceptingMessageDescriptorAmino[];
+  interface_accepting_messages?: InterfaceAcceptingMessageDescriptorAmino[];
   /** interface_implementers is a list of the descriptors of the interface implementers */
-  interface_implementers: InterfaceImplementerDescriptorAmino[];
+  interface_implementers?: InterfaceImplementerDescriptorAmino[];
 }
 export interface InterfaceDescriptorAminoMsg {
   type: "cosmos-sdk/InterfaceDescriptor";
@@ -272,14 +272,14 @@ export interface InterfaceImplementerDescriptorProtoMsg {
 /** InterfaceImplementerDescriptor describes an interface implementer */
 export interface InterfaceImplementerDescriptorAmino {
   /** fullname is the protobuf queryable name of the interface implementer */
-  fullname: string;
+  fullname?: string;
   /**
    * type_url defines the type URL used when marshalling the type as any
    * this is required so we can provide type safe google.protobuf.Any marshalling and
    * unmarshalling, making sure that we don't accept just 'any' type
    * in our interface fields
    */
-  type_url: string;
+  type_url?: string;
 }
 export interface InterfaceImplementerDescriptorAminoMsg {
   type: "cosmos-sdk/InterfaceImplementerDescriptor";
@@ -314,13 +314,13 @@ export interface InterfaceAcceptingMessageDescriptorProtoMsg {
  */
 export interface InterfaceAcceptingMessageDescriptorAmino {
   /** fullname is the protobuf fullname of the type containing the interface */
-  fullname: string;
+  fullname?: string;
   /**
    * field_descriptor_names is a list of the protobuf name (not fullname) of the field
    * which contains the interface as google.protobuf.Any (the interface is the same, but
    * it can be in multiple fields of the same proto message)
    */
-  field_descriptor_names: string[];
+  field_descriptor_names?: string[];
 }
 export interface InterfaceAcceptingMessageDescriptorAminoMsg {
   type: "cosmos-sdk/InterfaceAcceptingMessageDescriptor";
@@ -346,7 +346,7 @@ export interface ConfigurationDescriptorProtoMsg {
 /** ConfigurationDescriptor contains metadata information on the sdk.Config */
 export interface ConfigurationDescriptorAmino {
   /** bech32_account_address_prefix is the account address prefix */
-  bech32_account_address_prefix: string;
+  bech32_account_address_prefix?: string;
 }
 export interface ConfigurationDescriptorAminoMsg {
   type: "cosmos-sdk/ConfigurationDescriptor";
@@ -368,7 +368,7 @@ export interface MsgDescriptorProtoMsg {
 /** MsgDescriptor describes a cosmos-sdk message that can be delivered with a transaction */
 export interface MsgDescriptorAmino {
   /** msg_type_url contains the TypeURL of a sdk.Msg. */
-  msg_type_url: string;
+  msg_type_url?: string;
 }
 export interface MsgDescriptorAminoMsg {
   type: "cosmos-sdk/MsgDescriptor";
@@ -612,7 +612,7 @@ export interface QueryServicesDescriptorProtoMsg {
 /** QueryServicesDescriptor contains the list of cosmos-sdk queriable services */
 export interface QueryServicesDescriptorAmino {
   /** query_services is a list of cosmos-sdk QueryServiceDescriptor */
-  query_services: QueryServiceDescriptorAmino[];
+  query_services?: QueryServiceDescriptorAmino[];
 }
 export interface QueryServicesDescriptorAminoMsg {
   type: "cosmos-sdk/QueryServicesDescriptor";
@@ -638,11 +638,11 @@ export interface QueryServiceDescriptorProtoMsg {
 /** QueryServiceDescriptor describes a cosmos-sdk queryable service */
 export interface QueryServiceDescriptorAmino {
   /** fullname is the protobuf fullname of the service descriptor */
-  fullname: string;
+  fullname?: string;
   /** is_module describes if this service is actually exposed by an application's module */
-  is_module: boolean;
+  is_module?: boolean;
   /** methods provides a list of query service methods */
-  methods: QueryMethodDescriptorAmino[];
+  methods?: QueryMethodDescriptorAmino[];
 }
 export interface QueryServiceDescriptorAminoMsg {
   type: "cosmos-sdk/QueryServiceDescriptor";
@@ -679,12 +679,12 @@ export interface QueryMethodDescriptorProtoMsg {
  */
 export interface QueryMethodDescriptorAmino {
   /** name is the protobuf name (not fullname) of the method */
-  name: string;
+  name?: string;
   /**
    * full_query_path is the path that can be used to query
    * this method via tendermint abci.Query
    */
-  full_query_path: string;
+  full_query_path?: string;
 }
 export interface QueryMethodDescriptorAminoMsg {
   type: "cosmos-sdk/QueryMethodDescriptor";
@@ -776,14 +776,26 @@ export const AppDescriptor = {
     return message;
   },
   fromAmino(object: AppDescriptorAmino): AppDescriptor {
-    return {
-      authn: object?.authn ? AuthnDescriptor.fromAmino(object.authn) : undefined,
-      chain: object?.chain ? ChainDescriptor.fromAmino(object.chain) : undefined,
-      codec: object?.codec ? CodecDescriptor.fromAmino(object.codec) : undefined,
-      configuration: object?.configuration ? ConfigurationDescriptor.fromAmino(object.configuration) : undefined,
-      queryServices: object?.query_services ? QueryServicesDescriptor.fromAmino(object.query_services) : undefined,
-      tx: object?.tx ? TxDescriptor.fromAmino(object.tx) : undefined
-    };
+    const message = createBaseAppDescriptor();
+    if (object.authn !== undefined && object.authn !== null) {
+      message.authn = AuthnDescriptor.fromAmino(object.authn);
+    }
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = ChainDescriptor.fromAmino(object.chain);
+    }
+    if (object.codec !== undefined && object.codec !== null) {
+      message.codec = CodecDescriptor.fromAmino(object.codec);
+    }
+    if (object.configuration !== undefined && object.configuration !== null) {
+      message.configuration = ConfigurationDescriptor.fromAmino(object.configuration);
+    }
+    if (object.query_services !== undefined && object.query_services !== null) {
+      message.queryServices = QueryServicesDescriptor.fromAmino(object.query_services);
+    }
+    if (object.tx !== undefined && object.tx !== null) {
+      message.tx = TxDescriptor.fromAmino(object.tx);
+    }
+    return message;
   },
   toAmino(message: AppDescriptor): AppDescriptorAmino {
     const obj: any = {};
@@ -862,10 +874,12 @@ export const TxDescriptor = {
     return message;
   },
   fromAmino(object: TxDescriptorAmino): TxDescriptor {
-    return {
-      fullname: object.fullname,
-      msgs: Array.isArray(object?.msgs) ? object.msgs.map((e: any) => MsgDescriptor.fromAmino(e)) : []
-    };
+    const message = createBaseTxDescriptor();
+    if (object.fullname !== undefined && object.fullname !== null) {
+      message.fullname = object.fullname;
+    }
+    message.msgs = object.msgs?.map(e => MsgDescriptor.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: TxDescriptor): TxDescriptorAmino {
     const obj: any = {};
@@ -936,9 +950,9 @@ export const AuthnDescriptor = {
     return message;
   },
   fromAmino(object: AuthnDescriptorAmino): AuthnDescriptor {
-    return {
-      signModes: Array.isArray(object?.sign_modes) ? object.sign_modes.map((e: any) => SigningModeDescriptor.fromAmino(e)) : []
-    };
+    const message = createBaseAuthnDescriptor();
+    message.signModes = object.sign_modes?.map(e => SigningModeDescriptor.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: AuthnDescriptor): AuthnDescriptorAmino {
     const obj: any = {};
@@ -1024,11 +1038,17 @@ export const SigningModeDescriptor = {
     return message;
   },
   fromAmino(object: SigningModeDescriptorAmino): SigningModeDescriptor {
-    return {
-      name: object.name,
-      number: object.number,
-      authnInfoProviderMethodFullname: object.authn_info_provider_method_fullname
-    };
+    const message = createBaseSigningModeDescriptor();
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.number !== undefined && object.number !== null) {
+      message.number = object.number;
+    }
+    if (object.authn_info_provider_method_fullname !== undefined && object.authn_info_provider_method_fullname !== null) {
+      message.authnInfoProviderMethodFullname = object.authn_info_provider_method_fullname;
+    }
+    return message;
   },
   toAmino(message: SigningModeDescriptor): SigningModeDescriptorAmino {
     const obj: any = {};
@@ -1096,9 +1116,11 @@ export const ChainDescriptor = {
     return message;
   },
   fromAmino(object: ChainDescriptorAmino): ChainDescriptor {
-    return {
-      id: object.id
-    };
+    const message = createBaseChainDescriptor();
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    return message;
   },
   toAmino(message: ChainDescriptor): ChainDescriptorAmino {
     const obj: any = {};
@@ -1164,9 +1186,9 @@ export const CodecDescriptor = {
     return message;
   },
   fromAmino(object: CodecDescriptorAmino): CodecDescriptor {
-    return {
-      interfaces: Array.isArray(object?.interfaces) ? object.interfaces.map((e: any) => InterfaceDescriptor.fromAmino(e)) : []
-    };
+    const message = createBaseCodecDescriptor();
+    message.interfaces = object.interfaces?.map(e => InterfaceDescriptor.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: CodecDescriptor): CodecDescriptorAmino {
     const obj: any = {};
@@ -1252,11 +1274,13 @@ export const InterfaceDescriptor = {
     return message;
   },
   fromAmino(object: InterfaceDescriptorAmino): InterfaceDescriptor {
-    return {
-      fullname: object.fullname,
-      interfaceAcceptingMessages: Array.isArray(object?.interface_accepting_messages) ? object.interface_accepting_messages.map((e: any) => InterfaceAcceptingMessageDescriptor.fromAmino(e)) : [],
-      interfaceImplementers: Array.isArray(object?.interface_implementers) ? object.interface_implementers.map((e: any) => InterfaceImplementerDescriptor.fromAmino(e)) : []
-    };
+    const message = createBaseInterfaceDescriptor();
+    if (object.fullname !== undefined && object.fullname !== null) {
+      message.fullname = object.fullname;
+    }
+    message.interfaceAcceptingMessages = object.interface_accepting_messages?.map(e => InterfaceAcceptingMessageDescriptor.fromAmino(e)) || [];
+    message.interfaceImplementers = object.interface_implementers?.map(e => InterfaceImplementerDescriptor.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: InterfaceDescriptor): InterfaceDescriptorAmino {
     const obj: any = {};
@@ -1340,10 +1364,14 @@ export const InterfaceImplementerDescriptor = {
     return message;
   },
   fromAmino(object: InterfaceImplementerDescriptorAmino): InterfaceImplementerDescriptor {
-    return {
-      fullname: object.fullname,
-      typeUrl: object.type_url
-    };
+    const message = createBaseInterfaceImplementerDescriptor();
+    if (object.fullname !== undefined && object.fullname !== null) {
+      message.fullname = object.fullname;
+    }
+    if (object.type_url !== undefined && object.type_url !== null) {
+      message.typeUrl = object.type_url;
+    }
+    return message;
   },
   toAmino(message: InterfaceImplementerDescriptor): InterfaceImplementerDescriptorAmino {
     const obj: any = {};
@@ -1418,10 +1446,12 @@ export const InterfaceAcceptingMessageDescriptor = {
     return message;
   },
   fromAmino(object: InterfaceAcceptingMessageDescriptorAmino): InterfaceAcceptingMessageDescriptor {
-    return {
-      fullname: object.fullname,
-      fieldDescriptorNames: Array.isArray(object?.field_descriptor_names) ? object.field_descriptor_names.map((e: any) => e) : []
-    };
+    const message = createBaseInterfaceAcceptingMessageDescriptor();
+    if (object.fullname !== undefined && object.fullname !== null) {
+      message.fullname = object.fullname;
+    }
+    message.fieldDescriptorNames = object.field_descriptor_names?.map(e => e) || [];
+    return message;
   },
   toAmino(message: InterfaceAcceptingMessageDescriptor): InterfaceAcceptingMessageDescriptorAmino {
     const obj: any = {};
@@ -1492,9 +1522,11 @@ export const ConfigurationDescriptor = {
     return message;
   },
   fromAmino(object: ConfigurationDescriptorAmino): ConfigurationDescriptor {
-    return {
-      bech32AccountAddressPrefix: object.bech32_account_address_prefix
-    };
+    const message = createBaseConfigurationDescriptor();
+    if (object.bech32_account_address_prefix !== undefined && object.bech32_account_address_prefix !== null) {
+      message.bech32AccountAddressPrefix = object.bech32_account_address_prefix;
+    }
+    return message;
   },
   toAmino(message: ConfigurationDescriptor): ConfigurationDescriptorAmino {
     const obj: any = {};
@@ -1560,9 +1592,11 @@ export const MsgDescriptor = {
     return message;
   },
   fromAmino(object: MsgDescriptorAmino): MsgDescriptor {
-    return {
-      msgTypeUrl: object.msg_type_url
-    };
+    const message = createBaseMsgDescriptor();
+    if (object.msg_type_url !== undefined && object.msg_type_url !== null) {
+      message.msgTypeUrl = object.msg_type_url;
+    }
+    return message;
   },
   toAmino(message: MsgDescriptor): MsgDescriptorAmino {
     const obj: any = {};
@@ -1619,7 +1653,8 @@ export const GetAuthnDescriptorRequest = {
     return message;
   },
   fromAmino(_: GetAuthnDescriptorRequestAmino): GetAuthnDescriptorRequest {
-    return {};
+    const message = createBaseGetAuthnDescriptorRequest();
+    return message;
   },
   toAmino(_: GetAuthnDescriptorRequest): GetAuthnDescriptorRequestAmino {
     const obj: any = {};
@@ -1684,9 +1719,11 @@ export const GetAuthnDescriptorResponse = {
     return message;
   },
   fromAmino(object: GetAuthnDescriptorResponseAmino): GetAuthnDescriptorResponse {
-    return {
-      authn: object?.authn ? AuthnDescriptor.fromAmino(object.authn) : undefined
-    };
+    const message = createBaseGetAuthnDescriptorResponse();
+    if (object.authn !== undefined && object.authn !== null) {
+      message.authn = AuthnDescriptor.fromAmino(object.authn);
+    }
+    return message;
   },
   toAmino(message: GetAuthnDescriptorResponse): GetAuthnDescriptorResponseAmino {
     const obj: any = {};
@@ -1743,7 +1780,8 @@ export const GetChainDescriptorRequest = {
     return message;
   },
   fromAmino(_: GetChainDescriptorRequestAmino): GetChainDescriptorRequest {
-    return {};
+    const message = createBaseGetChainDescriptorRequest();
+    return message;
   },
   toAmino(_: GetChainDescriptorRequest): GetChainDescriptorRequestAmino {
     const obj: any = {};
@@ -1808,9 +1846,11 @@ export const GetChainDescriptorResponse = {
     return message;
   },
   fromAmino(object: GetChainDescriptorResponseAmino): GetChainDescriptorResponse {
-    return {
-      chain: object?.chain ? ChainDescriptor.fromAmino(object.chain) : undefined
-    };
+    const message = createBaseGetChainDescriptorResponse();
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = ChainDescriptor.fromAmino(object.chain);
+    }
+    return message;
   },
   toAmino(message: GetChainDescriptorResponse): GetChainDescriptorResponseAmino {
     const obj: any = {};
@@ -1867,7 +1907,8 @@ export const GetCodecDescriptorRequest = {
     return message;
   },
   fromAmino(_: GetCodecDescriptorRequestAmino): GetCodecDescriptorRequest {
-    return {};
+    const message = createBaseGetCodecDescriptorRequest();
+    return message;
   },
   toAmino(_: GetCodecDescriptorRequest): GetCodecDescriptorRequestAmino {
     const obj: any = {};
@@ -1932,9 +1973,11 @@ export const GetCodecDescriptorResponse = {
     return message;
   },
   fromAmino(object: GetCodecDescriptorResponseAmino): GetCodecDescriptorResponse {
-    return {
-      codec: object?.codec ? CodecDescriptor.fromAmino(object.codec) : undefined
-    };
+    const message = createBaseGetCodecDescriptorResponse();
+    if (object.codec !== undefined && object.codec !== null) {
+      message.codec = CodecDescriptor.fromAmino(object.codec);
+    }
+    return message;
   },
   toAmino(message: GetCodecDescriptorResponse): GetCodecDescriptorResponseAmino {
     const obj: any = {};
@@ -1991,7 +2034,8 @@ export const GetConfigurationDescriptorRequest = {
     return message;
   },
   fromAmino(_: GetConfigurationDescriptorRequestAmino): GetConfigurationDescriptorRequest {
-    return {};
+    const message = createBaseGetConfigurationDescriptorRequest();
+    return message;
   },
   toAmino(_: GetConfigurationDescriptorRequest): GetConfigurationDescriptorRequestAmino {
     const obj: any = {};
@@ -2056,9 +2100,11 @@ export const GetConfigurationDescriptorResponse = {
     return message;
   },
   fromAmino(object: GetConfigurationDescriptorResponseAmino): GetConfigurationDescriptorResponse {
-    return {
-      config: object?.config ? ConfigurationDescriptor.fromAmino(object.config) : undefined
-    };
+    const message = createBaseGetConfigurationDescriptorResponse();
+    if (object.config !== undefined && object.config !== null) {
+      message.config = ConfigurationDescriptor.fromAmino(object.config);
+    }
+    return message;
   },
   toAmino(message: GetConfigurationDescriptorResponse): GetConfigurationDescriptorResponseAmino {
     const obj: any = {};
@@ -2115,7 +2161,8 @@ export const GetQueryServicesDescriptorRequest = {
     return message;
   },
   fromAmino(_: GetQueryServicesDescriptorRequestAmino): GetQueryServicesDescriptorRequest {
-    return {};
+    const message = createBaseGetQueryServicesDescriptorRequest();
+    return message;
   },
   toAmino(_: GetQueryServicesDescriptorRequest): GetQueryServicesDescriptorRequestAmino {
     const obj: any = {};
@@ -2180,9 +2227,11 @@ export const GetQueryServicesDescriptorResponse = {
     return message;
   },
   fromAmino(object: GetQueryServicesDescriptorResponseAmino): GetQueryServicesDescriptorResponse {
-    return {
-      queries: object?.queries ? QueryServicesDescriptor.fromAmino(object.queries) : undefined
-    };
+    const message = createBaseGetQueryServicesDescriptorResponse();
+    if (object.queries !== undefined && object.queries !== null) {
+      message.queries = QueryServicesDescriptor.fromAmino(object.queries);
+    }
+    return message;
   },
   toAmino(message: GetQueryServicesDescriptorResponse): GetQueryServicesDescriptorResponseAmino {
     const obj: any = {};
@@ -2239,7 +2288,8 @@ export const GetTxDescriptorRequest = {
     return message;
   },
   fromAmino(_: GetTxDescriptorRequestAmino): GetTxDescriptorRequest {
-    return {};
+    const message = createBaseGetTxDescriptorRequest();
+    return message;
   },
   toAmino(_: GetTxDescriptorRequest): GetTxDescriptorRequestAmino {
     const obj: any = {};
@@ -2304,9 +2354,11 @@ export const GetTxDescriptorResponse = {
     return message;
   },
   fromAmino(object: GetTxDescriptorResponseAmino): GetTxDescriptorResponse {
-    return {
-      tx: object?.tx ? TxDescriptor.fromAmino(object.tx) : undefined
-    };
+    const message = createBaseGetTxDescriptorResponse();
+    if (object.tx !== undefined && object.tx !== null) {
+      message.tx = TxDescriptor.fromAmino(object.tx);
+    }
+    return message;
   },
   toAmino(message: GetTxDescriptorResponse): GetTxDescriptorResponseAmino {
     const obj: any = {};
@@ -2372,9 +2424,9 @@ export const QueryServicesDescriptor = {
     return message;
   },
   fromAmino(object: QueryServicesDescriptorAmino): QueryServicesDescriptor {
-    return {
-      queryServices: Array.isArray(object?.query_services) ? object.query_services.map((e: any) => QueryServiceDescriptor.fromAmino(e)) : []
-    };
+    const message = createBaseQueryServicesDescriptor();
+    message.queryServices = object.query_services?.map(e => QueryServiceDescriptor.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: QueryServicesDescriptor): QueryServicesDescriptorAmino {
     const obj: any = {};
@@ -2460,11 +2512,15 @@ export const QueryServiceDescriptor = {
     return message;
   },
   fromAmino(object: QueryServiceDescriptorAmino): QueryServiceDescriptor {
-    return {
-      fullname: object.fullname,
-      isModule: object.is_module,
-      methods: Array.isArray(object?.methods) ? object.methods.map((e: any) => QueryMethodDescriptor.fromAmino(e)) : []
-    };
+    const message = createBaseQueryServiceDescriptor();
+    if (object.fullname !== undefined && object.fullname !== null) {
+      message.fullname = object.fullname;
+    }
+    if (object.is_module !== undefined && object.is_module !== null) {
+      message.isModule = object.is_module;
+    }
+    message.methods = object.methods?.map(e => QueryMethodDescriptor.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: QueryServiceDescriptor): QueryServiceDescriptorAmino {
     const obj: any = {};
@@ -2544,10 +2600,14 @@ export const QueryMethodDescriptor = {
     return message;
   },
   fromAmino(object: QueryMethodDescriptorAmino): QueryMethodDescriptor {
-    return {
-      name: object.name,
-      fullQueryPath: object.full_query_path
-    };
+    const message = createBaseQueryMethodDescriptor();
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.full_query_path !== undefined && object.full_query_path !== null) {
+      message.fullQueryPath = object.full_query_path;
+    }
+    return message;
   },
   toAmino(message: QueryMethodDescriptor): QueryMethodDescriptorAmino {
     const obj: any = {};

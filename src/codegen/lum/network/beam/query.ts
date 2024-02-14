@@ -1,7 +1,6 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
 import { BeamState, Beam, BeamAmino, BeamSDKType, beamStateFromJSON } from "./beam";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { isSet } from "../../../helpers";
 export interface QueryGetBeamRequest {
   id: string;
 }
@@ -10,7 +9,7 @@ export interface QueryGetBeamRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetBeamRequestAmino {
-  id: string;
+  id?: string;
 }
 export interface QueryGetBeamRequestAminoMsg {
   type: "/lum.network.beam.QueryGetBeamRequest";
@@ -46,7 +45,7 @@ export interface QueryFetchBeamsRequestProtoMsg {
 }
 export interface QueryFetchBeamsRequestAmino {
   pagination?: PageRequestAmino | undefined;
-  state: BeamState;
+  state?: BeamState;
 }
 export interface QueryFetchBeamsRequestAminoMsg {
   type: "/lum.network.beam.QueryFetchBeamsRequest";
@@ -65,7 +64,7 @@ export interface QueryFetchBeamsResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryFetchBeamsResponseAmino {
-  beams: BeamAmino[];
+  beams?: BeamAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryFetchBeamsResponseAminoMsg {
@@ -102,7 +101,7 @@ export interface QueryFetchBeamsOpenQueueResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryFetchBeamsOpenQueueResponseAmino {
-  beam_ids: string[];
+  beam_ids?: string[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryFetchBeamsOpenQueueResponseAminoMsg {
@@ -149,9 +148,11 @@ export const QueryGetBeamRequest = {
     return message;
   },
   fromAmino(object: QueryGetBeamRequestAmino): QueryGetBeamRequest {
-    return {
-      id: object.id
-    };
+    const message = createBaseQueryGetBeamRequest();
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    return message;
   },
   toAmino(message: QueryGetBeamRequest): QueryGetBeamRequestAmino {
     const obj: any = {};
@@ -210,9 +211,11 @@ export const QueryGetBeamResponse = {
     return message;
   },
   fromAmino(object: QueryGetBeamResponseAmino): QueryGetBeamResponse {
-    return {
-      beam: object?.beam ? Beam.fromAmino(object.beam) : undefined
-    };
+    const message = createBaseQueryGetBeamResponse();
+    if (object.beam !== undefined && object.beam !== null) {
+      message.beam = Beam.fromAmino(object.beam);
+    }
+    return message;
   },
   toAmino(message: QueryGetBeamResponse): QueryGetBeamResponseAmino {
     const obj: any = {};
@@ -279,10 +282,14 @@ export const QueryFetchBeamsRequest = {
     return message;
   },
   fromAmino(object: QueryFetchBeamsRequestAmino): QueryFetchBeamsRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined,
-      state: isSet(object.state) ? beamStateFromJSON(object.state) : -1
-    };
+    const message = createBaseQueryFetchBeamsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = beamStateFromJSON(object.state);
+    }
+    return message;
   },
   toAmino(message: QueryFetchBeamsRequest): QueryFetchBeamsRequestAmino {
     const obj: any = {};
@@ -350,10 +357,12 @@ export const QueryFetchBeamsResponse = {
     return message;
   },
   fromAmino(object: QueryFetchBeamsResponseAmino): QueryFetchBeamsResponse {
-    return {
-      beams: Array.isArray(object?.beams) ? object.beams.map((e: any) => Beam.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryFetchBeamsResponse();
+    message.beams = object.beams?.map(e => Beam.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryFetchBeamsResponse): QueryFetchBeamsResponseAmino {
     const obj: any = {};
@@ -417,9 +426,11 @@ export const QueryFetchBeamsOpenQueueRequest = {
     return message;
   },
   fromAmino(object: QueryFetchBeamsOpenQueueRequestAmino): QueryFetchBeamsOpenQueueRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryFetchBeamsOpenQueueRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryFetchBeamsOpenQueueRequest): QueryFetchBeamsOpenQueueRequestAmino {
     const obj: any = {};
@@ -486,10 +497,12 @@ export const QueryFetchBeamsOpenQueueResponse = {
     return message;
   },
   fromAmino(object: QueryFetchBeamsOpenQueueResponseAmino): QueryFetchBeamsOpenQueueResponse {
-    return {
-      beamIds: Array.isArray(object?.beam_ids) ? object.beam_ids.map((e: any) => e) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryFetchBeamsOpenQueueResponse();
+    message.beamIds = object.beam_ids?.map(e => e) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryFetchBeamsOpenQueueResponse): QueryFetchBeamsOpenQueueResponseAmino {
     const obj: any = {};

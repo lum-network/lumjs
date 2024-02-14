@@ -1,5 +1,6 @@
 import { ProofOps, ProofOpsAmino, ProofOpsSDKType } from "../../../tendermint/crypto/proof";
 import { BinaryReader, BinaryWriter } from "../../../binary";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** MsgSubmitQueryResponse represents a message type to fulfil a query request. */
 export interface MsgSubmitQueryResponse {
   chainId: string;
@@ -15,12 +16,12 @@ export interface MsgSubmitQueryResponseProtoMsg {
 }
 /** MsgSubmitQueryResponse represents a message type to fulfil a query request. */
 export interface MsgSubmitQueryResponseAmino {
-  chain_id: string;
-  query_id: string;
-  result: Uint8Array;
+  chain_id?: string;
+  query_id?: string;
+  result?: string;
   proof_ops?: ProofOpsAmino | undefined;
-  height: string;
-  from_address: string;
+  height?: string;
+  from_address?: string;
 }
 export interface MsgSubmitQueryResponseAminoMsg {
   type: "/stride.interchainquery.v1.MsgSubmitQueryResponse";
@@ -134,20 +135,32 @@ export const MsgSubmitQueryResponse = {
     return message;
   },
   fromAmino(object: MsgSubmitQueryResponseAmino): MsgSubmitQueryResponse {
-    return {
-      chainId: object.chain_id,
-      queryId: object.query_id,
-      result: object.result,
-      proofOps: object?.proof_ops ? ProofOps.fromAmino(object.proof_ops) : undefined,
-      height: BigInt(object.height),
-      fromAddress: object.from_address
-    };
+    const message = createBaseMsgSubmitQueryResponse();
+    if (object.chain_id !== undefined && object.chain_id !== null) {
+      message.chainId = object.chain_id;
+    }
+    if (object.query_id !== undefined && object.query_id !== null) {
+      message.queryId = object.query_id;
+    }
+    if (object.result !== undefined && object.result !== null) {
+      message.result = bytesFromBase64(object.result);
+    }
+    if (object.proof_ops !== undefined && object.proof_ops !== null) {
+      message.proofOps = ProofOps.fromAmino(object.proof_ops);
+    }
+    if (object.height !== undefined && object.height !== null) {
+      message.height = BigInt(object.height);
+    }
+    if (object.from_address !== undefined && object.from_address !== null) {
+      message.fromAddress = object.from_address;
+    }
+    return message;
   },
   toAmino(message: MsgSubmitQueryResponse): MsgSubmitQueryResponseAmino {
     const obj: any = {};
     obj.chain_id = message.chainId;
     obj.query_id = message.queryId;
-    obj.result = message.result;
+    obj.result = message.result ? base64FromBytes(message.result) : undefined;
     obj.proof_ops = message.proofOps ? ProofOps.toAmino(message.proofOps) : undefined;
     obj.height = message.height ? message.height.toString() : undefined;
     obj.from_address = message.fromAddress;
@@ -196,7 +209,8 @@ export const MsgSubmitQueryResponseResponse = {
     return message;
   },
   fromAmino(_: MsgSubmitQueryResponseResponseAmino): MsgSubmitQueryResponseResponse {
-    return {};
+    const message = createBaseMsgSubmitQueryResponseResponse();
+    return message;
   },
   toAmino(_: MsgSubmitQueryResponseResponse): MsgSubmitQueryResponseResponseAmino {
     const obj: any = {};

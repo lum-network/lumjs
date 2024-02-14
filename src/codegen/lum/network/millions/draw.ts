@@ -2,7 +2,7 @@ import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin"
 import { PrizeRef, PrizeRefAmino, PrizeRefSDKType } from "./prize_ref";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export enum DrawState {
   DRAW_STATE_UNSPECIFIED = 0,
   DRAW_STATE_ICA_WITHDRAWREWARDS = 1,
@@ -95,25 +95,25 @@ export interface DrawProtoMsg {
 }
 export interface DrawAmino {
   /** Draw IDs */
-  pool_id: string;
-  draw_id: string;
+  pool_id?: string;
+  draw_id?: string;
   /**
    * Draw states
    * error_state is only set in case of failure
    */
-  state: DrawState;
-  error_state: DrawState;
+  state?: DrawState;
+  error_state?: DrawState;
   /** Draw state done data */
-  rand_seed: string;
+  rand_seed?: string;
   prize_pool?: CoinAmino | undefined;
-  prize_pool_fresh_amount: string;
-  prize_pool_remains_amount: string;
-  prizes_refs: PrizeRefAmino[];
-  total_win_count: string;
-  total_win_amount: string;
+  prize_pool_fresh_amount?: string;
+  prize_pool_remains_amount?: string;
+  prizes_refs?: PrizeRefAmino[];
+  total_win_count?: string;
+  total_win_amount?: string;
   /** Draw creation and updates */
-  created_at_height: string;
-  updated_at_height: string;
+  created_at_height?: string;
+  updated_at_height?: string;
   created_at?: string | undefined;
   updated_at?: string | undefined;
 }
@@ -286,23 +286,51 @@ export const Draw = {
     return message;
   },
   fromAmino(object: DrawAmino): Draw {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      state: isSet(object.state) ? drawStateFromJSON(object.state) : -1,
-      errorState: isSet(object.error_state) ? drawStateFromJSON(object.error_state) : -1,
-      randSeed: BigInt(object.rand_seed),
-      prizePool: object?.prize_pool ? Coin.fromAmino(object.prize_pool) : undefined,
-      prizePoolFreshAmount: object.prize_pool_fresh_amount,
-      prizePoolRemainsAmount: object.prize_pool_remains_amount,
-      prizesRefs: Array.isArray(object?.prizes_refs) ? object.prizes_refs.map((e: any) => PrizeRef.fromAmino(e)) : [],
-      totalWinCount: BigInt(object.total_win_count),
-      totalWinAmount: object.total_win_amount,
-      createdAtHeight: BigInt(object.created_at_height),
-      updatedAtHeight: BigInt(object.updated_at_height),
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
-      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
-    };
+    const message = createBaseDraw();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = drawStateFromJSON(object.state);
+    }
+    if (object.error_state !== undefined && object.error_state !== null) {
+      message.errorState = drawStateFromJSON(object.error_state);
+    }
+    if (object.rand_seed !== undefined && object.rand_seed !== null) {
+      message.randSeed = BigInt(object.rand_seed);
+    }
+    if (object.prize_pool !== undefined && object.prize_pool !== null) {
+      message.prizePool = Coin.fromAmino(object.prize_pool);
+    }
+    if (object.prize_pool_fresh_amount !== undefined && object.prize_pool_fresh_amount !== null) {
+      message.prizePoolFreshAmount = object.prize_pool_fresh_amount;
+    }
+    if (object.prize_pool_remains_amount !== undefined && object.prize_pool_remains_amount !== null) {
+      message.prizePoolRemainsAmount = object.prize_pool_remains_amount;
+    }
+    message.prizesRefs = object.prizes_refs?.map(e => PrizeRef.fromAmino(e)) || [];
+    if (object.total_win_count !== undefined && object.total_win_count !== null) {
+      message.totalWinCount = BigInt(object.total_win_count);
+    }
+    if (object.total_win_amount !== undefined && object.total_win_amount !== null) {
+      message.totalWinAmount = object.total_win_amount;
+    }
+    if (object.created_at_height !== undefined && object.created_at_height !== null) {
+      message.createdAtHeight = BigInt(object.created_at_height);
+    }
+    if (object.updated_at_height !== undefined && object.updated_at_height !== null) {
+      message.updatedAtHeight = BigInt(object.updated_at_height);
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    if (object.updated_at !== undefined && object.updated_at !== null) {
+      message.updatedAt = fromTimestamp(Timestamp.fromAmino(object.updated_at));
+    }
+    return message;
   },
   toAmino(message: Draw): DrawAmino {
     const obj: any = {};

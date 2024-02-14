@@ -1,6 +1,5 @@
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { Decimal } from "@cosmjs/math";
 export interface Params {
   /**
    * min_deposit_amount the minimum deposit amount accepted by pool
@@ -33,11 +32,6 @@ export interface Params {
    */
   prizeExpirationDelta: Duration | undefined;
   /**
-   * fees_stakers the fees distributed by stakers over prize won (common to all
-   * pools)
-   */
-  feesStakers: string;
-  /**
    * min_deposit_draw_delta the minimum delta before a draw for a deposit to be
    * accepted during the time weighted balance computation for a draw
    */
@@ -52,17 +46,17 @@ export interface ParamsAmino {
    * min_deposit_amount the minimum deposit amount accepted by pool
    * configurations
    */
-  min_deposit_amount: string;
+  min_deposit_amount?: string;
   /**
    * max_prize_strategy_batches the maximum prize strategy batches accepted by
    * pool configurations
    */
-  max_prize_strategy_batches: string;
+  max_prize_strategy_batches?: string;
   /**
    * max_prize_batch_quantity the maximum prize batch quantity accepted by pool
    * configurations
    */
-  max_prize_batch_quantity: string;
+  max_prize_batch_quantity?: string;
   /**
    * min_draw_schedule_delta the minimum delta between draws accepted by pool
    * configurations
@@ -78,11 +72,6 @@ export interface ParamsAmino {
    * pools)
    */
   prize_expiration_delta?: DurationAmino | undefined;
-  /**
-   * fees_stakers the fees distributed by stakers over prize won (common to all
-   * pools)
-   */
-  fees_stakers: string;
   /**
    * min_deposit_draw_delta the minimum delta before a draw for a deposit to be
    * accepted during the time weighted balance computation for a draw
@@ -100,7 +89,6 @@ export interface ParamsSDKType {
   min_draw_schedule_delta: DurationSDKType | undefined;
   max_draw_schedule_delta: DurationSDKType | undefined;
   prize_expiration_delta: DurationSDKType | undefined;
-  fees_stakers: string;
   min_deposit_draw_delta: DurationSDKType | undefined;
 }
 function createBaseParams(): Params {
@@ -111,7 +99,6 @@ function createBaseParams(): Params {
     minDrawScheduleDelta: Duration.fromPartial({}),
     maxDrawScheduleDelta: Duration.fromPartial({}),
     prizeExpirationDelta: Duration.fromPartial({}),
-    feesStakers: "",
     minDepositDrawDelta: Duration.fromPartial({})
   };
 }
@@ -135,9 +122,6 @@ export const Params = {
     }
     if (message.prizeExpirationDelta !== undefined) {
       Duration.encode(message.prizeExpirationDelta, writer.uint32(50).fork()).ldelim();
-    }
-    if (message.feesStakers !== "") {
-      writer.uint32(58).string(Decimal.fromUserInput(message.feesStakers, 18).atomics);
     }
     if (message.minDepositDrawDelta !== undefined) {
       Duration.encode(message.minDepositDrawDelta, writer.uint32(66).fork()).ldelim();
@@ -169,9 +153,6 @@ export const Params = {
         case 6:
           message.prizeExpirationDelta = Duration.decode(reader, reader.uint32());
           break;
-        case 7:
-          message.feesStakers = Decimal.fromAtomics(reader.string(), 18).toString();
-          break;
         case 8:
           message.minDepositDrawDelta = Duration.decode(reader, reader.uint32());
           break;
@@ -190,21 +171,33 @@ export const Params = {
     message.minDrawScheduleDelta = object.minDrawScheduleDelta !== undefined && object.minDrawScheduleDelta !== null ? Duration.fromPartial(object.minDrawScheduleDelta) : undefined;
     message.maxDrawScheduleDelta = object.maxDrawScheduleDelta !== undefined && object.maxDrawScheduleDelta !== null ? Duration.fromPartial(object.maxDrawScheduleDelta) : undefined;
     message.prizeExpirationDelta = object.prizeExpirationDelta !== undefined && object.prizeExpirationDelta !== null ? Duration.fromPartial(object.prizeExpirationDelta) : undefined;
-    message.feesStakers = object.feesStakers ?? "";
     message.minDepositDrawDelta = object.minDepositDrawDelta !== undefined && object.minDepositDrawDelta !== null ? Duration.fromPartial(object.minDepositDrawDelta) : undefined;
     return message;
   },
   fromAmino(object: ParamsAmino): Params {
-    return {
-      minDepositAmount: object.min_deposit_amount,
-      maxPrizeStrategyBatches: BigInt(object.max_prize_strategy_batches),
-      maxPrizeBatchQuantity: BigInt(object.max_prize_batch_quantity),
-      minDrawScheduleDelta: object?.min_draw_schedule_delta ? Duration.fromAmino(object.min_draw_schedule_delta) : undefined,
-      maxDrawScheduleDelta: object?.max_draw_schedule_delta ? Duration.fromAmino(object.max_draw_schedule_delta) : undefined,
-      prizeExpirationDelta: object?.prize_expiration_delta ? Duration.fromAmino(object.prize_expiration_delta) : undefined,
-      feesStakers: object.fees_stakers,
-      minDepositDrawDelta: object?.min_deposit_draw_delta ? Duration.fromAmino(object.min_deposit_draw_delta) : undefined
-    };
+    const message = createBaseParams();
+    if (object.min_deposit_amount !== undefined && object.min_deposit_amount !== null) {
+      message.minDepositAmount = object.min_deposit_amount;
+    }
+    if (object.max_prize_strategy_batches !== undefined && object.max_prize_strategy_batches !== null) {
+      message.maxPrizeStrategyBatches = BigInt(object.max_prize_strategy_batches);
+    }
+    if (object.max_prize_batch_quantity !== undefined && object.max_prize_batch_quantity !== null) {
+      message.maxPrizeBatchQuantity = BigInt(object.max_prize_batch_quantity);
+    }
+    if (object.min_draw_schedule_delta !== undefined && object.min_draw_schedule_delta !== null) {
+      message.minDrawScheduleDelta = Duration.fromAmino(object.min_draw_schedule_delta);
+    }
+    if (object.max_draw_schedule_delta !== undefined && object.max_draw_schedule_delta !== null) {
+      message.maxDrawScheduleDelta = Duration.fromAmino(object.max_draw_schedule_delta);
+    }
+    if (object.prize_expiration_delta !== undefined && object.prize_expiration_delta !== null) {
+      message.prizeExpirationDelta = Duration.fromAmino(object.prize_expiration_delta);
+    }
+    if (object.min_deposit_draw_delta !== undefined && object.min_deposit_draw_delta !== null) {
+      message.minDepositDrawDelta = Duration.fromAmino(object.min_deposit_draw_delta);
+    }
+    return message;
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
@@ -214,7 +207,6 @@ export const Params = {
     obj.min_draw_schedule_delta = message.minDrawScheduleDelta ? Duration.toAmino(message.minDrawScheduleDelta) : undefined;
     obj.max_draw_schedule_delta = message.maxDrawScheduleDelta ? Duration.toAmino(message.maxDrawScheduleDelta) : undefined;
     obj.prize_expiration_delta = message.prizeExpirationDelta ? Duration.toAmino(message.prizeExpirationDelta) : undefined;
-    obj.fees_stakers = message.feesStakers;
     obj.min_deposit_draw_delta = message.minDepositDrawDelta ? Duration.toAmino(message.minDepositDrawDelta) : undefined;
     return obj;
   },

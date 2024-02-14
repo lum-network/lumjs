@@ -2,7 +2,6 @@ import { Action, ClaimRecord, ClaimRecordAmino, ClaimRecordSDKType, actionFromJS
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { isSet } from "../../../helpers";
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryModuleAccountBalanceRequest {}
 export interface QueryModuleAccountBalanceRequestProtoMsg {
@@ -29,7 +28,7 @@ export interface QueryModuleAccountBalanceResponseProtoMsg {
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryModuleAccountBalanceResponseAmino {
   /** params defines the parameters of the module. */
-  module_account_balance: CoinAmino[];
+  module_account_balance?: CoinAmino[];
 }
 export interface QueryModuleAccountBalanceResponseAminoMsg {
   type: "/lum.network.airdrop.QueryModuleAccountBalanceResponse";
@@ -83,7 +82,7 @@ export interface QueryClaimRecordRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryClaimRecordRequestAmino {
-  address: string;
+  address?: string;
 }
 export interface QueryClaimRecordRequestAminoMsg {
   type: "/lum.network.airdrop.QueryClaimRecordRequest";
@@ -118,8 +117,8 @@ export interface QueryClaimableForActionRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryClaimableForActionRequestAmino {
-  address: string;
-  action: Action;
+  address?: string;
+  action?: Action;
 }
 export interface QueryClaimableForActionRequestAminoMsg {
   type: "/lum.network.airdrop.QueryClaimableForActionRequest";
@@ -137,7 +136,7 @@ export interface QueryClaimableForActionResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryClaimableForActionResponseAmino {
-  coins: CoinAmino[];
+  coins?: CoinAmino[];
 }
 export interface QueryClaimableForActionResponseAminoMsg {
   type: "/lum.network.airdrop.QueryClaimableForActionResponse";
@@ -154,7 +153,7 @@ export interface QueryTotalClaimableRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryTotalClaimableRequestAmino {
-  address: string;
+  address?: string;
 }
 export interface QueryTotalClaimableRequestAminoMsg {
   type: "/lum.network.airdrop.QueryTotalClaimableRequest";
@@ -171,7 +170,7 @@ export interface QueryTotalClaimableResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryTotalClaimableResponseAmino {
-  coins: CoinAmino[];
+  coins?: CoinAmino[];
 }
 export interface QueryTotalClaimableResponseAminoMsg {
   type: "/lum.network.airdrop.QueryTotalClaimableResponse";
@@ -207,7 +206,8 @@ export const QueryModuleAccountBalanceRequest = {
     return message;
   },
   fromAmino(_: QueryModuleAccountBalanceRequestAmino): QueryModuleAccountBalanceRequest {
-    return {};
+    const message = createBaseQueryModuleAccountBalanceRequest();
+    return message;
   },
   toAmino(_: QueryModuleAccountBalanceRequest): QueryModuleAccountBalanceRequestAmino {
     const obj: any = {};
@@ -265,9 +265,9 @@ export const QueryModuleAccountBalanceResponse = {
     return message;
   },
   fromAmino(object: QueryModuleAccountBalanceResponseAmino): QueryModuleAccountBalanceResponse {
-    return {
-      moduleAccountBalance: Array.isArray(object?.module_account_balance) ? object.module_account_balance.map((e: any) => Coin.fromAmino(e)) : []
-    };
+    const message = createBaseQueryModuleAccountBalanceResponse();
+    message.moduleAccountBalance = object.module_account_balance?.map(e => Coin.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: QueryModuleAccountBalanceResponse): QueryModuleAccountBalanceResponseAmino {
     const obj: any = {};
@@ -321,7 +321,8 @@ export const QueryParamsRequest = {
     return message;
   },
   fromAmino(_: QueryParamsRequestAmino): QueryParamsRequest {
-    return {};
+    const message = createBaseQueryParamsRequest();
+    return message;
   },
   toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
     const obj: any = {};
@@ -379,9 +380,11 @@ export const QueryParamsResponse = {
     return message;
   },
   fromAmino(object: QueryParamsResponseAmino): QueryParamsResponse {
-    return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined
-    };
+    const message = createBaseQueryParamsResponse();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    return message;
   },
   toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
     const obj: any = {};
@@ -440,9 +443,11 @@ export const QueryClaimRecordRequest = {
     return message;
   },
   fromAmino(object: QueryClaimRecordRequestAmino): QueryClaimRecordRequest {
-    return {
-      address: object.address
-    };
+    const message = createBaseQueryClaimRecordRequest();
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    return message;
   },
   toAmino(message: QueryClaimRecordRequest): QueryClaimRecordRequestAmino {
     const obj: any = {};
@@ -501,9 +506,11 @@ export const QueryClaimRecordResponse = {
     return message;
   },
   fromAmino(object: QueryClaimRecordResponseAmino): QueryClaimRecordResponse {
-    return {
-      claimRecord: object?.claim_record ? ClaimRecord.fromAmino(object.claim_record) : undefined
-    };
+    const message = createBaseQueryClaimRecordResponse();
+    if (object.claim_record !== undefined && object.claim_record !== null) {
+      message.claimRecord = ClaimRecord.fromAmino(object.claim_record);
+    }
+    return message;
   },
   toAmino(message: QueryClaimRecordResponse): QueryClaimRecordResponseAmino {
     const obj: any = {};
@@ -570,10 +577,14 @@ export const QueryClaimableForActionRequest = {
     return message;
   },
   fromAmino(object: QueryClaimableForActionRequestAmino): QueryClaimableForActionRequest {
-    return {
-      address: object.address,
-      action: isSet(object.action) ? actionFromJSON(object.action) : -1
-    };
+    const message = createBaseQueryClaimableForActionRequest();
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = actionFromJSON(object.action);
+    }
+    return message;
   },
   toAmino(message: QueryClaimableForActionRequest): QueryClaimableForActionRequestAmino {
     const obj: any = {};
@@ -633,9 +644,9 @@ export const QueryClaimableForActionResponse = {
     return message;
   },
   fromAmino(object: QueryClaimableForActionResponseAmino): QueryClaimableForActionResponse {
-    return {
-      coins: Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromAmino(e)) : []
-    };
+    const message = createBaseQueryClaimableForActionResponse();
+    message.coins = object.coins?.map(e => Coin.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: QueryClaimableForActionResponse): QueryClaimableForActionResponseAmino {
     const obj: any = {};
@@ -698,9 +709,11 @@ export const QueryTotalClaimableRequest = {
     return message;
   },
   fromAmino(object: QueryTotalClaimableRequestAmino): QueryTotalClaimableRequest {
-    return {
-      address: object.address
-    };
+    const message = createBaseQueryTotalClaimableRequest();
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    return message;
   },
   toAmino(message: QueryTotalClaimableRequest): QueryTotalClaimableRequestAmino {
     const obj: any = {};
@@ -759,9 +772,9 @@ export const QueryTotalClaimableResponse = {
     return message;
   },
   fromAmino(object: QueryTotalClaimableResponseAmino): QueryTotalClaimableResponse {
-    return {
-      coins: Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromAmino(e)) : []
-    };
+    const message = createBaseQueryTotalClaimableResponse();
+    message.coins = object.coins?.map(e => Coin.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: QueryTotalClaimableResponse): QueryTotalClaimableResponseAmino {
     const obj: any = {};

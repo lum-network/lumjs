@@ -26,17 +26,17 @@ export interface GenesisStateProtoMsg {
 }
 export interface GenesisStateAmino {
   params?: ParamsAmino | undefined;
-  next_pool_id: string;
-  next_deposit_id: string;
-  next_prize_id: string;
-  next_withdrawal_id: string;
-  pools: PoolAmino[];
-  deposits: DepositAmino[];
-  draws: DrawAmino[];
-  prizes: PrizeAmino[];
-  withdrawals: WithdrawalAmino[];
-  epoch_trackers: EpochTrackerAmino[];
-  epoch_unbondings: EpochUnbondingAmino[];
+  next_pool_id?: string;
+  next_deposit_id?: string;
+  next_prize_id?: string;
+  next_withdrawal_id?: string;
+  pools?: PoolAmino[];
+  deposits?: DepositAmino[];
+  draws?: DrawAmino[];
+  prizes?: PrizeAmino[];
+  withdrawals?: WithdrawalAmino[];
+  epoch_trackers?: EpochTrackerAmino[];
+  epoch_unbondings?: EpochUnbondingAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/lum.network.millions.GenesisState";
@@ -180,20 +180,30 @@ export const GenesisState = {
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
-    return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined,
-      nextPoolId: BigInt(object.next_pool_id),
-      nextDepositId: BigInt(object.next_deposit_id),
-      nextPrizeId: BigInt(object.next_prize_id),
-      nextWithdrawalId: BigInt(object.next_withdrawal_id),
-      pools: Array.isArray(object?.pools) ? object.pools.map((e: any) => Pool.fromAmino(e)) : [],
-      deposits: Array.isArray(object?.deposits) ? object.deposits.map((e: any) => Deposit.fromAmino(e)) : [],
-      draws: Array.isArray(object?.draws) ? object.draws.map((e: any) => Draw.fromAmino(e)) : [],
-      prizes: Array.isArray(object?.prizes) ? object.prizes.map((e: any) => Prize.fromAmino(e)) : [],
-      withdrawals: Array.isArray(object?.withdrawals) ? object.withdrawals.map((e: any) => Withdrawal.fromAmino(e)) : [],
-      epochTrackers: Array.isArray(object?.epoch_trackers) ? object.epoch_trackers.map((e: any) => EpochTracker.fromAmino(e)) : [],
-      epochUnbondings: Array.isArray(object?.epoch_unbondings) ? object.epoch_unbondings.map((e: any) => EpochUnbonding.fromAmino(e)) : []
-    };
+    const message = createBaseGenesisState();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    if (object.next_pool_id !== undefined && object.next_pool_id !== null) {
+      message.nextPoolId = BigInt(object.next_pool_id);
+    }
+    if (object.next_deposit_id !== undefined && object.next_deposit_id !== null) {
+      message.nextDepositId = BigInt(object.next_deposit_id);
+    }
+    if (object.next_prize_id !== undefined && object.next_prize_id !== null) {
+      message.nextPrizeId = BigInt(object.next_prize_id);
+    }
+    if (object.next_withdrawal_id !== undefined && object.next_withdrawal_id !== null) {
+      message.nextWithdrawalId = BigInt(object.next_withdrawal_id);
+    }
+    message.pools = object.pools?.map(e => Pool.fromAmino(e)) || [];
+    message.deposits = object.deposits?.map(e => Deposit.fromAmino(e)) || [];
+    message.draws = object.draws?.map(e => Draw.fromAmino(e)) || [];
+    message.prizes = object.prizes?.map(e => Prize.fromAmino(e)) || [];
+    message.withdrawals = object.withdrawals?.map(e => Withdrawal.fromAmino(e)) || [];
+    message.epochTrackers = object.epoch_trackers?.map(e => EpochTracker.fromAmino(e)) || [];
+    message.epochUnbondings = object.epoch_unbondings?.map(e => EpochUnbonding.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};

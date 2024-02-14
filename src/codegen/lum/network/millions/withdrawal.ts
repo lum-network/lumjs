@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export enum WithdrawalState {
   WITHDRAWAL_STATE_UNSPECIFIED = 0,
   WITHDRAWAL_STATE_ICA_UNDELEGATE = 1,
@@ -78,16 +78,16 @@ export interface WithdrawalProtoMsg {
   value: Uint8Array;
 }
 export interface WithdrawalAmino {
-  pool_id: string;
-  deposit_id: string;
-  withdrawal_id: string;
-  state: WithdrawalState;
-  error_state: WithdrawalState;
-  depositor_address: string;
-  to_address: string;
+  pool_id?: string;
+  deposit_id?: string;
+  withdrawal_id?: string;
+  state?: WithdrawalState;
+  error_state?: WithdrawalState;
+  depositor_address?: string;
+  to_address?: string;
   amount?: CoinAmino | undefined;
-  created_at_height: string;
-  updated_at_height: string;
+  created_at_height?: string;
+  updated_at_height?: string;
   unbonding_ends_at?: string | undefined;
   created_at?: string | undefined;
   updated_at?: string | undefined;
@@ -120,8 +120,8 @@ export interface WithdrawalIDsProtoMsg {
   value: Uint8Array;
 }
 export interface WithdrawalIDsAmino {
-  pool_id: string;
-  withdrawal_id: string;
+  pool_id?: string;
+  withdrawal_id?: string;
 }
 export interface WithdrawalIDsAminoMsg {
   type: "/lum.network.millions.WithdrawalIDs";
@@ -139,7 +139,7 @@ export interface WithdrawalIDsCollectionProtoMsg {
   value: Uint8Array;
 }
 export interface WithdrawalIDsCollectionAmino {
-  withdrawals_ids: WithdrawalIDsAmino[];
+  withdrawals_ids?: WithdrawalIDsAmino[];
 }
 export interface WithdrawalIDsCollectionAminoMsg {
   type: "/lum.network.millions.WithdrawalIDsCollection";
@@ -280,21 +280,47 @@ export const Withdrawal = {
     return message;
   },
   fromAmino(object: WithdrawalAmino): Withdrawal {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id),
-      withdrawalId: BigInt(object.withdrawal_id),
-      state: isSet(object.state) ? withdrawalStateFromJSON(object.state) : -1,
-      errorState: isSet(object.error_state) ? withdrawalStateFromJSON(object.error_state) : -1,
-      depositorAddress: object.depositor_address,
-      toAddress: object.to_address,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      createdAtHeight: BigInt(object.created_at_height),
-      updatedAtHeight: BigInt(object.updated_at_height),
-      unbondingEndsAt: object?.unbonding_ends_at ? fromTimestamp(Timestamp.fromAmino(object.unbonding_ends_at)) : undefined,
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
-      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
-    };
+    const message = createBaseWithdrawal();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = withdrawalStateFromJSON(object.state);
+    }
+    if (object.error_state !== undefined && object.error_state !== null) {
+      message.errorState = withdrawalStateFromJSON(object.error_state);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.to_address !== undefined && object.to_address !== null) {
+      message.toAddress = object.to_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.created_at_height !== undefined && object.created_at_height !== null) {
+      message.createdAtHeight = BigInt(object.created_at_height);
+    }
+    if (object.updated_at_height !== undefined && object.updated_at_height !== null) {
+      message.updatedAtHeight = BigInt(object.updated_at_height);
+    }
+    if (object.unbonding_ends_at !== undefined && object.unbonding_ends_at !== null) {
+      message.unbondingEndsAt = fromTimestamp(Timestamp.fromAmino(object.unbonding_ends_at));
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    if (object.updated_at !== undefined && object.updated_at !== null) {
+      message.updatedAt = fromTimestamp(Timestamp.fromAmino(object.updated_at));
+    }
+    return message;
   },
   toAmino(message: Withdrawal): WithdrawalAmino {
     const obj: any = {};
@@ -373,10 +399,14 @@ export const WithdrawalIDs = {
     return message;
   },
   fromAmino(object: WithdrawalIDsAmino): WithdrawalIDs {
-    return {
-      poolId: BigInt(object.pool_id),
-      withdrawalId: BigInt(object.withdrawal_id)
-    };
+    const message = createBaseWithdrawalIDs();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    return message;
   },
   toAmino(message: WithdrawalIDs): WithdrawalIDsAmino {
     const obj: any = {};
@@ -436,9 +466,9 @@ export const WithdrawalIDsCollection = {
     return message;
   },
   fromAmino(object: WithdrawalIDsCollectionAmino): WithdrawalIDsCollection {
-    return {
-      withdrawalsIds: Array.isArray(object?.withdrawals_ids) ? object.withdrawals_ids.map((e: any) => WithdrawalIDs.fromAmino(e)) : []
-    };
+    const message = createBaseWithdrawalIDsCollection();
+    message.withdrawalsIds = object.withdrawals_ids?.map(e => WithdrawalIDs.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: WithdrawalIDsCollection): WithdrawalIDsCollectionAmino {
     const obj: any = {};

@@ -13,7 +13,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the capability module's genesis state. */
 export interface GenesisStateAmino {
   module_account_balance?: CoinAmino | undefined;
-  beams: BeamAmino[];
+  beams?: BeamAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/lum.network.beam.GenesisState";
@@ -68,10 +68,12 @@ export const GenesisState = {
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
-    return {
-      moduleAccountBalance: object?.module_account_balance ? Coin.fromAmino(object.module_account_balance) : undefined,
-      beams: Array.isArray(object?.beams) ? object.beams.map((e: any) => Beam.fromAmino(e)) : []
-    };
+    const message = createBaseGenesisState();
+    if (object.module_account_balance !== undefined && object.module_account_balance !== null) {
+      message.moduleAccountBalance = Coin.fromAmino(object.module_account_balance);
+    }
+    message.beams = object.beams?.map(e => Beam.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};

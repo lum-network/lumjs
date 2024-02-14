@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export enum BeamState {
   UNSPECIFIED = 0,
   OPEN = 1,
@@ -56,9 +56,9 @@ export interface BeamMediaProtoMsg {
   value: Uint8Array;
 }
 export interface BeamMediaAmino {
-  mimetype: string;
-  url: string;
-  thumbnail_url: string;
+  mimetype?: string;
+  url?: string;
+  thumbnail_url?: string;
 }
 export interface BeamMediaAminoMsg {
   type: "/lum.network.beam.BeamMedia";
@@ -79,9 +79,9 @@ export interface BeamReviewerProtoMsg {
   value: Uint8Array;
 }
 export interface BeamReviewerAmino {
-  reviewer_id: string;
-  name: string;
-  is_anonymous: boolean;
+  reviewer_id?: string;
+  name?: string;
+  is_anonymous?: boolean;
 }
 export interface BeamReviewerAminoMsg {
   type: "/lum.network.beam.BeamReviewer";
@@ -102,9 +102,9 @@ export interface BeamVerifierProtoMsg {
   value: Uint8Array;
 }
 export interface BeamVerifierAmino {
-  name: string;
-  url: string;
-  signature: string;
+  name?: string;
+  url?: string;
+  signature?: string;
 }
 export interface BeamVerifierAminoMsg {
   type: "/lum.network.beam.BeamVerifier";
@@ -128,12 +128,12 @@ export interface BeamRewardProtoMsg {
   value: Uint8Array;
 }
 export interface BeamRewardAmino {
-  trigger: string;
-  amount: number;
-  max_amount: number;
-  currency: string;
-  status: string;
-  details: BeamReward_BeamRewardDetailsAmino[];
+  trigger?: string;
+  amount?: number;
+  max_amount?: number;
+  currency?: string;
+  status?: string;
+  details?: BeamReward_BeamRewardDetailsAmino[];
 }
 export interface BeamRewardAminoMsg {
   type: "/lum.network.beam.BeamReward";
@@ -158,10 +158,10 @@ export interface BeamReward_BeamRewardDetailsProtoMsg {
   value: Uint8Array;
 }
 export interface BeamReward_BeamRewardDetailsAmino {
-  type: string;
-  amount: number;
-  max_amount: number;
-  status: string;
+  type?: string;
+  amount?: number;
+  max_amount?: number;
+  status?: string;
 }
 export interface BeamReward_BeamRewardDetailsAminoMsg {
   type: "/lum.network.beam.BeamRewardDetails";
@@ -190,15 +190,15 @@ export interface BeamMerchantReviewProtoMsg {
   value: Uint8Array;
 }
 export interface BeamMerchantReviewAmino {
-  order_id: string;
-  review_id: string;
-  merchant_url: string;
-  rating_url: string;
-  review_url: string;
-  collection_method: string;
-  timestamp: string;
+  order_id?: string;
+  review_id?: string;
+  merchant_url?: string;
+  rating_url?: string;
+  review_url?: string;
+  collection_method?: string;
+  timestamp?: string;
   ratings?: BeamMerchantReview_BeamMerchantReviewRatingAmino | undefined;
-  title: string;
+  title?: string;
   content?: BeamMerchantReview_BeamMerchantReviewContentAmino | undefined;
 }
 export interface BeamMerchantReviewAminoMsg {
@@ -227,9 +227,9 @@ export interface BeamMerchantReview_BeamMerchantReviewRatingProtoMsg {
   value: Uint8Array;
 }
 export interface BeamMerchantReview_BeamMerchantReviewRatingAmino {
-  overall: number;
-  customer_service: number;
-  nps: number;
+  overall?: number;
+  customer_service?: number;
+  nps?: number;
 }
 export interface BeamMerchantReview_BeamMerchantReviewRatingAminoMsg {
   type: "/lum.network.beam.BeamMerchantReviewRating";
@@ -249,8 +249,8 @@ export interface BeamMerchantReview_BeamMerchantReviewContentProtoMsg {
   value: Uint8Array;
 }
 export interface BeamMerchantReview_BeamMerchantReviewContentAmino {
-  overall: string;
-  customer_service: string;
+  overall?: string;
+  customer_service?: string;
 }
 export interface BeamMerchantReview_BeamMerchantReviewContentAminoMsg {
   type: "/lum.network.beam.BeamMerchantReviewContent";
@@ -278,17 +278,17 @@ export interface BeamProductReviewProtoMsg {
   value: Uint8Array;
 }
 export interface BeamProductReviewAmino {
-  order_id: string;
-  review_id: string;
-  rating_url: string;
-  review_url: string;
-  collection_method: string;
-  timestamp: string;
+  order_id?: string;
+  review_id?: string;
+  rating_url?: string;
+  review_url?: string;
+  collection_method?: string;
+  timestamp?: string;
   ratings?: BeamProductReview_BeamProductReviewRatingAmino | undefined;
-  title: string;
+  title?: string;
   content?: BeamProductReview_BeamProductReviewContentAmino | undefined;
-  medias: BeamMediaAmino[];
-  products: BeamProductReview_BeamProductAmino[];
+  medias?: BeamMediaAmino[];
+  products?: BeamProductReview_BeamProductAmino[];
 }
 export interface BeamProductReviewAminoMsg {
   type: "/lum.network.beam.BeamProductReview";
@@ -316,8 +316,8 @@ export interface BeamProductReview_BeamProductReviewRatingProtoMsg {
   value: Uint8Array;
 }
 export interface BeamProductReview_BeamProductReviewRatingAmino {
-  overall: number;
-  quality: number;
+  overall?: number;
+  quality?: number;
 }
 export interface BeamProductReview_BeamProductReviewRatingAminoMsg {
   type: "/lum.network.beam.BeamProductReviewRating";
@@ -337,9 +337,9 @@ export interface BeamProductReview_BeamProductReviewContentProtoMsg {
   value: Uint8Array;
 }
 export interface BeamProductReview_BeamProductReviewContentAmino {
-  overall: string;
-  pros: string;
-  cons: string;
+  overall?: string;
+  pros?: string;
+  cons?: string;
 }
 export interface BeamProductReview_BeamProductReviewContentAminoMsg {
   type: "/lum.network.beam.BeamProductReviewContent";
@@ -361,9 +361,9 @@ export interface BeamProductReview_BeamProductProtoMsg {
   value: Uint8Array;
 }
 export interface BeamProductReview_BeamProductAmino {
-  name: string;
-  url: string;
-  urls: string[];
+  name?: string;
+  url?: string;
+  urls?: string[];
   ids?: BeamProductReview_BeamProduct_BeamProductIdsAmino | undefined;
 }
 export interface BeamProductReview_BeamProductAminoMsg {
@@ -387,10 +387,10 @@ export interface BeamProductReview_BeamProduct_BeamProductIdsProtoMsg {
   value: Uint8Array;
 }
 export interface BeamProductReview_BeamProduct_BeamProductIdsAmino {
-  gtins: string[];
-  mpns: string[];
-  skus: string[];
-  asins: string[];
+  gtins?: string[];
+  mpns?: string[];
+  skus?: string[];
+  asins?: string[];
 }
 export interface BeamProductReview_BeamProduct_BeamProductIdsAminoMsg {
   type: "/lum.network.beam.BeamProductIds";
@@ -418,7 +418,7 @@ export interface BeamDataAmino {
   verifier?: BeamVerifierAmino | undefined;
   reviewer?: BeamReviewerAmino | undefined;
   merchant_review?: BeamMerchantReviewAmino | undefined;
-  products_reviews: BeamProductReviewAmino[];
+  products_reviews?: BeamProductReviewAmino[];
 }
 export interface BeamDataAminoMsg {
   type: "/lum.network.beam.BeamData";
@@ -454,20 +454,20 @@ export interface BeamProtoMsg {
   value: Uint8Array;
 }
 export interface BeamAmino {
-  creator_address: string;
-  id: string;
+  creator_address?: string;
+  id?: string;
   amount?: CoinAmino | undefined;
-  status: BeamState;
-  secret: string;
-  claim_address: string;
-  funds_withdrawn: boolean;
-  claimed: boolean;
-  cancel_reason: string;
-  hide_content: boolean;
-  schema: string;
+  status?: BeamState;
+  secret?: string;
+  claim_address?: string;
+  funds_withdrawn?: boolean;
+  claimed?: boolean;
+  cancel_reason?: string;
+  hide_content?: boolean;
+  schema?: string;
   data?: BeamDataAmino | undefined;
-  claim_expires_at_block: number;
-  closes_at_block: number;
+  claim_expires_at_block?: number;
+  closes_at_block?: number;
   created_at?: string | undefined;
   closed_at?: string | undefined;
 }
@@ -545,11 +545,17 @@ export const BeamMedia = {
     return message;
   },
   fromAmino(object: BeamMediaAmino): BeamMedia {
-    return {
-      mimetype: object.mimetype,
-      url: object.url,
-      thumbnailUrl: object.thumbnail_url
-    };
+    const message = createBaseBeamMedia();
+    if (object.mimetype !== undefined && object.mimetype !== null) {
+      message.mimetype = object.mimetype;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
+    if (object.thumbnail_url !== undefined && object.thumbnail_url !== null) {
+      message.thumbnailUrl = object.thumbnail_url;
+    }
+    return message;
   },
   toAmino(message: BeamMedia): BeamMediaAmino {
     const obj: any = {};
@@ -626,11 +632,17 @@ export const BeamReviewer = {
     return message;
   },
   fromAmino(object: BeamReviewerAmino): BeamReviewer {
-    return {
-      reviewerId: object.reviewer_id,
-      name: object.name,
-      isAnonymous: object.is_anonymous
-    };
+    const message = createBaseBeamReviewer();
+    if (object.reviewer_id !== undefined && object.reviewer_id !== null) {
+      message.reviewerId = object.reviewer_id;
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.is_anonymous !== undefined && object.is_anonymous !== null) {
+      message.isAnonymous = object.is_anonymous;
+    }
+    return message;
   },
   toAmino(message: BeamReviewer): BeamReviewerAmino {
     const obj: any = {};
@@ -707,11 +719,17 @@ export const BeamVerifier = {
     return message;
   },
   fromAmino(object: BeamVerifierAmino): BeamVerifier {
-    return {
-      name: object.name,
-      url: object.url,
-      signature: object.signature
-    };
+    const message = createBaseBeamVerifier();
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = object.signature;
+    }
+    return message;
   },
   toAmino(message: BeamVerifier): BeamVerifierAmino {
     const obj: any = {};
@@ -812,14 +830,24 @@ export const BeamReward = {
     return message;
   },
   fromAmino(object: BeamRewardAmino): BeamReward {
-    return {
-      trigger: object.trigger,
-      amount: object.amount,
-      maxAmount: object.max_amount,
-      currency: object.currency,
-      status: object.status,
-      details: Array.isArray(object?.details) ? object.details.map((e: any) => BeamReward_BeamRewardDetails.fromAmino(e)) : []
-    };
+    const message = createBaseBeamReward();
+    if (object.trigger !== undefined && object.trigger !== null) {
+      message.trigger = object.trigger;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = object.amount;
+    }
+    if (object.max_amount !== undefined && object.max_amount !== null) {
+      message.maxAmount = object.max_amount;
+    }
+    if (object.currency !== undefined && object.currency !== null) {
+      message.currency = object.currency;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    }
+    message.details = object.details?.map(e => BeamReward_BeamRewardDetails.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: BeamReward): BeamRewardAmino {
     const obj: any = {};
@@ -911,12 +939,20 @@ export const BeamReward_BeamRewardDetails = {
     return message;
   },
   fromAmino(object: BeamReward_BeamRewardDetailsAmino): BeamReward_BeamRewardDetails {
-    return {
-      type: object.type,
-      amount: object.amount,
-      maxAmount: object.max_amount,
-      status: object.status
-    };
+    const message = createBaseBeamReward_BeamRewardDetails();
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = object.amount;
+    }
+    if (object.max_amount !== undefined && object.max_amount !== null) {
+      message.maxAmount = object.max_amount;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    }
+    return message;
   },
   toAmino(message: BeamReward_BeamRewardDetails): BeamReward_BeamRewardDetailsAmino {
     const obj: any = {};
@@ -1050,18 +1086,38 @@ export const BeamMerchantReview = {
     return message;
   },
   fromAmino(object: BeamMerchantReviewAmino): BeamMerchantReview {
-    return {
-      orderId: object.order_id,
-      reviewId: object.review_id,
-      merchantUrl: object.merchant_url,
-      ratingUrl: object.rating_url,
-      reviewUrl: object.review_url,
-      collectionMethod: object.collection_method,
-      timestamp: object.timestamp,
-      ratings: object?.ratings ? BeamMerchantReview_BeamMerchantReviewRating.fromAmino(object.ratings) : undefined,
-      title: object.title,
-      content: object?.content ? BeamMerchantReview_BeamMerchantReviewContent.fromAmino(object.content) : undefined
-    };
+    const message = createBaseBeamMerchantReview();
+    if (object.order_id !== undefined && object.order_id !== null) {
+      message.orderId = object.order_id;
+    }
+    if (object.review_id !== undefined && object.review_id !== null) {
+      message.reviewId = object.review_id;
+    }
+    if (object.merchant_url !== undefined && object.merchant_url !== null) {
+      message.merchantUrl = object.merchant_url;
+    }
+    if (object.rating_url !== undefined && object.rating_url !== null) {
+      message.ratingUrl = object.rating_url;
+    }
+    if (object.review_url !== undefined && object.review_url !== null) {
+      message.reviewUrl = object.review_url;
+    }
+    if (object.collection_method !== undefined && object.collection_method !== null) {
+      message.collectionMethod = object.collection_method;
+    }
+    if (object.timestamp !== undefined && object.timestamp !== null) {
+      message.timestamp = object.timestamp;
+    }
+    if (object.ratings !== undefined && object.ratings !== null) {
+      message.ratings = BeamMerchantReview_BeamMerchantReviewRating.fromAmino(object.ratings);
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.content !== undefined && object.content !== null) {
+      message.content = BeamMerchantReview_BeamMerchantReviewContent.fromAmino(object.content);
+    }
+    return message;
   },
   toAmino(message: BeamMerchantReview): BeamMerchantReviewAmino {
     const obj: any = {};
@@ -1145,11 +1201,17 @@ export const BeamMerchantReview_BeamMerchantReviewRating = {
     return message;
   },
   fromAmino(object: BeamMerchantReview_BeamMerchantReviewRatingAmino): BeamMerchantReview_BeamMerchantReviewRating {
-    return {
-      overall: object.overall,
-      customerService: object.customer_service,
-      nps: object.nps
-    };
+    const message = createBaseBeamMerchantReview_BeamMerchantReviewRating();
+    if (object.overall !== undefined && object.overall !== null) {
+      message.overall = object.overall;
+    }
+    if (object.customer_service !== undefined && object.customer_service !== null) {
+      message.customerService = object.customer_service;
+    }
+    if (object.nps !== undefined && object.nps !== null) {
+      message.nps = object.nps;
+    }
+    return message;
   },
   toAmino(message: BeamMerchantReview_BeamMerchantReviewRating): BeamMerchantReview_BeamMerchantReviewRatingAmino {
     const obj: any = {};
@@ -1218,10 +1280,14 @@ export const BeamMerchantReview_BeamMerchantReviewContent = {
     return message;
   },
   fromAmino(object: BeamMerchantReview_BeamMerchantReviewContentAmino): BeamMerchantReview_BeamMerchantReviewContent {
-    return {
-      overall: object.overall,
-      customerService: object.customer_service
-    };
+    const message = createBaseBeamMerchantReview_BeamMerchantReviewContent();
+    if (object.overall !== undefined && object.overall !== null) {
+      message.overall = object.overall;
+    }
+    if (object.customer_service !== undefined && object.customer_service !== null) {
+      message.customerService = object.customer_service;
+    }
+    return message;
   },
   toAmino(message: BeamMerchantReview_BeamMerchantReviewContent): BeamMerchantReview_BeamMerchantReviewContentAmino {
     const obj: any = {};
@@ -1361,19 +1427,37 @@ export const BeamProductReview = {
     return message;
   },
   fromAmino(object: BeamProductReviewAmino): BeamProductReview {
-    return {
-      orderId: object.order_id,
-      reviewId: object.review_id,
-      ratingUrl: object.rating_url,
-      reviewUrl: object.review_url,
-      collectionMethod: object.collection_method,
-      timestamp: object.timestamp,
-      ratings: object?.ratings ? BeamProductReview_BeamProductReviewRating.fromAmino(object.ratings) : undefined,
-      title: object.title,
-      content: object?.content ? BeamProductReview_BeamProductReviewContent.fromAmino(object.content) : undefined,
-      medias: Array.isArray(object?.medias) ? object.medias.map((e: any) => BeamMedia.fromAmino(e)) : [],
-      products: Array.isArray(object?.products) ? object.products.map((e: any) => BeamProductReview_BeamProduct.fromAmino(e)) : []
-    };
+    const message = createBaseBeamProductReview();
+    if (object.order_id !== undefined && object.order_id !== null) {
+      message.orderId = object.order_id;
+    }
+    if (object.review_id !== undefined && object.review_id !== null) {
+      message.reviewId = object.review_id;
+    }
+    if (object.rating_url !== undefined && object.rating_url !== null) {
+      message.ratingUrl = object.rating_url;
+    }
+    if (object.review_url !== undefined && object.review_url !== null) {
+      message.reviewUrl = object.review_url;
+    }
+    if (object.collection_method !== undefined && object.collection_method !== null) {
+      message.collectionMethod = object.collection_method;
+    }
+    if (object.timestamp !== undefined && object.timestamp !== null) {
+      message.timestamp = object.timestamp;
+    }
+    if (object.ratings !== undefined && object.ratings !== null) {
+      message.ratings = BeamProductReview_BeamProductReviewRating.fromAmino(object.ratings);
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.content !== undefined && object.content !== null) {
+      message.content = BeamProductReview_BeamProductReviewContent.fromAmino(object.content);
+    }
+    message.medias = object.medias?.map(e => BeamMedia.fromAmino(e)) || [];
+    message.products = object.products?.map(e => BeamProductReview_BeamProduct.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: BeamProductReview): BeamProductReviewAmino {
     const obj: any = {};
@@ -1458,10 +1542,14 @@ export const BeamProductReview_BeamProductReviewRating = {
     return message;
   },
   fromAmino(object: BeamProductReview_BeamProductReviewRatingAmino): BeamProductReview_BeamProductReviewRating {
-    return {
-      overall: object.overall,
-      quality: object.quality
-    };
+    const message = createBaseBeamProductReview_BeamProductReviewRating();
+    if (object.overall !== undefined && object.overall !== null) {
+      message.overall = object.overall;
+    }
+    if (object.quality !== undefined && object.quality !== null) {
+      message.quality = object.quality;
+    }
+    return message;
   },
   toAmino(message: BeamProductReview_BeamProductReviewRating): BeamProductReview_BeamProductReviewRatingAmino {
     const obj: any = {};
@@ -1537,11 +1625,17 @@ export const BeamProductReview_BeamProductReviewContent = {
     return message;
   },
   fromAmino(object: BeamProductReview_BeamProductReviewContentAmino): BeamProductReview_BeamProductReviewContent {
-    return {
-      overall: object.overall,
-      pros: object.pros,
-      cons: object.cons
-    };
+    const message = createBaseBeamProductReview_BeamProductReviewContent();
+    if (object.overall !== undefined && object.overall !== null) {
+      message.overall = object.overall;
+    }
+    if (object.pros !== undefined && object.pros !== null) {
+      message.pros = object.pros;
+    }
+    if (object.cons !== undefined && object.cons !== null) {
+      message.cons = object.cons;
+    }
+    return message;
   },
   toAmino(message: BeamProductReview_BeamProductReviewContent): BeamProductReview_BeamProductReviewContentAmino {
     const obj: any = {};
@@ -1626,12 +1720,18 @@ export const BeamProductReview_BeamProduct = {
     return message;
   },
   fromAmino(object: BeamProductReview_BeamProductAmino): BeamProductReview_BeamProduct {
-    return {
-      name: object.name,
-      url: object.url,
-      urls: Array.isArray(object?.urls) ? object.urls.map((e: any) => e) : [],
-      ids: object?.ids ? BeamProductReview_BeamProduct_BeamProductIds.fromAmino(object.ids) : undefined
-    };
+    const message = createBaseBeamProductReview_BeamProduct();
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
+    message.urls = object.urls?.map(e => e) || [];
+    if (object.ids !== undefined && object.ids !== null) {
+      message.ids = BeamProductReview_BeamProduct_BeamProductIds.fromAmino(object.ids);
+    }
+    return message;
   },
   toAmino(message: BeamProductReview_BeamProduct): BeamProductReview_BeamProductAmino {
     const obj: any = {};
@@ -1721,12 +1821,12 @@ export const BeamProductReview_BeamProduct_BeamProductIds = {
     return message;
   },
   fromAmino(object: BeamProductReview_BeamProduct_BeamProductIdsAmino): BeamProductReview_BeamProduct_BeamProductIds {
-    return {
-      gtins: Array.isArray(object?.gtins) ? object.gtins.map((e: any) => e) : [],
-      mpns: Array.isArray(object?.mpns) ? object.mpns.map((e: any) => e) : [],
-      skus: Array.isArray(object?.skus) ? object.skus.map((e: any) => e) : [],
-      asins: Array.isArray(object?.asins) ? object.asins.map((e: any) => e) : []
-    };
+    const message = createBaseBeamProductReview_BeamProduct_BeamProductIds();
+    message.gtins = object.gtins?.map(e => e) || [];
+    message.mpns = object.mpns?.map(e => e) || [];
+    message.skus = object.skus?.map(e => e) || [];
+    message.asins = object.asins?.map(e => e) || [];
+    return message;
   },
   toAmino(message: BeamProductReview_BeamProduct_BeamProductIds): BeamProductReview_BeamProduct_BeamProductIdsAmino {
     const obj: any = {};
@@ -1836,13 +1936,21 @@ export const BeamData = {
     return message;
   },
   fromAmino(object: BeamDataAmino): BeamData {
-    return {
-      reward: object?.reward ? BeamReward.fromAmino(object.reward) : undefined,
-      verifier: object?.verifier ? BeamVerifier.fromAmino(object.verifier) : undefined,
-      reviewer: object?.reviewer ? BeamReviewer.fromAmino(object.reviewer) : undefined,
-      merchantReview: object?.merchant_review ? BeamMerchantReview.fromAmino(object.merchant_review) : undefined,
-      productsReviews: Array.isArray(object?.products_reviews) ? object.products_reviews.map((e: any) => BeamProductReview.fromAmino(e)) : []
-    };
+    const message = createBaseBeamData();
+    if (object.reward !== undefined && object.reward !== null) {
+      message.reward = BeamReward.fromAmino(object.reward);
+    }
+    if (object.verifier !== undefined && object.verifier !== null) {
+      message.verifier = BeamVerifier.fromAmino(object.verifier);
+    }
+    if (object.reviewer !== undefined && object.reviewer !== null) {
+      message.reviewer = BeamReviewer.fromAmino(object.reviewer);
+    }
+    if (object.merchant_review !== undefined && object.merchant_review !== null) {
+      message.merchantReview = BeamMerchantReview.fromAmino(object.merchant_review);
+    }
+    message.productsReviews = object.products_reviews?.map(e => BeamProductReview.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: BeamData): BeamDataAmino {
     const obj: any = {};
@@ -2029,24 +2137,56 @@ export const Beam = {
     return message;
   },
   fromAmino(object: BeamAmino): Beam {
-    return {
-      creatorAddress: object.creator_address,
-      id: object.id,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      status: isSet(object.status) ? beamStateFromJSON(object.status) : -1,
-      secret: object.secret,
-      claimAddress: object.claim_address,
-      fundsWithdrawn: object.funds_withdrawn,
-      claimed: object.claimed,
-      cancelReason: object.cancel_reason,
-      hideContent: object.hide_content,
-      schema: object.schema,
-      data: object?.data ? BeamData.fromAmino(object.data) : undefined,
-      claimExpiresAtBlock: object.claim_expires_at_block,
-      closesAtBlock: object.closes_at_block,
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
-      closedAt: object?.closed_at ? fromTimestamp(Timestamp.fromAmino(object.closed_at)) : undefined
-    };
+    const message = createBaseBeam();
+    if (object.creator_address !== undefined && object.creator_address !== null) {
+      message.creatorAddress = object.creator_address;
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = beamStateFromJSON(object.status);
+    }
+    if (object.secret !== undefined && object.secret !== null) {
+      message.secret = object.secret;
+    }
+    if (object.claim_address !== undefined && object.claim_address !== null) {
+      message.claimAddress = object.claim_address;
+    }
+    if (object.funds_withdrawn !== undefined && object.funds_withdrawn !== null) {
+      message.fundsWithdrawn = object.funds_withdrawn;
+    }
+    if (object.claimed !== undefined && object.claimed !== null) {
+      message.claimed = object.claimed;
+    }
+    if (object.cancel_reason !== undefined && object.cancel_reason !== null) {
+      message.cancelReason = object.cancel_reason;
+    }
+    if (object.hide_content !== undefined && object.hide_content !== null) {
+      message.hideContent = object.hide_content;
+    }
+    if (object.schema !== undefined && object.schema !== null) {
+      message.schema = object.schema;
+    }
+    if (object.data !== undefined && object.data !== null) {
+      message.data = BeamData.fromAmino(object.data);
+    }
+    if (object.claim_expires_at_block !== undefined && object.claim_expires_at_block !== null) {
+      message.claimExpiresAtBlock = object.claim_expires_at_block;
+    }
+    if (object.closes_at_block !== undefined && object.closes_at_block !== null) {
+      message.closesAtBlock = object.closes_at_block;
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    if (object.closed_at !== undefined && object.closed_at !== null) {
+      message.closedAt = fromTimestamp(Timestamp.fromAmino(object.closed_at));
+    }
+    return message;
   },
   toAmino(message: Beam): BeamAmino {
     const obj: any = {};

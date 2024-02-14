@@ -1,4 +1,5 @@
 import { BinaryReader, BinaryWriter } from "../../binary";
+import { bytesFromBase64, base64FromBytes } from "../../helpers";
 /**
  * Wrapper message for `double`.
  * 
@@ -19,7 +20,7 @@ export interface DoubleValueProtoMsg {
  */
 export interface DoubleValueAmino {
   /** The double value. */
-  value: number;
+  value?: number;
 }
 export interface DoubleValueAminoMsg {
   type: "/google.protobuf.DoubleValue";
@@ -53,7 +54,7 @@ export interface FloatValueProtoMsg {
  */
 export interface FloatValueAmino {
   /** The float value. */
-  value: number;
+  value?: number;
 }
 export interface FloatValueAminoMsg {
   type: "/google.protobuf.FloatValue";
@@ -87,7 +88,7 @@ export interface Int64ValueProtoMsg {
  */
 export interface Int64ValueAmino {
   /** The int64 value. */
-  value: string;
+  value?: string;
 }
 export interface Int64ValueAminoMsg {
   type: "/google.protobuf.Int64Value";
@@ -121,7 +122,7 @@ export interface UInt64ValueProtoMsg {
  */
 export interface UInt64ValueAmino {
   /** The uint64 value. */
-  value: string;
+  value?: string;
 }
 export interface UInt64ValueAminoMsg {
   type: "/google.protobuf.UInt64Value";
@@ -155,7 +156,7 @@ export interface Int32ValueProtoMsg {
  */
 export interface Int32ValueAmino {
   /** The int32 value. */
-  value: number;
+  value?: number;
 }
 export interface Int32ValueAminoMsg {
   type: "/google.protobuf.Int32Value";
@@ -189,7 +190,7 @@ export interface UInt32ValueProtoMsg {
  */
 export interface UInt32ValueAmino {
   /** The uint32 value. */
-  value: number;
+  value?: number;
 }
 export interface UInt32ValueAminoMsg {
   type: "/google.protobuf.UInt32Value";
@@ -223,7 +224,7 @@ export interface BoolValueProtoMsg {
  */
 export interface BoolValueAmino {
   /** The bool value. */
-  value: boolean;
+  value?: boolean;
 }
 export interface BoolValueAminoMsg {
   type: "/google.protobuf.BoolValue";
@@ -257,7 +258,7 @@ export interface StringValueProtoMsg {
  */
 export interface StringValueAmino {
   /** The string value. */
-  value: string;
+  value?: string;
 }
 export interface StringValueAminoMsg {
   type: "/google.protobuf.StringValue";
@@ -291,7 +292,7 @@ export interface BytesValueProtoMsg {
  */
 export interface BytesValueAmino {
   /** The bytes value. */
-  value: Uint8Array;
+  value?: string;
 }
 export interface BytesValueAminoMsg {
   type: "/google.protobuf.BytesValue";
@@ -341,9 +342,11 @@ export const DoubleValue = {
     return message;
   },
   fromAmino(object: DoubleValueAmino): DoubleValue {
-    return {
-      value: object.value
-    };
+    const message = createBaseDoubleValue();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
+    return message;
   },
   toAmino(message: DoubleValue): DoubleValueAmino {
     const obj: any = {};
@@ -402,9 +405,11 @@ export const FloatValue = {
     return message;
   },
   fromAmino(object: FloatValueAmino): FloatValue {
-    return {
-      value: object.value
-    };
+    const message = createBaseFloatValue();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
+    return message;
   },
   toAmino(message: FloatValue): FloatValueAmino {
     const obj: any = {};
@@ -463,9 +468,11 @@ export const Int64Value = {
     return message;
   },
   fromAmino(object: Int64ValueAmino): Int64Value {
-    return {
-      value: BigInt(object.value)
-    };
+    const message = createBaseInt64Value();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = BigInt(object.value);
+    }
+    return message;
   },
   toAmino(message: Int64Value): Int64ValueAmino {
     const obj: any = {};
@@ -524,9 +531,11 @@ export const UInt64Value = {
     return message;
   },
   fromAmino(object: UInt64ValueAmino): UInt64Value {
-    return {
-      value: BigInt(object.value)
-    };
+    const message = createBaseUInt64Value();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = BigInt(object.value);
+    }
+    return message;
   },
   toAmino(message: UInt64Value): UInt64ValueAmino {
     const obj: any = {};
@@ -585,9 +594,11 @@ export const Int32Value = {
     return message;
   },
   fromAmino(object: Int32ValueAmino): Int32Value {
-    return {
-      value: object.value
-    };
+    const message = createBaseInt32Value();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
+    return message;
   },
   toAmino(message: Int32Value): Int32ValueAmino {
     const obj: any = {};
@@ -646,9 +657,11 @@ export const UInt32Value = {
     return message;
   },
   fromAmino(object: UInt32ValueAmino): UInt32Value {
-    return {
-      value: object.value
-    };
+    const message = createBaseUInt32Value();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
+    return message;
   },
   toAmino(message: UInt32Value): UInt32ValueAmino {
     const obj: any = {};
@@ -707,9 +720,11 @@ export const BoolValue = {
     return message;
   },
   fromAmino(object: BoolValueAmino): BoolValue {
-    return {
-      value: object.value
-    };
+    const message = createBaseBoolValue();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
+    return message;
   },
   toAmino(message: BoolValue): BoolValueAmino {
     const obj: any = {};
@@ -768,9 +783,11 @@ export const StringValue = {
     return message;
   },
   fromAmino(object: StringValueAmino): StringValue {
-    return {
-      value: object.value
-    };
+    const message = createBaseStringValue();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
+    return message;
   },
   toAmino(message: StringValue): StringValueAmino {
     const obj: any = {};
@@ -829,13 +846,15 @@ export const BytesValue = {
     return message;
   },
   fromAmino(object: BytesValueAmino): BytesValue {
-    return {
-      value: object.value
-    };
+    const message = createBaseBytesValue();
+    if (object.value !== undefined && object.value !== null) {
+      message.value = bytesFromBase64(object.value);
+    }
+    return message;
   },
   toAmino(message: BytesValue): BytesValueAmino {
     const obj: any = {};
-    obj.value = message.value;
+    obj.value = message.value ? base64FromBytes(message.value) : undefined;
     return obj;
   },
   fromAminoMsg(object: BytesValueAminoMsg): BytesValue {

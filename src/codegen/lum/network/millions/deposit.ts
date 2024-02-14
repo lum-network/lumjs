@@ -1,7 +1,7 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 export enum DepositState {
   DEPOSIT_STATE_UNSPECIFIED = 0,
   DEPOSIT_STATE_IBC_TRANSFER = 1,
@@ -71,16 +71,16 @@ export interface DepositProtoMsg {
   value: Uint8Array;
 }
 export interface DepositAmino {
-  pool_id: string;
-  deposit_id: string;
-  state: DepositState;
-  error_state: DepositState;
-  depositor_address: string;
+  pool_id?: string;
+  deposit_id?: string;
+  state?: DepositState;
+  error_state?: DepositState;
+  depositor_address?: string;
   amount?: CoinAmino | undefined;
-  winner_address: string;
-  is_sponsor: boolean;
-  created_at_height: string;
-  updated_at_height: string;
+  winner_address?: string;
+  is_sponsor?: boolean;
+  created_at_height?: string;
+  updated_at_height?: string;
   created_at?: string | undefined;
   updated_at?: string | undefined;
 }
@@ -226,20 +226,44 @@ export const Deposit = {
     return message;
   },
   fromAmino(object: DepositAmino): Deposit {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id),
-      state: isSet(object.state) ? depositStateFromJSON(object.state) : -1,
-      errorState: isSet(object.error_state) ? depositStateFromJSON(object.error_state) : -1,
-      depositorAddress: object.depositor_address,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      winnerAddress: object.winner_address,
-      isSponsor: object.is_sponsor,
-      createdAtHeight: BigInt(object.created_at_height),
-      updatedAtHeight: BigInt(object.updated_at_height),
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
-      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
-    };
+    const message = createBaseDeposit();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = depositStateFromJSON(object.state);
+    }
+    if (object.error_state !== undefined && object.error_state !== null) {
+      message.errorState = depositStateFromJSON(object.error_state);
+    }
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.is_sponsor !== undefined && object.is_sponsor !== null) {
+      message.isSponsor = object.is_sponsor;
+    }
+    if (object.created_at_height !== undefined && object.created_at_height !== null) {
+      message.createdAtHeight = BigInt(object.created_at_height);
+    }
+    if (object.updated_at_height !== undefined && object.updated_at_height !== null) {
+      message.updatedAtHeight = BigInt(object.updated_at_height);
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    if (object.updated_at !== undefined && object.updated_at !== null) {
+      message.updatedAt = fromTimestamp(Timestamp.fromAmino(object.updated_at));
+    }
+    return message;
   },
   toAmino(message: Deposit): DepositAmino {
     const obj: any = {};

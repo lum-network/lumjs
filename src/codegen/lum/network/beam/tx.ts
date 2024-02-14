@@ -1,7 +1,6 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { BeamData, BeamDataAmino, BeamDataSDKType, BeamState, beamStateFromJSON } from "./beam";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { isSet } from "../../../helpers";
 export interface MsgOpenBeam {
   id: string;
   creatorAddress: string;
@@ -18,15 +17,15 @@ export interface MsgOpenBeamProtoMsg {
   value: Uint8Array;
 }
 export interface MsgOpenBeamAmino {
-  id: string;
-  creator_address: string;
-  secret: string;
+  id?: string;
+  creator_address?: string;
+  secret?: string;
   amount?: CoinAmino | undefined;
-  schema: string;
+  schema?: string;
   data?: BeamDataAmino | undefined;
-  claim_address: string;
-  claim_expires_at_block: number;
-  closes_at_block: number;
+  claim_address?: string;
+  claim_expires_at_block?: number;
+  closes_at_block?: number;
 }
 export interface MsgOpenBeamAminoMsg {
   type: "/lum.network.beam.MsgOpenBeam";
@@ -71,16 +70,16 @@ export interface MsgUpdateBeamProtoMsg {
   value: Uint8Array;
 }
 export interface MsgUpdateBeamAmino {
-  id: string;
-  updater_address: string;
+  id?: string;
+  updater_address?: string;
   amount?: CoinAmino | undefined;
-  status: BeamState;
-  cancel_reason: string;
-  hide_content: boolean;
+  status?: BeamState;
+  cancel_reason?: string;
+  hide_content?: boolean;
   data?: BeamDataAmino | undefined;
-  claim_address: string;
-  claim_expires_at_block: number;
-  closes_at_block: number;
+  claim_address?: string;
+  claim_expires_at_block?: number;
+  closes_at_block?: number;
 }
 export interface MsgUpdateBeamAminoMsg {
   type: "/lum.network.beam.MsgUpdateBeam";
@@ -119,9 +118,9 @@ export interface MsgClaimBeamProtoMsg {
   value: Uint8Array;
 }
 export interface MsgClaimBeamAmino {
-  id: string;
-  claimer_address: string;
-  secret: string;
+  id?: string;
+  claimer_address?: string;
+  secret?: string;
 }
 export interface MsgClaimBeamAminoMsg {
   type: "/lum.network.beam.MsgClaimBeam";
@@ -243,17 +242,35 @@ export const MsgOpenBeam = {
     return message;
   },
   fromAmino(object: MsgOpenBeamAmino): MsgOpenBeam {
-    return {
-      id: object.id,
-      creatorAddress: object.creator_address,
-      secret: object.secret,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      schema: object.schema,
-      data: object?.data ? BeamData.fromAmino(object.data) : undefined,
-      claimAddress: object.claim_address,
-      claimExpiresAtBlock: object.claim_expires_at_block,
-      closesAtBlock: object.closes_at_block
-    };
+    const message = createBaseMsgOpenBeam();
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    if (object.creator_address !== undefined && object.creator_address !== null) {
+      message.creatorAddress = object.creator_address;
+    }
+    if (object.secret !== undefined && object.secret !== null) {
+      message.secret = object.secret;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.schema !== undefined && object.schema !== null) {
+      message.schema = object.schema;
+    }
+    if (object.data !== undefined && object.data !== null) {
+      message.data = BeamData.fromAmino(object.data);
+    }
+    if (object.claim_address !== undefined && object.claim_address !== null) {
+      message.claimAddress = object.claim_address;
+    }
+    if (object.claim_expires_at_block !== undefined && object.claim_expires_at_block !== null) {
+      message.claimExpiresAtBlock = object.claim_expires_at_block;
+    }
+    if (object.closes_at_block !== undefined && object.closes_at_block !== null) {
+      message.closesAtBlock = object.closes_at_block;
+    }
+    return message;
   },
   toAmino(message: MsgOpenBeam): MsgOpenBeamAmino {
     const obj: any = {};
@@ -311,7 +328,8 @@ export const MsgOpenBeamResponse = {
     return message;
   },
   fromAmino(_: MsgOpenBeamResponseAmino): MsgOpenBeamResponse {
-    return {};
+    const message = createBaseMsgOpenBeamResponse();
+    return message;
   },
   toAmino(_: MsgOpenBeamResponse): MsgOpenBeamResponseAmino {
     const obj: any = {};
@@ -441,18 +459,38 @@ export const MsgUpdateBeam = {
     return message;
   },
   fromAmino(object: MsgUpdateBeamAmino): MsgUpdateBeam {
-    return {
-      id: object.id,
-      updaterAddress: object.updater_address,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      status: isSet(object.status) ? beamStateFromJSON(object.status) : -1,
-      cancelReason: object.cancel_reason,
-      hideContent: object.hide_content,
-      data: object?.data ? BeamData.fromAmino(object.data) : undefined,
-      claimAddress: object.claim_address,
-      claimExpiresAtBlock: object.claim_expires_at_block,
-      closesAtBlock: object.closes_at_block
-    };
+    const message = createBaseMsgUpdateBeam();
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    if (object.updater_address !== undefined && object.updater_address !== null) {
+      message.updaterAddress = object.updater_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = beamStateFromJSON(object.status);
+    }
+    if (object.cancel_reason !== undefined && object.cancel_reason !== null) {
+      message.cancelReason = object.cancel_reason;
+    }
+    if (object.hide_content !== undefined && object.hide_content !== null) {
+      message.hideContent = object.hide_content;
+    }
+    if (object.data !== undefined && object.data !== null) {
+      message.data = BeamData.fromAmino(object.data);
+    }
+    if (object.claim_address !== undefined && object.claim_address !== null) {
+      message.claimAddress = object.claim_address;
+    }
+    if (object.claim_expires_at_block !== undefined && object.claim_expires_at_block !== null) {
+      message.claimExpiresAtBlock = object.claim_expires_at_block;
+    }
+    if (object.closes_at_block !== undefined && object.closes_at_block !== null) {
+      message.closesAtBlock = object.closes_at_block;
+    }
+    return message;
   },
   toAmino(message: MsgUpdateBeam): MsgUpdateBeamAmino {
     const obj: any = {};
@@ -511,7 +549,8 @@ export const MsgUpdateBeamResponse = {
     return message;
   },
   fromAmino(_: MsgUpdateBeamResponseAmino): MsgUpdateBeamResponse {
-    return {};
+    const message = createBaseMsgUpdateBeamResponse();
+    return message;
   },
   toAmino(_: MsgUpdateBeamResponse): MsgUpdateBeamResponseAmino {
     const obj: any = {};
@@ -585,11 +624,17 @@ export const MsgClaimBeam = {
     return message;
   },
   fromAmino(object: MsgClaimBeamAmino): MsgClaimBeam {
-    return {
-      id: object.id,
-      claimerAddress: object.claimer_address,
-      secret: object.secret
-    };
+    const message = createBaseMsgClaimBeam();
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    if (object.claimer_address !== undefined && object.claimer_address !== null) {
+      message.claimerAddress = object.claimer_address;
+    }
+    if (object.secret !== undefined && object.secret !== null) {
+      message.secret = object.secret;
+    }
+    return message;
   },
   toAmino(message: MsgClaimBeam): MsgClaimBeamAmino {
     const obj: any = {};
@@ -641,7 +686,8 @@ export const MsgClaimBeamResponse = {
     return message;
   },
   fromAmino(_: MsgClaimBeamResponseAmino): MsgClaimBeamResponse {
-    return {};
+    const message = createBaseMsgClaimBeamResponse();
+    return message;
   },
   toAmino(_: MsgClaimBeamResponse): MsgClaimBeamResponseAmino {
     const obj: any = {};

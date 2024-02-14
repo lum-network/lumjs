@@ -66,10 +66,14 @@ export const DrawSchedule = {
     return message;
   },
   fromAmino(object: DrawScheduleAmino): DrawSchedule {
-    return {
-      initialDrawAt: object?.initial_draw_at ? fromTimestamp(Timestamp.fromAmino(object.initial_draw_at)) : undefined,
-      drawDelta: object?.draw_delta ? Duration.fromAmino(object.draw_delta) : undefined
-    };
+    const message = createBaseDrawSchedule();
+    if (object.initial_draw_at !== undefined && object.initial_draw_at !== null) {
+      message.initialDrawAt = fromTimestamp(Timestamp.fromAmino(object.initial_draw_at));
+    }
+    if (object.draw_delta !== undefined && object.draw_delta !== null) {
+      message.drawDelta = Duration.fromAmino(object.draw_delta);
+    }
+    return message;
   },
   toAmino(message: DrawSchedule): DrawScheduleAmino {
     const obj: any = {};

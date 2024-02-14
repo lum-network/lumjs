@@ -46,7 +46,7 @@ export interface QueryGetCallbackDataRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetCallbackDataRequestAmino {
-  callback_key: string;
+  callback_key?: string;
 }
 export interface QueryGetCallbackDataRequestAminoMsg {
   type: "/lum.network.icacallbacks.QueryGetCallbackDataRequest";
@@ -98,7 +98,7 @@ export interface QueryAllCallbackDataResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllCallbackDataResponseAmino {
-  callback_data: CallbackDataAmino[];
+  callback_data?: CallbackDataAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryAllCallbackDataResponseAminoMsg {
@@ -136,7 +136,8 @@ export const QueryParamsRequest = {
     return message;
   },
   fromAmino(_: QueryParamsRequestAmino): QueryParamsRequest {
-    return {};
+    const message = createBaseQueryParamsRequest();
+    return message;
   },
   toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
     const obj: any = {};
@@ -194,9 +195,11 @@ export const QueryParamsResponse = {
     return message;
   },
   fromAmino(object: QueryParamsResponseAmino): QueryParamsResponse {
-    return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined
-    };
+    const message = createBaseQueryParamsResponse();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    return message;
   },
   toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
     const obj: any = {};
@@ -255,9 +258,11 @@ export const QueryGetCallbackDataRequest = {
     return message;
   },
   fromAmino(object: QueryGetCallbackDataRequestAmino): QueryGetCallbackDataRequest {
-    return {
-      callbackKey: object.callback_key
-    };
+    const message = createBaseQueryGetCallbackDataRequest();
+    if (object.callback_key !== undefined && object.callback_key !== null) {
+      message.callbackKey = object.callback_key;
+    }
+    return message;
   },
   toAmino(message: QueryGetCallbackDataRequest): QueryGetCallbackDataRequestAmino {
     const obj: any = {};
@@ -316,9 +321,11 @@ export const QueryGetCallbackDataResponse = {
     return message;
   },
   fromAmino(object: QueryGetCallbackDataResponseAmino): QueryGetCallbackDataResponse {
-    return {
-      callbackData: object?.callback_data ? CallbackData.fromAmino(object.callback_data) : undefined
-    };
+    const message = createBaseQueryGetCallbackDataResponse();
+    if (object.callback_data !== undefined && object.callback_data !== null) {
+      message.callbackData = CallbackData.fromAmino(object.callback_data);
+    }
+    return message;
   },
   toAmino(message: QueryGetCallbackDataResponse): QueryGetCallbackDataResponseAmino {
     const obj: any = {};
@@ -377,9 +384,11 @@ export const QueryAllCallbackDataRequest = {
     return message;
   },
   fromAmino(object: QueryAllCallbackDataRequestAmino): QueryAllCallbackDataRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAllCallbackDataRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAllCallbackDataRequest): QueryAllCallbackDataRequestAmino {
     const obj: any = {};
@@ -446,10 +455,12 @@ export const QueryAllCallbackDataResponse = {
     return message;
   },
   fromAmino(object: QueryAllCallbackDataResponseAmino): QueryAllCallbackDataResponse {
-    return {
-      callbackData: Array.isArray(object?.callback_data) ? object.callback_data.map((e: any) => CallbackData.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAllCallbackDataResponse();
+    message.callbackData = object.callback_data?.map(e => CallbackData.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAllCallbackDataResponse): QueryAllCallbackDataResponseAmino {
     const obj: any = {};

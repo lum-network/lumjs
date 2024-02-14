@@ -9,9 +9,9 @@ export interface PrizeRefProtoMsg {
   value: Uint8Array;
 }
 export interface PrizeRefAmino {
-  amount: string;
-  prize_id: string;
-  winner_address: string;
+  amount?: string;
+  prize_id?: string;
+  winner_address?: string;
 }
 export interface PrizeRefAminoMsg {
   type: "/lum.network.millions.PrizeRef";
@@ -74,11 +74,17 @@ export const PrizeRef = {
     return message;
   },
   fromAmino(object: PrizeRefAmino): PrizeRef {
-    return {
-      amount: object.amount,
-      prizeId: object?.prize_id ? BigInt(object.prize_id) : undefined,
-      winnerAddress: object?.winner_address
-    };
+    const message = createBasePrizeRef();
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = object.amount;
+    }
+    if (object.prize_id !== undefined && object.prize_id !== null) {
+      message.prizeId = BigInt(object.prize_id);
+    }
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    return message;
   },
   toAmino(message: PrizeRef): PrizeRefAmino {
     const obj: any = {};

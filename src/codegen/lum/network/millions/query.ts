@@ -60,7 +60,7 @@ export interface QueryPoolsResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolsResponseAmino {
-  pools: PoolAmino[];
+  pools?: PoolAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryPoolsResponseAminoMsg {
@@ -79,7 +79,7 @@ export interface QueryPoolRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolRequestAmino {
-  pool_id: string;
+  pool_id?: string;
 }
 export interface QueryPoolRequestAminoMsg {
   type: "/lum.network.millions.QueryPoolRequest";
@@ -131,7 +131,7 @@ export interface QueryDepositsResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryDepositsResponseAmino {
-  deposits: DepositAmino[];
+  deposits?: DepositAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryDepositsResponseAminoMsg {
@@ -168,8 +168,8 @@ export interface QueryPoolDepositRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolDepositRequestAmino {
-  pool_id: string;
-  deposit_id: string;
+  pool_id?: string;
+  deposit_id?: string;
 }
 export interface QueryPoolDepositRequestAminoMsg {
   type: "/lum.network.millions.QueryPoolDepositRequest";
@@ -188,7 +188,7 @@ export interface QueryPoolDepositsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolDepositsRequestAmino {
-  pool_id: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryPoolDepositsRequestAminoMsg {
@@ -208,7 +208,7 @@ export interface QueryAccountDepositsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountDepositsRequestAmino {
-  depositor_address: string;
+  depositor_address?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountDepositsRequestAminoMsg {
@@ -229,8 +229,8 @@ export interface QueryAccountPoolDepositsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountPoolDepositsRequestAmino {
-  depositor_address: string;
-  pool_id: string;
+  depositor_address?: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountPoolDepositsRequestAminoMsg {
@@ -268,7 +268,7 @@ export interface QueryDrawsResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryDrawsResponseAmino {
-  draws: DrawAmino[];
+  draws?: DrawAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryDrawsResponseAminoMsg {
@@ -305,7 +305,7 @@ export interface QueryPoolDrawsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolDrawsRequestAmino {
-  pool_id: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryPoolDrawsRequestAminoMsg {
@@ -325,8 +325,8 @@ export interface QueryPoolDrawRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolDrawRequestAmino {
-  pool_id: string;
-  draw_id: string;
+  pool_id?: string;
+  draw_id?: string;
 }
 export interface QueryPoolDrawRequestAminoMsg {
   type: "/lum.network.millions.QueryPoolDrawRequest";
@@ -362,7 +362,7 @@ export interface QueryPrizesResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPrizesResponseAmino {
-  prizes: PrizeAmino[];
+  prizes?: PrizeAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryPrizesResponseAminoMsg {
@@ -383,9 +383,9 @@ export interface QueryPoolDrawPrizeRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolDrawPrizeRequestAmino {
-  pool_id: string;
-  draw_id: string;
-  prize_id: string;
+  pool_id?: string;
+  draw_id?: string;
+  prize_id?: string;
 }
 export interface QueryPoolDrawPrizeRequestAminoMsg {
   type: "/lum.network.millions.QueryPoolDrawPrizeRequest";
@@ -422,7 +422,7 @@ export interface QueryPoolPrizesRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolPrizesRequestAmino {
-  pool_id: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryPoolPrizesRequestAminoMsg {
@@ -443,8 +443,8 @@ export interface QueryPoolDrawPrizesRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolDrawPrizesRequestAmino {
-  pool_id: string;
-  draw_id: string;
+  pool_id?: string;
+  draw_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryPoolDrawPrizesRequestAminoMsg {
@@ -465,7 +465,7 @@ export interface QueryAccountPrizesRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountPrizesRequestAmino {
-  winner_address: string;
+  winner_address?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountPrizesRequestAminoMsg {
@@ -486,8 +486,8 @@ export interface QueryAccountPoolPrizesRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountPoolPrizesRequestAmino {
-  winner_address: string;
-  pool_id: string;
+  winner_address?: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountPoolPrizesRequestAminoMsg {
@@ -510,9 +510,9 @@ export interface QueryAccountPoolDrawPrizesRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountPoolDrawPrizesRequestAmino {
-  winner_address: string;
-  pool_id: string;
-  draw_id: string;
+  winner_address?: string;
+  pool_id?: string;
+  draw_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountPoolDrawPrizesRequestAminoMsg {
@@ -551,7 +551,7 @@ export interface QueryWithdrawalsResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryWithdrawalsResponseAmino {
-  withdrawals: WithdrawalAmino[];
+  withdrawals?: WithdrawalAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryWithdrawalsResponseAminoMsg {
@@ -571,8 +571,8 @@ export interface QueryPoolWithdrawalRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolWithdrawalRequestAmino {
-  pool_id: string;
-  withdrawal_id: string;
+  pool_id?: string;
+  withdrawal_id?: string;
 }
 export interface QueryPoolWithdrawalRequestAminoMsg {
   type: "/lum.network.millions.QueryPoolWithdrawalRequest";
@@ -608,7 +608,7 @@ export interface QueryPoolWithdrawalsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryPoolWithdrawalsRequestAmino {
-  pool_id: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryPoolWithdrawalsRequestAminoMsg {
@@ -628,7 +628,7 @@ export interface QueryAccountWithdrawalsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountWithdrawalsRequestAmino {
-  depositor_address: string;
+  depositor_address?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountWithdrawalsRequestAminoMsg {
@@ -649,8 +649,8 @@ export interface QueryAccountPoolWithdrawalsRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAccountPoolWithdrawalsRequestAmino {
-  depositor_address: string;
-  pool_id: string;
+  depositor_address?: string;
+  pool_id?: string;
   pagination?: PageRequestAmino | undefined;
 }
 export interface QueryAccountPoolWithdrawalsRequestAminoMsg {
@@ -698,9 +698,11 @@ export const QueryParamsResponse = {
     return message;
   },
   fromAmino(object: QueryParamsResponseAmino): QueryParamsResponse {
-    return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined
-    };
+    const message = createBaseQueryParamsResponse();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    return message;
   },
   toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
     const obj: any = {};
@@ -750,7 +752,8 @@ export const QueryParamsRequest = {
     return message;
   },
   fromAmino(_: QueryParamsRequestAmino): QueryParamsRequest {
-    return {};
+    const message = createBaseQueryParamsRequest();
+    return message;
   },
   toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
     const obj: any = {};
@@ -808,9 +811,11 @@ export const QueryPoolResponse = {
     return message;
   },
   fromAmino(object: QueryPoolResponseAmino): QueryPoolResponse {
-    return {
-      pool: object?.pool ? Pool.fromAmino(object.pool) : undefined
-    };
+    const message = createBaseQueryPoolResponse();
+    if (object.pool !== undefined && object.pool !== null) {
+      message.pool = Pool.fromAmino(object.pool);
+    }
+    return message;
   },
   toAmino(message: QueryPoolResponse): QueryPoolResponseAmino {
     const obj: any = {};
@@ -877,10 +882,12 @@ export const QueryPoolsResponse = {
     return message;
   },
   fromAmino(object: QueryPoolsResponseAmino): QueryPoolsResponse {
-    return {
-      pools: Array.isArray(object?.pools) ? object.pools.map((e: any) => Pool.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolsResponse();
+    message.pools = object.pools?.map(e => Pool.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolsResponse): QueryPoolsResponseAmino {
     const obj: any = {};
@@ -944,9 +951,11 @@ export const QueryPoolRequest = {
     return message;
   },
   fromAmino(object: QueryPoolRequestAmino): QueryPoolRequest {
-    return {
-      poolId: BigInt(object.pool_id)
-    };
+    const message = createBaseQueryPoolRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    return message;
   },
   toAmino(message: QueryPoolRequest): QueryPoolRequestAmino {
     const obj: any = {};
@@ -1005,9 +1014,11 @@ export const QueryPoolsRequest = {
     return message;
   },
   fromAmino(object: QueryPoolsRequestAmino): QueryPoolsRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolsRequest): QueryPoolsRequestAmino {
     const obj: any = {};
@@ -1066,9 +1077,11 @@ export const QueryDepositResponse = {
     return message;
   },
   fromAmino(object: QueryDepositResponseAmino): QueryDepositResponse {
-    return {
-      deposit: object?.deposit ? Deposit.fromAmino(object.deposit) : undefined
-    };
+    const message = createBaseQueryDepositResponse();
+    if (object.deposit !== undefined && object.deposit !== null) {
+      message.deposit = Deposit.fromAmino(object.deposit);
+    }
+    return message;
   },
   toAmino(message: QueryDepositResponse): QueryDepositResponseAmino {
     const obj: any = {};
@@ -1135,10 +1148,12 @@ export const QueryDepositsResponse = {
     return message;
   },
   fromAmino(object: QueryDepositsResponseAmino): QueryDepositsResponse {
-    return {
-      deposits: Array.isArray(object?.deposits) ? object.deposits.map((e: any) => Deposit.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryDepositsResponse();
+    message.deposits = object.deposits?.map(e => Deposit.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryDepositsResponse): QueryDepositsResponseAmino {
     const obj: any = {};
@@ -1202,9 +1217,11 @@ export const QueryDepositsRequest = {
     return message;
   },
   fromAmino(object: QueryDepositsRequestAmino): QueryDepositsRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryDepositsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryDepositsRequest): QueryDepositsRequestAmino {
     const obj: any = {};
@@ -1271,10 +1288,14 @@ export const QueryPoolDepositRequest = {
     return message;
   },
   fromAmino(object: QueryPoolDepositRequestAmino): QueryPoolDepositRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id)
-    };
+    const message = createBaseQueryPoolDepositRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    return message;
   },
   toAmino(message: QueryPoolDepositRequest): QueryPoolDepositRequestAmino {
     const obj: any = {};
@@ -1342,10 +1363,14 @@ export const QueryPoolDepositsRequest = {
     return message;
   },
   fromAmino(object: QueryPoolDepositsRequestAmino): QueryPoolDepositsRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolDepositsRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolDepositsRequest): QueryPoolDepositsRequestAmino {
     const obj: any = {};
@@ -1413,10 +1438,14 @@ export const QueryAccountDepositsRequest = {
     return message;
   },
   fromAmino(object: QueryAccountDepositsRequestAmino): QueryAccountDepositsRequest {
-    return {
-      depositorAddress: object.depositor_address,
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountDepositsRequest();
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountDepositsRequest): QueryAccountDepositsRequestAmino {
     const obj: any = {};
@@ -1492,11 +1521,17 @@ export const QueryAccountPoolDepositsRequest = {
     return message;
   },
   fromAmino(object: QueryAccountPoolDepositsRequestAmino): QueryAccountPoolDepositsRequest {
-    return {
-      depositorAddress: object.depositor_address,
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountPoolDepositsRequest();
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountPoolDepositsRequest): QueryAccountPoolDepositsRequestAmino {
     const obj: any = {};
@@ -1557,9 +1592,11 @@ export const QueryDrawResponse = {
     return message;
   },
   fromAmino(object: QueryDrawResponseAmino): QueryDrawResponse {
-    return {
-      draw: object?.draw ? Draw.fromAmino(object.draw) : undefined
-    };
+    const message = createBaseQueryDrawResponse();
+    if (object.draw !== undefined && object.draw !== null) {
+      message.draw = Draw.fromAmino(object.draw);
+    }
+    return message;
   },
   toAmino(message: QueryDrawResponse): QueryDrawResponseAmino {
     const obj: any = {};
@@ -1626,10 +1663,12 @@ export const QueryDrawsResponse = {
     return message;
   },
   fromAmino(object: QueryDrawsResponseAmino): QueryDrawsResponse {
-    return {
-      draws: Array.isArray(object?.draws) ? object.draws.map((e: any) => Draw.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryDrawsResponse();
+    message.draws = object.draws?.map(e => Draw.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryDrawsResponse): QueryDrawsResponseAmino {
     const obj: any = {};
@@ -1693,9 +1732,11 @@ export const QueryDrawsRequest = {
     return message;
   },
   fromAmino(object: QueryDrawsRequestAmino): QueryDrawsRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryDrawsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryDrawsRequest): QueryDrawsRequestAmino {
     const obj: any = {};
@@ -1762,10 +1803,14 @@ export const QueryPoolDrawsRequest = {
     return message;
   },
   fromAmino(object: QueryPoolDrawsRequestAmino): QueryPoolDrawsRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolDrawsRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolDrawsRequest): QueryPoolDrawsRequestAmino {
     const obj: any = {};
@@ -1833,10 +1878,14 @@ export const QueryPoolDrawRequest = {
     return message;
   },
   fromAmino(object: QueryPoolDrawRequestAmino): QueryPoolDrawRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id)
-    };
+    const message = createBaseQueryPoolDrawRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    return message;
   },
   toAmino(message: QueryPoolDrawRequest): QueryPoolDrawRequestAmino {
     const obj: any = {};
@@ -1896,9 +1945,11 @@ export const QueryPrizeResponse = {
     return message;
   },
   fromAmino(object: QueryPrizeResponseAmino): QueryPrizeResponse {
-    return {
-      prize: object?.prize ? Prize.fromAmino(object.prize) : undefined
-    };
+    const message = createBaseQueryPrizeResponse();
+    if (object.prize !== undefined && object.prize !== null) {
+      message.prize = Prize.fromAmino(object.prize);
+    }
+    return message;
   },
   toAmino(message: QueryPrizeResponse): QueryPrizeResponseAmino {
     const obj: any = {};
@@ -1965,10 +2016,12 @@ export const QueryPrizesResponse = {
     return message;
   },
   fromAmino(object: QueryPrizesResponseAmino): QueryPrizesResponse {
-    return {
-      prizes: Array.isArray(object?.prizes) ? object.prizes.map((e: any) => Prize.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPrizesResponse();
+    message.prizes = object.prizes?.map(e => Prize.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPrizesResponse): QueryPrizesResponseAmino {
     const obj: any = {};
@@ -2048,11 +2101,17 @@ export const QueryPoolDrawPrizeRequest = {
     return message;
   },
   fromAmino(object: QueryPoolDrawPrizeRequestAmino): QueryPoolDrawPrizeRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      prizeId: BigInt(object.prize_id)
-    };
+    const message = createBaseQueryPoolDrawPrizeRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.prize_id !== undefined && object.prize_id !== null) {
+      message.prizeId = BigInt(object.prize_id);
+    }
+    return message;
   },
   toAmino(message: QueryPoolDrawPrizeRequest): QueryPoolDrawPrizeRequestAmino {
     const obj: any = {};
@@ -2113,9 +2172,11 @@ export const QueryPrizesRequest = {
     return message;
   },
   fromAmino(object: QueryPrizesRequestAmino): QueryPrizesRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPrizesRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPrizesRequest): QueryPrizesRequestAmino {
     const obj: any = {};
@@ -2182,10 +2243,14 @@ export const QueryPoolPrizesRequest = {
     return message;
   },
   fromAmino(object: QueryPoolPrizesRequestAmino): QueryPoolPrizesRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolPrizesRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolPrizesRequest): QueryPoolPrizesRequestAmino {
     const obj: any = {};
@@ -2261,11 +2326,17 @@ export const QueryPoolDrawPrizesRequest = {
     return message;
   },
   fromAmino(object: QueryPoolDrawPrizesRequestAmino): QueryPoolDrawPrizesRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolDrawPrizesRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolDrawPrizesRequest): QueryPoolDrawPrizesRequestAmino {
     const obj: any = {};
@@ -2334,10 +2405,14 @@ export const QueryAccountPrizesRequest = {
     return message;
   },
   fromAmino(object: QueryAccountPrizesRequestAmino): QueryAccountPrizesRequest {
-    return {
-      winnerAddress: object.winner_address,
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountPrizesRequest();
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountPrizesRequest): QueryAccountPrizesRequestAmino {
     const obj: any = {};
@@ -2413,11 +2488,17 @@ export const QueryAccountPoolPrizesRequest = {
     return message;
   },
   fromAmino(object: QueryAccountPoolPrizesRequestAmino): QueryAccountPoolPrizesRequest {
-    return {
-      winnerAddress: object.winner_address,
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountPoolPrizesRequest();
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountPoolPrizesRequest): QueryAccountPoolPrizesRequestAmino {
     const obj: any = {};
@@ -2502,12 +2583,20 @@ export const QueryAccountPoolDrawPrizesRequest = {
     return message;
   },
   fromAmino(object: QueryAccountPoolDrawPrizesRequestAmino): QueryAccountPoolDrawPrizesRequest {
-    return {
-      winnerAddress: object.winner_address,
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountPoolDrawPrizesRequest();
+    if (object.winner_address !== undefined && object.winner_address !== null) {
+      message.winnerAddress = object.winner_address;
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountPoolDrawPrizesRequest): QueryAccountPoolDrawPrizesRequestAmino {
     const obj: any = {};
@@ -2569,9 +2658,11 @@ export const QueryWithdrawalResponse = {
     return message;
   },
   fromAmino(object: QueryWithdrawalResponseAmino): QueryWithdrawalResponse {
-    return {
-      withdrawal: object?.withdrawal ? Withdrawal.fromAmino(object.withdrawal) : undefined
-    };
+    const message = createBaseQueryWithdrawalResponse();
+    if (object.withdrawal !== undefined && object.withdrawal !== null) {
+      message.withdrawal = Withdrawal.fromAmino(object.withdrawal);
+    }
+    return message;
   },
   toAmino(message: QueryWithdrawalResponse): QueryWithdrawalResponseAmino {
     const obj: any = {};
@@ -2638,10 +2729,12 @@ export const QueryWithdrawalsResponse = {
     return message;
   },
   fromAmino(object: QueryWithdrawalsResponseAmino): QueryWithdrawalsResponse {
-    return {
-      withdrawals: Array.isArray(object?.withdrawals) ? object.withdrawals.map((e: any) => Withdrawal.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryWithdrawalsResponse();
+    message.withdrawals = object.withdrawals?.map(e => Withdrawal.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryWithdrawalsResponse): QueryWithdrawalsResponseAmino {
     const obj: any = {};
@@ -2713,10 +2806,14 @@ export const QueryPoolWithdrawalRequest = {
     return message;
   },
   fromAmino(object: QueryPoolWithdrawalRequestAmino): QueryPoolWithdrawalRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      withdrawalId: BigInt(object.withdrawal_id)
-    };
+    const message = createBaseQueryPoolWithdrawalRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    return message;
   },
   toAmino(message: QueryPoolWithdrawalRequest): QueryPoolWithdrawalRequestAmino {
     const obj: any = {};
@@ -2776,9 +2873,11 @@ export const QueryWithdrawalsRequest = {
     return message;
   },
   fromAmino(object: QueryWithdrawalsRequestAmino): QueryWithdrawalsRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryWithdrawalsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryWithdrawalsRequest): QueryWithdrawalsRequestAmino {
     const obj: any = {};
@@ -2845,10 +2944,14 @@ export const QueryPoolWithdrawalsRequest = {
     return message;
   },
   fromAmino(object: QueryPoolWithdrawalsRequestAmino): QueryPoolWithdrawalsRequest {
-    return {
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryPoolWithdrawalsRequest();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryPoolWithdrawalsRequest): QueryPoolWithdrawalsRequestAmino {
     const obj: any = {};
@@ -2916,10 +3019,14 @@ export const QueryAccountWithdrawalsRequest = {
     return message;
   },
   fromAmino(object: QueryAccountWithdrawalsRequestAmino): QueryAccountWithdrawalsRequest {
-    return {
-      depositorAddress: object.depositor_address,
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountWithdrawalsRequest();
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountWithdrawalsRequest): QueryAccountWithdrawalsRequestAmino {
     const obj: any = {};
@@ -2995,11 +3102,17 @@ export const QueryAccountPoolWithdrawalsRequest = {
     return message;
   },
   fromAmino(object: QueryAccountPoolWithdrawalsRequestAmino): QueryAccountPoolWithdrawalsRequest {
-    return {
-      depositorAddress: object.depositor_address,
-      poolId: BigInt(object.pool_id),
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryAccountPoolWithdrawalsRequest();
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryAccountPoolWithdrawalsRequest): QueryAccountPoolWithdrawalsRequestAmino {
     const obj: any = {};

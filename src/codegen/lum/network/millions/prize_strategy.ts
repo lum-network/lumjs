@@ -8,7 +8,7 @@ export interface PrizeStrategyProtoMsg {
   value: Uint8Array;
 }
 export interface PrizeStrategyAmino {
-  prize_batches: PrizeBatchAmino[];
+  prize_batches?: PrizeBatchAmino[];
 }
 export interface PrizeStrategyAminoMsg {
   type: "/lum.network.millions.PrizeStrategy";
@@ -53,9 +53,9 @@ export const PrizeStrategy = {
     return message;
   },
   fromAmino(object: PrizeStrategyAmino): PrizeStrategy {
-    return {
-      prizeBatches: Array.isArray(object?.prize_batches) ? object.prize_batches.map((e: any) => PrizeBatch.fromAmino(e)) : []
-    };
+    const message = createBasePrizeStrategy();
+    message.prizeBatches = object.prize_batches?.map(e => PrizeBatch.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: PrizeStrategy): PrizeStrategyAmino {
     const obj: any = {};

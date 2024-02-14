@@ -13,12 +13,12 @@ export interface ProposalUpdateParamsProtoMsg {
   value: Uint8Array;
 }
 export interface ProposalUpdateParamsAmino {
-  title: string;
-  description: string;
-  withdrawal_address: string;
+  title?: string;
+  description?: string;
+  withdrawal_address?: string;
   is_deposit_enabled?: BoolValueAmino | undefined;
-  deposit_denoms: string[];
-  min_deposit_amount: string;
+  deposit_denoms?: string[];
+  min_deposit_amount?: string;
 }
 export interface ProposalUpdateParamsAminoMsg {
   type: "/lum.network.dfract.ProposalUpdateParams";
@@ -108,14 +108,24 @@ export const ProposalUpdateParams = {
     return message;
   },
   fromAmino(object: ProposalUpdateParamsAmino): ProposalUpdateParams {
-    return {
-      title: object.title,
-      description: object.description,
-      withdrawalAddress: object.withdrawal_address,
-      isDepositEnabled: object?.is_deposit_enabled ? BoolValue.fromAmino(object.is_deposit_enabled) : undefined,
-      depositDenoms: Array.isArray(object?.deposit_denoms) ? object.deposit_denoms.map((e: any) => e) : [],
-      minDepositAmount: object?.min_deposit_amount
-    };
+    const message = createBaseProposalUpdateParams();
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = object.description;
+    }
+    if (object.withdrawal_address !== undefined && object.withdrawal_address !== null) {
+      message.withdrawalAddress = object.withdrawal_address;
+    }
+    if (object.is_deposit_enabled !== undefined && object.is_deposit_enabled !== null) {
+      message.isDepositEnabled = BoolValue.fromAmino(object.is_deposit_enabled);
+    }
+    message.depositDenoms = object.deposit_denoms?.map(e => e) || [];
+    if (object.min_deposit_amount !== undefined && object.min_deposit_amount !== null) {
+      message.minDepositAmount = object.min_deposit_amount;
+    }
+    return message;
   },
   toAmino(message: ProposalUpdateParams): ProposalUpdateParamsAmino {
     const obj: any = {};

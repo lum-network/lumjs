@@ -1,5 +1,4 @@
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { isSet } from "../../../helpers";
 export enum TransferType {
   TRANSFER_TYPE_UNSPECIFIED = 0,
   TRANSFER_TYPE_CLAIM = 1,
@@ -47,8 +46,8 @@ export interface SplitDelegationProtoMsg {
   value: Uint8Array;
 }
 export interface SplitDelegationAmino {
-  validator_address: string;
-  amount: string;
+  validator_address?: string;
+  amount?: string;
 }
 export interface SplitDelegationAminoMsg {
   type: "/lum.network.millions.SplitDelegation";
@@ -68,9 +67,9 @@ export interface DelegateCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface DelegateCallbackAmino {
-  pool_id: string;
-  deposit_id: string;
-  split_delegations: SplitDelegationAmino[];
+  pool_id?: string;
+  deposit_id?: string;
+  split_delegations?: SplitDelegationAmino[];
 }
 export interface DelegateCallbackAminoMsg {
   type: "/lum.network.millions.DelegateCallback";
@@ -90,8 +89,8 @@ export interface UndelegateCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface UndelegateCallbackAmino {
-  pool_id: string;
-  withdrawal_ids: string[];
+  pool_id?: string;
+  withdrawal_ids?: string[];
 }
 export interface UndelegateCallbackAminoMsg {
   type: "/lum.network.millions.UndelegateCallback";
@@ -111,9 +110,9 @@ export interface RedelegateCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface RedelegateCallbackAmino {
-  pool_id: string;
-  operator_address: string;
-  split_delegations: SplitDelegationAmino[];
+  pool_id?: string;
+  operator_address?: string;
+  split_delegations?: SplitDelegationAmino[];
 }
 export interface RedelegateCallbackAminoMsg {
   type: "/lum.network.millions.RedelegateCallback";
@@ -133,8 +132,8 @@ export interface ClaimRewardsCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface ClaimRewardsCallbackAmino {
-  pool_id: string;
-  draw_id: string;
+  pool_id?: string;
+  draw_id?: string;
 }
 export interface ClaimRewardsCallbackAminoMsg {
   type: "/lum.network.millions.ClaimRewardsCallback";
@@ -153,8 +152,8 @@ export interface TransferToNativeCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface TransferToNativeCallbackAmino {
-  pool_id: string;
-  deposit_id: string;
+  pool_id?: string;
+  deposit_id?: string;
 }
 export interface TransferToNativeCallbackAminoMsg {
   type: "/lum.network.millions.TransferToNativeCallback";
@@ -175,10 +174,10 @@ export interface TransferFromNativeCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface TransferFromNativeCallbackAmino {
-  type: TransferType;
-  pool_id: string;
-  draw_id: string;
-  withdrawal_id: string;
+  type?: TransferType;
+  pool_id?: string;
+  draw_id?: string;
+  withdrawal_id?: string;
 }
 export interface TransferFromNativeCallbackAminoMsg {
   type: "/lum.network.millions.TransferFromNativeCallback";
@@ -198,7 +197,7 @@ export interface SetWithdrawAddressCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface SetWithdrawAddressCallbackAmino {
-  pool_id: string;
+  pool_id?: string;
 }
 export interface SetWithdrawAddressCallbackAminoMsg {
   type: "/lum.network.millions.SetWithdrawAddressCallback";
@@ -216,8 +215,8 @@ export interface BankSendCallbackProtoMsg {
   value: Uint8Array;
 }
 export interface BankSendCallbackAmino {
-  pool_id: string;
-  withdrawal_id: string;
+  pool_id?: string;
+  withdrawal_id?: string;
 }
 export interface BankSendCallbackAminoMsg {
   type: "/lum.network.millions.BankSendCallback";
@@ -271,10 +270,14 @@ export const SplitDelegation = {
     return message;
   },
   fromAmino(object: SplitDelegationAmino): SplitDelegation {
-    return {
-      validatorAddress: object.validator_address,
-      amount: object.amount
-    };
+    const message = createBaseSplitDelegation();
+    if (object.validator_address !== undefined && object.validator_address !== null) {
+      message.validatorAddress = object.validator_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = object.amount;
+    }
+    return message;
   },
   toAmino(message: SplitDelegation): SplitDelegationAmino {
     const obj: any = {};
@@ -350,11 +353,15 @@ export const DelegateCallback = {
     return message;
   },
   fromAmino(object: DelegateCallbackAmino): DelegateCallback {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id),
-      splitDelegations: Array.isArray(object?.split_delegations) ? object.split_delegations.map((e: any) => SplitDelegation.fromAmino(e)) : []
-    };
+    const message = createBaseDelegateCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    message.splitDelegations = object.split_delegations?.map(e => SplitDelegation.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: DelegateCallback): DelegateCallbackAmino {
     const obj: any = {};
@@ -436,10 +443,12 @@ export const UndelegateCallback = {
     return message;
   },
   fromAmino(object: UndelegateCallbackAmino): UndelegateCallback {
-    return {
-      poolId: BigInt(object.pool_id),
-      withdrawalIds: Array.isArray(object?.withdrawal_ids) ? object.withdrawal_ids.map((e: any) => BigInt(e)) : []
-    };
+    const message = createBaseUndelegateCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    message.withdrawalIds = object.withdrawal_ids?.map(e => BigInt(e)) || [];
+    return message;
   },
   toAmino(message: UndelegateCallback): UndelegateCallbackAmino {
     const obj: any = {};
@@ -519,11 +528,15 @@ export const RedelegateCallback = {
     return message;
   },
   fromAmino(object: RedelegateCallbackAmino): RedelegateCallback {
-    return {
-      poolId: BigInt(object.pool_id),
-      operatorAddress: object.operator_address,
-      splitDelegations: Array.isArray(object?.split_delegations) ? object.split_delegations.map((e: any) => SplitDelegation.fromAmino(e)) : []
-    };
+    const message = createBaseRedelegateCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.operator_address !== undefined && object.operator_address !== null) {
+      message.operatorAddress = object.operator_address;
+    }
+    message.splitDelegations = object.split_delegations?.map(e => SplitDelegation.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: RedelegateCallback): RedelegateCallbackAmino {
     const obj: any = {};
@@ -596,10 +609,14 @@ export const ClaimRewardsCallback = {
     return message;
   },
   fromAmino(object: ClaimRewardsCallbackAmino): ClaimRewardsCallback {
-    return {
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id)
-    };
+    const message = createBaseClaimRewardsCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    return message;
   },
   toAmino(message: ClaimRewardsCallback): ClaimRewardsCallbackAmino {
     const obj: any = {};
@@ -667,10 +684,14 @@ export const TransferToNativeCallback = {
     return message;
   },
   fromAmino(object: TransferToNativeCallbackAmino): TransferToNativeCallback {
-    return {
-      poolId: BigInt(object.pool_id),
-      depositId: BigInt(object.deposit_id)
-    };
+    const message = createBaseTransferToNativeCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.deposit_id !== undefined && object.deposit_id !== null) {
+      message.depositId = BigInt(object.deposit_id);
+    }
+    return message;
   },
   toAmino(message: TransferToNativeCallback): TransferToNativeCallbackAmino {
     const obj: any = {};
@@ -754,12 +775,20 @@ export const TransferFromNativeCallback = {
     return message;
   },
   fromAmino(object: TransferFromNativeCallbackAmino): TransferFromNativeCallback {
-    return {
-      type: isSet(object.type) ? transferTypeFromJSON(object.type) : -1,
-      poolId: BigInt(object.pool_id),
-      drawId: BigInt(object.draw_id),
-      withdrawalId: BigInt(object.withdrawal_id)
-    };
+    const message = createBaseTransferFromNativeCallback();
+    if (object.type !== undefined && object.type !== null) {
+      message.type = transferTypeFromJSON(object.type);
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.draw_id !== undefined && object.draw_id !== null) {
+      message.drawId = BigInt(object.draw_id);
+    }
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    return message;
   },
   toAmino(message: TransferFromNativeCallback): TransferFromNativeCallbackAmino {
     const obj: any = {};
@@ -821,9 +850,11 @@ export const SetWithdrawAddressCallback = {
     return message;
   },
   fromAmino(object: SetWithdrawAddressCallbackAmino): SetWithdrawAddressCallback {
-    return {
-      poolId: BigInt(object.pool_id)
-    };
+    const message = createBaseSetWithdrawAddressCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    return message;
   },
   toAmino(message: SetWithdrawAddressCallback): SetWithdrawAddressCallbackAmino {
     const obj: any = {};
@@ -890,10 +921,14 @@ export const BankSendCallback = {
     return message;
   },
   fromAmino(object: BankSendCallbackAmino): BankSendCallback {
-    return {
-      poolId: BigInt(object.pool_id),
-      withdrawalId: BigInt(object.withdrawal_id)
-    };
+    const message = createBaseBankSendCallback();
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    if (object.withdrawal_id !== undefined && object.withdrawal_id !== null) {
+      message.withdrawalId = BigInt(object.withdrawal_id);
+    }
+    return message;
   },
   toAmino(message: BankSendCallback): BankSendCallbackAmino {
     const obj: any = {};

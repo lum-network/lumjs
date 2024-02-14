@@ -3,7 +3,6 @@ import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin"
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { Deposit, DepositAmino, DepositSDKType } from "./deposit";
 import { BinaryReader, BinaryWriter } from "../../../binary";
-import { isSet } from "../../../helpers";
 export enum DepositsQueryType {
   PENDING_WITHDRAWAL = 0,
   PENDING_MINT = 1,
@@ -61,7 +60,7 @@ export interface QueryModuleAccountBalanceResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryModuleAccountBalanceResponseAmino {
-  module_account_balance: CoinAmino[];
+  module_account_balance?: CoinAmino[];
 }
 export interface QueryModuleAccountBalanceResponseAminoMsg {
   type: "/lum.network.dfract.QueryModuleAccountBalanceResponse";
@@ -106,7 +105,7 @@ export interface QueryGetDepositsForAddressRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetDepositsForAddressRequestAmino {
-  address: string;
+  address?: string;
 }
 export interface QueryGetDepositsForAddressRequestAminoMsg {
   type: "/lum.network.dfract.QueryGetDepositsForAddressRequest";
@@ -125,7 +124,7 @@ export interface QueryFetchDepositsRequestProtoMsg {
 }
 export interface QueryFetchDepositsRequestAmino {
   pagination?: PageRequestAmino | undefined;
-  type: DepositsQueryType;
+  type?: DepositsQueryType;
 }
 export interface QueryFetchDepositsRequestAminoMsg {
   type: "/lum.network.dfract.QueryFetchDepositsRequest";
@@ -167,7 +166,7 @@ export interface QueryFetchDepositsResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryFetchDepositsResponseAmino {
-  deposits: DepositAmino[];
+  deposits?: DepositAmino[];
   pagination?: PageResponseAmino | undefined;
 }
 export interface QueryFetchDepositsResponseAminoMsg {
@@ -205,7 +204,8 @@ export const QueryModuleAccountBalanceRequest = {
     return message;
   },
   fromAmino(_: QueryModuleAccountBalanceRequestAmino): QueryModuleAccountBalanceRequest {
-    return {};
+    const message = createBaseQueryModuleAccountBalanceRequest();
+    return message;
   },
   toAmino(_: QueryModuleAccountBalanceRequest): QueryModuleAccountBalanceRequestAmino {
     const obj: any = {};
@@ -263,9 +263,9 @@ export const QueryModuleAccountBalanceResponse = {
     return message;
   },
   fromAmino(object: QueryModuleAccountBalanceResponseAmino): QueryModuleAccountBalanceResponse {
-    return {
-      moduleAccountBalance: Array.isArray(object?.module_account_balance) ? object.module_account_balance.map((e: any) => Coin.fromAmino(e)) : []
-    };
+    const message = createBaseQueryModuleAccountBalanceResponse();
+    message.moduleAccountBalance = object.module_account_balance?.map(e => Coin.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: QueryModuleAccountBalanceResponse): QueryModuleAccountBalanceResponseAmino {
     const obj: any = {};
@@ -319,7 +319,8 @@ export const QueryParamsRequest = {
     return message;
   },
   fromAmino(_: QueryParamsRequestAmino): QueryParamsRequest {
-    return {};
+    const message = createBaseQueryParamsRequest();
+    return message;
   },
   toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
     const obj: any = {};
@@ -377,9 +378,11 @@ export const QueryParamsResponse = {
     return message;
   },
   fromAmino(object: QueryParamsResponseAmino): QueryParamsResponse {
-    return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined
-    };
+    const message = createBaseQueryParamsResponse();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    return message;
   },
   toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
     const obj: any = {};
@@ -438,9 +441,11 @@ export const QueryGetDepositsForAddressRequest = {
     return message;
   },
   fromAmino(object: QueryGetDepositsForAddressRequestAmino): QueryGetDepositsForAddressRequest {
-    return {
-      address: object.address
-    };
+    const message = createBaseQueryGetDepositsForAddressRequest();
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    return message;
   },
   toAmino(message: QueryGetDepositsForAddressRequest): QueryGetDepositsForAddressRequestAmino {
     const obj: any = {};
@@ -507,10 +512,14 @@ export const QueryFetchDepositsRequest = {
     return message;
   },
   fromAmino(object: QueryFetchDepositsRequestAmino): QueryFetchDepositsRequest {
-    return {
-      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined,
-      type: isSet(object.type) ? depositsQueryTypeFromJSON(object.type) : -1
-    };
+    const message = createBaseQueryFetchDepositsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    if (object.type !== undefined && object.type !== null) {
+      message.type = depositsQueryTypeFromJSON(object.type);
+    }
+    return message;
   },
   toAmino(message: QueryFetchDepositsRequest): QueryFetchDepositsRequestAmino {
     const obj: any = {};
@@ -586,11 +595,17 @@ export const QueryGetDepositsForAddressResponse = {
     return message;
   },
   fromAmino(object: QueryGetDepositsForAddressResponseAmino): QueryGetDepositsForAddressResponse {
-    return {
-      depositsPendingWithdrawal: object?.deposits_pending_withdrawal ? Deposit.fromAmino(object.deposits_pending_withdrawal) : undefined,
-      depositsPendingMint: object?.deposits_pending_mint ? Deposit.fromAmino(object.deposits_pending_mint) : undefined,
-      depositsMinted: object?.deposits_minted ? Deposit.fromAmino(object.deposits_minted) : undefined
-    };
+    const message = createBaseQueryGetDepositsForAddressResponse();
+    if (object.deposits_pending_withdrawal !== undefined && object.deposits_pending_withdrawal !== null) {
+      message.depositsPendingWithdrawal = Deposit.fromAmino(object.deposits_pending_withdrawal);
+    }
+    if (object.deposits_pending_mint !== undefined && object.deposits_pending_mint !== null) {
+      message.depositsPendingMint = Deposit.fromAmino(object.deposits_pending_mint);
+    }
+    if (object.deposits_minted !== undefined && object.deposits_minted !== null) {
+      message.depositsMinted = Deposit.fromAmino(object.deposits_minted);
+    }
+    return message;
   },
   toAmino(message: QueryGetDepositsForAddressResponse): QueryGetDepositsForAddressResponseAmino {
     const obj: any = {};
@@ -659,10 +674,12 @@ export const QueryFetchDepositsResponse = {
     return message;
   },
   fromAmino(object: QueryFetchDepositsResponseAmino): QueryFetchDepositsResponse {
-    return {
-      deposits: Array.isArray(object?.deposits) ? object.deposits.map((e: any) => Deposit.fromAmino(e)) : [],
-      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
-    };
+    const message = createBaseQueryFetchDepositsResponse();
+    message.deposits = object.deposits?.map(e => Deposit.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
   },
   toAmino(message: QueryFetchDepositsResponse): QueryFetchDepositsResponseAmino {
     const obj: any = {};

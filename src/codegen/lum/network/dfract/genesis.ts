@@ -14,11 +14,11 @@ export interface GenesisStateProtoMsg {
   value: Uint8Array;
 }
 export interface GenesisStateAmino {
-  module_account_balance: CoinAmino[];
+  module_account_balance?: CoinAmino[];
   params?: ParamsAmino | undefined;
-  deposits_pending_withdrawal: DepositAmino[];
-  deposits_pending_mint: DepositAmino[];
-  deposits_minted: DepositAmino[];
+  deposits_pending_withdrawal?: DepositAmino[];
+  deposits_pending_mint?: DepositAmino[];
+  deposits_minted?: DepositAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/lum.network.dfract.GenesisState";
@@ -99,13 +99,15 @@ export const GenesisState = {
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
-    return {
-      moduleAccountBalance: Array.isArray(object?.module_account_balance) ? object.module_account_balance.map((e: any) => Coin.fromAmino(e)) : [],
-      params: object?.params ? Params.fromAmino(object.params) : undefined,
-      depositsPendingWithdrawal: Array.isArray(object?.deposits_pending_withdrawal) ? object.deposits_pending_withdrawal.map((e: any) => Deposit.fromAmino(e)) : [],
-      depositsPendingMint: Array.isArray(object?.deposits_pending_mint) ? object.deposits_pending_mint.map((e: any) => Deposit.fromAmino(e)) : [],
-      depositsMinted: Array.isArray(object?.deposits_minted) ? object.deposits_minted.map((e: any) => Deposit.fromAmino(e)) : []
-    };
+    const message = createBaseGenesisState();
+    message.moduleAccountBalance = object.module_account_balance?.map(e => Coin.fromAmino(e)) || [];
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    message.depositsPendingWithdrawal = object.deposits_pending_withdrawal?.map(e => Deposit.fromAmino(e)) || [];
+    message.depositsPendingMint = object.deposits_pending_mint?.map(e => Deposit.fromAmino(e)) || [];
+    message.depositsMinted = object.deposits_minted?.map(e => Deposit.fromAmino(e)) || [];
+    return message;
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};

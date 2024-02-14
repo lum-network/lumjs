@@ -9,7 +9,7 @@ export interface MsgDepositProtoMsg {
   value: Uint8Array;
 }
 export interface MsgDepositAmino {
-  depositor_address: string;
+  depositor_address?: string;
   amount?: CoinAmino | undefined;
 }
 export interface MsgDepositAminoMsg {
@@ -40,8 +40,8 @@ export interface MsgWithdrawAndMintProtoMsg {
   value: Uint8Array;
 }
 export interface MsgWithdrawAndMintAmino {
-  address: string;
-  micro_mint_rate: string;
+  address?: string;
+  micro_mint_rate?: string;
 }
 export interface MsgWithdrawAndMintAminoMsg {
   type: "/lum.network.dfract.MsgWithdrawAndMint";
@@ -106,10 +106,14 @@ export const MsgDeposit = {
     return message;
   },
   fromAmino(object: MsgDepositAmino): MsgDeposit {
-    return {
-      depositorAddress: object.depositor_address,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined
-    };
+    const message = createBaseMsgDeposit();
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    return message;
   },
   toAmino(message: MsgDeposit): MsgDepositAmino {
     const obj: any = {};
@@ -160,7 +164,8 @@ export const MsgDepositResponse = {
     return message;
   },
   fromAmino(_: MsgDepositResponseAmino): MsgDepositResponse {
-    return {};
+    const message = createBaseMsgDepositResponse();
+    return message;
   },
   toAmino(_: MsgDepositResponse): MsgDepositResponseAmino {
     const obj: any = {};
@@ -226,10 +231,14 @@ export const MsgWithdrawAndMint = {
     return message;
   },
   fromAmino(object: MsgWithdrawAndMintAmino): MsgWithdrawAndMint {
-    return {
-      address: object.address,
-      microMintRate: BigInt(object.micro_mint_rate)
-    };
+    const message = createBaseMsgWithdrawAndMint();
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    if (object.micro_mint_rate !== undefined && object.micro_mint_rate !== null) {
+      message.microMintRate = BigInt(object.micro_mint_rate);
+    }
+    return message;
   },
   toAmino(message: MsgWithdrawAndMint): MsgWithdrawAndMintAmino {
     const obj: any = {};
@@ -280,7 +289,8 @@ export const MsgWithdrawAndMintResponse = {
     return message;
   },
   fromAmino(_: MsgWithdrawAndMintResponseAmino): MsgWithdrawAndMintResponse {
-    return {};
+    const message = createBaseMsgWithdrawAndMintResponse();
+    return message;
   },
   toAmino(_: MsgWithdrawAndMintResponse): MsgWithdrawAndMintResponseAmino {
     const obj: any = {};

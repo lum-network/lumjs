@@ -12,7 +12,7 @@ export interface DepositProtoMsg {
   value: Uint8Array;
 }
 export interface DepositAmino {
-  depositor_address: string;
+  depositor_address?: string;
   amount?: CoinAmino | undefined;
   created_at?: string | undefined;
 }
@@ -77,11 +77,17 @@ export const Deposit = {
     return message;
   },
   fromAmino(object: DepositAmino): Deposit {
-    return {
-      depositorAddress: object.depositor_address,
-      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined
-    };
+    const message = createBaseDeposit();
+    if (object.depositor_address !== undefined && object.depositor_address !== null) {
+      message.depositorAddress = object.depositor_address;
+    }
+    if (object.amount !== undefined && object.amount !== null) {
+      message.amount = Coin.fromAmino(object.amount);
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    return message;
   },
   toAmino(message: Deposit): DepositAmino {
     const obj: any = {};

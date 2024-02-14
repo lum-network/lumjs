@@ -11,10 +11,10 @@ export interface PrizeBatchProtoMsg {
   value: Uint8Array;
 }
 export interface PrizeBatchAmino {
-  pool_percent: string;
-  quantity: string;
-  draw_probability: string;
-  is_unique: boolean;
+  pool_percent?: string;
+  quantity?: string;
+  draw_probability?: string;
+  is_unique?: boolean;
 }
 export interface PrizeBatchAminoMsg {
   type: "/lum.network.millions.PrizeBatch";
@@ -86,12 +86,20 @@ export const PrizeBatch = {
     return message;
   },
   fromAmino(object: PrizeBatchAmino): PrizeBatch {
-    return {
-      poolPercent: BigInt(object.pool_percent),
-      quantity: BigInt(object.quantity),
-      drawProbability: object.draw_probability,
-      isUnique: object.is_unique
-    };
+    const message = createBasePrizeBatch();
+    if (object.pool_percent !== undefined && object.pool_percent !== null) {
+      message.poolPercent = BigInt(object.pool_percent);
+    }
+    if (object.quantity !== undefined && object.quantity !== null) {
+      message.quantity = BigInt(object.quantity);
+    }
+    if (object.draw_probability !== undefined && object.draw_probability !== null) {
+      message.drawProbability = object.draw_probability;
+    }
+    if (object.is_unique !== undefined && object.is_unique !== null) {
+      message.isUnique = object.is_unique;
+    }
+    return message;
   },
   toAmino(message: PrizeBatch): PrizeBatchAmino {
     const obj: any = {};

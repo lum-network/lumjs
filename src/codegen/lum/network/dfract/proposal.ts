@@ -24,10 +24,10 @@ export interface WithdrawAndMintProposalProtoMsg {
  * micro mint rate
  */
 export interface WithdrawAndMintProposalAmino {
-  title: string;
-  description: string;
-  withdrawal_address: string;
-  micro_mint_rate: string;
+  title?: string;
+  description?: string;
+  withdrawal_address?: string;
+  micro_mint_rate?: string;
 }
 export interface WithdrawAndMintProposalAminoMsg {
   type: "/lum.network.dfract.WithdrawAndMintProposal";
@@ -106,12 +106,20 @@ export const WithdrawAndMintProposal = {
     return message;
   },
   fromAmino(object: WithdrawAndMintProposalAmino): WithdrawAndMintProposal {
-    return {
-      title: object.title,
-      description: object.description,
-      withdrawalAddress: object.withdrawal_address,
-      microMintRate: BigInt(object.micro_mint_rate)
-    };
+    const message = createBaseWithdrawAndMintProposal();
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = object.description;
+    }
+    if (object.withdrawal_address !== undefined && object.withdrawal_address !== null) {
+      message.withdrawalAddress = object.withdrawal_address;
+    }
+    if (object.micro_mint_rate !== undefined && object.micro_mint_rate !== null) {
+      message.microMintRate = BigInt(object.micro_mint_rate);
+    }
+    return message;
   },
   toAmino(message: WithdrawAndMintProposal): WithdrawAndMintProposalAmino {
     const obj: any = {};

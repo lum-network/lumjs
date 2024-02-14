@@ -20,15 +20,15 @@ export interface EpochUnbondingProtoMsg {
   value: Uint8Array;
 }
 export interface EpochUnbondingAmino {
-  epoch_identifier: string;
-  epoch_number: string;
-  pool_id: string;
-  withdrawal_ids: string[];
-  withdrawal_ids_count: string;
+  epoch_identifier?: string;
+  epoch_number?: string;
+  pool_id?: string;
+  withdrawal_ids?: string[];
+  withdrawal_ids_count?: string;
   total_amount?: CoinAmino | undefined;
   /** metadata */
-  created_at_height: string;
-  updated_at_height: string;
+  created_at_height?: string;
+  updated_at_height?: string;
   created_at?: string | undefined;
   updated_at?: string | undefined;
 }
@@ -61,11 +61,11 @@ export interface EpochTrackerProtoMsg {
   value: Uint8Array;
 }
 export interface EpochTrackerAmino {
-  epoch_tracker_type: string;
-  epoch_identifier: string;
-  epoch_number: string;
-  next_epoch_number: string;
-  previous_epoch_number: string;
+  epoch_tracker_type?: string;
+  epoch_identifier?: string;
+  epoch_number?: string;
+  next_epoch_number?: string;
+  previous_epoch_number?: string;
   next_epoch_start_time?: string | undefined;
 }
 export interface EpochTrackerAminoMsg {
@@ -197,18 +197,36 @@ export const EpochUnbonding = {
     return message;
   },
   fromAmino(object: EpochUnbondingAmino): EpochUnbonding {
-    return {
-      epochIdentifier: object.epoch_identifier,
-      epochNumber: BigInt(object.epoch_number),
-      poolId: BigInt(object.pool_id),
-      withdrawalIds: Array.isArray(object?.withdrawal_ids) ? object.withdrawal_ids.map((e: any) => BigInt(e)) : [],
-      withdrawalIdsCount: BigInt(object.withdrawal_ids_count),
-      totalAmount: object?.total_amount ? Coin.fromAmino(object.total_amount) : undefined,
-      createdAtHeight: BigInt(object.created_at_height),
-      updatedAtHeight: BigInt(object.updated_at_height),
-      createdAt: object?.created_at ? fromTimestamp(Timestamp.fromAmino(object.created_at)) : undefined,
-      updatedAt: object?.updated_at ? fromTimestamp(Timestamp.fromAmino(object.updated_at)) : undefined
-    };
+    const message = createBaseEpochUnbonding();
+    if (object.epoch_identifier !== undefined && object.epoch_identifier !== null) {
+      message.epochIdentifier = object.epoch_identifier;
+    }
+    if (object.epoch_number !== undefined && object.epoch_number !== null) {
+      message.epochNumber = BigInt(object.epoch_number);
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    message.withdrawalIds = object.withdrawal_ids?.map(e => BigInt(e)) || [];
+    if (object.withdrawal_ids_count !== undefined && object.withdrawal_ids_count !== null) {
+      message.withdrawalIdsCount = BigInt(object.withdrawal_ids_count);
+    }
+    if (object.total_amount !== undefined && object.total_amount !== null) {
+      message.totalAmount = Coin.fromAmino(object.total_amount);
+    }
+    if (object.created_at_height !== undefined && object.created_at_height !== null) {
+      message.createdAtHeight = BigInt(object.created_at_height);
+    }
+    if (object.updated_at_height !== undefined && object.updated_at_height !== null) {
+      message.updatedAtHeight = BigInt(object.updated_at_height);
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.createdAt = fromTimestamp(Timestamp.fromAmino(object.created_at));
+    }
+    if (object.updated_at !== undefined && object.updated_at !== null) {
+      message.updatedAt = fromTimestamp(Timestamp.fromAmino(object.updated_at));
+    }
+    return message;
   },
   toAmino(message: EpochUnbonding): EpochUnbondingAmino {
     const obj: any = {};
@@ -320,14 +338,26 @@ export const EpochTracker = {
     return message;
   },
   fromAmino(object: EpochTrackerAmino): EpochTracker {
-    return {
-      epochTrackerType: object.epoch_tracker_type,
-      epochIdentifier: object.epoch_identifier,
-      epochNumber: BigInt(object.epoch_number),
-      nextEpochNumber: BigInt(object.next_epoch_number),
-      previousEpochNumber: BigInt(object.previous_epoch_number),
-      nextEpochStartTime: object?.next_epoch_start_time ? fromTimestamp(Timestamp.fromAmino(object.next_epoch_start_time)) : undefined
-    };
+    const message = createBaseEpochTracker();
+    if (object.epoch_tracker_type !== undefined && object.epoch_tracker_type !== null) {
+      message.epochTrackerType = object.epoch_tracker_type;
+    }
+    if (object.epoch_identifier !== undefined && object.epoch_identifier !== null) {
+      message.epochIdentifier = object.epoch_identifier;
+    }
+    if (object.epoch_number !== undefined && object.epoch_number !== null) {
+      message.epochNumber = BigInt(object.epoch_number);
+    }
+    if (object.next_epoch_number !== undefined && object.next_epoch_number !== null) {
+      message.nextEpochNumber = BigInt(object.next_epoch_number);
+    }
+    if (object.previous_epoch_number !== undefined && object.previous_epoch_number !== null) {
+      message.previousEpochNumber = BigInt(object.previous_epoch_number);
+    }
+    if (object.next_epoch_start_time !== undefined && object.next_epoch_start_time !== null) {
+      message.nextEpochStartTime = fromTimestamp(Timestamp.fromAmino(object.next_epoch_start_time));
+    }
+    return message;
   },
   toAmino(message: EpochTracker): EpochTrackerAmino {
     const obj: any = {};

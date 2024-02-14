@@ -1,4 +1,5 @@
 import { BinaryReader, BinaryWriter } from "../../../binary";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers";
 export interface CallbackData {
   callbackKey: string;
   portId: string;
@@ -12,12 +13,12 @@ export interface CallbackDataProtoMsg {
   value: Uint8Array;
 }
 export interface CallbackDataAmino {
-  callback_key: string;
-  port_id: string;
-  channel_id: string;
-  sequence: string;
-  callback_id: string;
-  callback_args: Uint8Array;
+  callback_key?: string;
+  port_id?: string;
+  channel_id?: string;
+  sequence?: string;
+  callback_id?: string;
+  callback_args?: string;
 }
 export interface CallbackDataAminoMsg {
   type: "/lum.network.icacallbacks.CallbackData";
@@ -107,14 +108,26 @@ export const CallbackData = {
     return message;
   },
   fromAmino(object: CallbackDataAmino): CallbackData {
-    return {
-      callbackKey: object.callback_key,
-      portId: object.port_id,
-      channelId: object.channel_id,
-      sequence: BigInt(object.sequence),
-      callbackId: object.callback_id,
-      callbackArgs: object.callback_args
-    };
+    const message = createBaseCallbackData();
+    if (object.callback_key !== undefined && object.callback_key !== null) {
+      message.callbackKey = object.callback_key;
+    }
+    if (object.port_id !== undefined && object.port_id !== null) {
+      message.portId = object.port_id;
+    }
+    if (object.channel_id !== undefined && object.channel_id !== null) {
+      message.channelId = object.channel_id;
+    }
+    if (object.sequence !== undefined && object.sequence !== null) {
+      message.sequence = BigInt(object.sequence);
+    }
+    if (object.callback_id !== undefined && object.callback_id !== null) {
+      message.callbackId = object.callback_id;
+    }
+    if (object.callback_args !== undefined && object.callback_args !== null) {
+      message.callbackArgs = bytesFromBase64(object.callback_args);
+    }
+    return message;
   },
   toAmino(message: CallbackData): CallbackDataAmino {
     const obj: any = {};
@@ -123,7 +136,7 @@ export const CallbackData = {
     obj.channel_id = message.channelId;
     obj.sequence = message.sequence ? message.sequence.toString() : undefined;
     obj.callback_id = message.callbackId;
-    obj.callback_args = message.callbackArgs;
+    obj.callback_args = message.callbackArgs ? base64FromBytes(message.callbackArgs) : undefined;
     return obj;
   },
   fromAminoMsg(object: CallbackDataAminoMsg): CallbackData {
