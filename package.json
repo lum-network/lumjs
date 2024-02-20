@@ -1,6 +1,6 @@
 {
     "name": "@lum-network/sdk-javascript",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Javascript SDK library for NodeJS and Web browsers to interact with the Lum Network.",
     "author": "Lum Network <contact@lum-network.com>",
     "homepage": "https://github.com/lum-network/lumjs#readme",

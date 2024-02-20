@@ -32,7 +32,7 @@ export interface MsgUpdateParamsAmino {
   updater_address?: string;
 }
 export interface MsgUpdateParamsAminoMsg {
-  type: "/lum.network.millions.MsgUpdateParams";
+  type: "lum-network/millions/MsgUpdateParams";
   value: MsgUpdateParamsAmino;
 }
 export interface MsgUpdateParamsSDKType {
@@ -88,7 +88,7 @@ export interface MsgRegisterPoolAmino {
   creator_address?: string;
 }
 export interface MsgRegisterPoolAminoMsg {
-  type: "/lum.network.millions.MsgRegisterPool";
+  type: "lum-network/millions/MsgRegisterPool";
   value: MsgRegisterPoolAmino;
 }
 export interface MsgRegisterPoolSDKType {
@@ -142,7 +142,7 @@ export interface MsgUpdatePoolAmino {
   updater_address?: string;
 }
 export interface MsgUpdatePoolAminoMsg {
-  type: "/lum.network.millions.MsgUpdatePool";
+  type: "lum-network/millions/MsgUpdatePool";
   value: MsgUpdatePoolAmino;
 }
 export interface MsgUpdatePoolSDKType {
@@ -183,7 +183,7 @@ export interface MsgDepositAmino {
   is_sponsor?: boolean;
 }
 export interface MsgDepositAminoMsg {
-  type: "/lum.network.millions.MsgDeposit";
+  type: "lum-network/millions/MsgPool";
   value: MsgDepositAmino;
 }
 export interface MsgDepositSDKType {
@@ -225,7 +225,7 @@ export interface MsgDepositRetryAmino {
   depositor_address?: string;
 }
 export interface MsgDepositRetryAminoMsg {
-  type: "/lum.network.millions.MsgDepositRetry";
+  type: "lum-network/millions/MsgDepositRetry";
   value: MsgDepositRetryAmino;
 }
 export interface MsgDepositRetrySDKType {
@@ -252,7 +252,7 @@ export interface MsgDepositEditAmino {
   depositor_address?: string;
 }
 export interface MsgDepositEditAminoMsg {
-  type: "/lum.network.millions.MsgDepositEdit";
+  type: "lum-network/millions/MsgDepositEdit";
   value: MsgDepositEditAmino;
 }
 export interface MsgDepositEditSDKType {
@@ -301,7 +301,7 @@ export interface MsgClaimPrizeAmino {
   winner_address?: string;
 }
 export interface MsgClaimPrizeAminoMsg {
-  type: "/lum.network.millions.MsgClaimPrize";
+  type: "lum-network/millions/MsgClaimPrize";
   value: MsgClaimPrizeAmino;
 }
 export interface MsgClaimPrizeSDKType {
@@ -338,7 +338,7 @@ export interface MsgWithdrawDepositAmino {
   to_address?: string;
 }
 export interface MsgWithdrawDepositAminoMsg {
-  type: "/lum.network.millions.MsgWithdrawDeposit";
+  type: "lum-network/millions/MsgWithdrawDeposit";
   value: MsgWithdrawDepositAmino;
 }
 export interface MsgWithdrawDepositSDKType {
@@ -379,7 +379,7 @@ export interface MsgWithdrawDepositRetryAmino {
   depositor_address?: string;
 }
 export interface MsgWithdrawDepositRetryAminoMsg {
-  type: "/lum.network.millions.MsgWithdrawDepositRetry";
+  type: "lum-network/millions/MsgWithdrawDepositRetry";
   value: MsgWithdrawDepositRetryAmino;
 }
 export interface MsgWithdrawDepositRetrySDKType {
@@ -413,7 +413,7 @@ export interface MsgDrawRetryAmino {
   draw_retry_address?: string;
 }
 export interface MsgDrawRetryAminoMsg {
-  type: "/lum.network.millions.MsgDrawRetry";
+  type: "lum-network/millions/MsgRetry";
   value: MsgDrawRetryAmino;
 }
 export interface MsgDrawRetrySDKType {
@@ -445,7 +445,7 @@ export interface MsgRestoreInterchainAccountsAmino {
   restorer_address?: string;
 }
 export interface MsgRestoreInterchainAccountsAminoMsg {
-  type: "/lum.network.millions.MsgRestoreInterchainAccounts";
+  type: "lum-network/millions/MsgRestoreInterchainAccounts";
   value: MsgRestoreInterchainAccountsAmino;
 }
 export interface MsgRestoreInterchainAccountsSDKType {
@@ -474,7 +474,7 @@ export interface MsgGenerateSeedAmino {
   requester_address?: string;
 }
 export interface MsgGenerateSeedAminoMsg {
-  type: "/lum.network.millions.MsgGenerateSeed";
+  type: "lum-network/millions/MsgGenerateSeed";
   value: MsgGenerateSeedAmino;
 }
 export interface MsgGenerateSeedSDKType {
@@ -512,6 +512,7 @@ function createBaseMsgUpdateParams(): MsgUpdateParams {
 }
 export const MsgUpdateParams = {
   typeUrl: "/lum.network.millions.MsgUpdateParams",
+  aminoType: "lum-network/millions/MsgUpdateParams",
   encode(message: MsgUpdateParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.minDepositAmount !== undefined) {
       writer.uint32(10).string(message.minDepositAmount);
@@ -643,6 +644,12 @@ export const MsgUpdateParams = {
   fromAminoMsg(object: MsgUpdateParamsAminoMsg): MsgUpdateParams {
     return MsgUpdateParams.fromAmino(object.value);
   },
+  toAminoMsg(message: MsgUpdateParams): MsgUpdateParamsAminoMsg {
+    return {
+      type: "lum-network/millions/MsgUpdateParams",
+      value: MsgUpdateParams.toAmino(message)
+    };
+  },
   fromProtoMsg(message: MsgUpdateParamsProtoMsg): MsgUpdateParams {
     return MsgUpdateParams.decode(message.value);
   },
@@ -723,6 +730,7 @@ function createBaseMsgRegisterPool(): MsgRegisterPool {
 }
 export const MsgRegisterPool = {
   typeUrl: "/lum.network.millions.MsgRegisterPool",
+  aminoType: "lum-network/millions/MsgRegisterPool",
   encode(message: MsgRegisterPool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
@@ -878,6 +886,12 @@ export const MsgRegisterPool = {
   fromAminoMsg(object: MsgRegisterPoolAminoMsg): MsgRegisterPool {
     return MsgRegisterPool.fromAmino(object.value);
   },
+  toAminoMsg(message: MsgRegisterPool): MsgRegisterPoolAminoMsg {
+    return {
+      type: "lum-network/millions/MsgRegisterPool",
+      value: MsgRegisterPool.toAmino(message)
+    };
+  },
   fromProtoMsg(message: MsgRegisterPoolProtoMsg): MsgRegisterPool {
     return MsgRegisterPool.decode(message.value);
   },
@@ -966,6 +980,7 @@ function createBaseMsgUpdatePool(): MsgUpdatePool {
 }
 export const MsgUpdatePool = {
   typeUrl: "/lum.network.millions.MsgUpdatePool",
+  aminoType: "lum-network/millions/MsgUpdatePool",
   encode(message: MsgUpdatePool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1066,6 +1081,12 @@ export const MsgUpdatePool = {
   fromAminoMsg(object: MsgUpdatePoolAminoMsg): MsgUpdatePool {
     return MsgUpdatePool.fromAmino(object.value);
   },
+  toAminoMsg(message: MsgUpdatePool): MsgUpdatePoolAminoMsg {
+    return {
+      type: "lum-network/millions/MsgUpdatePool",
+      value: MsgUpdatePool.toAmino(message)
+    };
+  },
   fromProtoMsg(message: MsgUpdatePoolProtoMsg): MsgUpdatePool {
     return MsgUpdatePool.decode(message.value);
   },
@@ -1140,6 +1161,7 @@ function createBaseMsgDeposit(): MsgDeposit {
 }
 export const MsgDeposit = {
   typeUrl: "/lum.network.millions.MsgDeposit",
+  aminoType: "lum-network/millions/MsgPool",
   encode(message: MsgDeposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1227,6 +1249,12 @@ export const MsgDeposit = {
   fromAminoMsg(object: MsgDepositAminoMsg): MsgDeposit {
     return MsgDeposit.fromAmino(object.value);
   },
+  toAminoMsg(message: MsgDeposit): MsgDepositAminoMsg {
+    return {
+      type: "lum-network/millions/MsgPool",
+      value: MsgDeposit.toAmino(message)
+    };
+  },
   fromProtoMsg(message: MsgDepositProtoMsg): MsgDeposit {
     return MsgDeposit.decode(message.value);
   },
@@ -1312,6 +1340,7 @@ function createBaseMsgDepositRetry(): MsgDepositRetry {
 }
 export const MsgDepositRetry = {
   typeUrl: "/lum.network.millions.MsgDepositRetry",
+  aminoType: "lum-network/millions/MsgDepositRetry",
   encode(message: MsgDepositRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1377,6 +1406,12 @@ export const MsgDepositRetry = {
   fromAminoMsg(object: MsgDepositRetryAminoMsg): MsgDepositRetry {
     return MsgDepositRetry.fromAmino(object.value);
   },
+  toAminoMsg(message: MsgDepositRetry): MsgDepositRetryAminoMsg {
+    return {
+      type: "lum-network/millions/MsgDepositRetry",
+      value: MsgDepositRetry.toAmino(message)
+    };
+  },
   fromProtoMsg(message: MsgDepositRetryProtoMsg): MsgDepositRetry {
     return MsgDepositRetry.decode(message.value);
   },
@@ -1401,6 +1436,7 @@ function createBaseMsgDepositEdit(): MsgDepositEdit {
 }
 export const MsgDepositEdit = {
   typeUrl: "/lum.network.millions.MsgDepositEdit",
+  aminoType: "lum-network/millions/MsgDepositEdit",
   encode(message: MsgDepositEdit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1487,6 +1523,12 @@ export const MsgDepositEdit = {
   },
   fromAminoMsg(object: MsgDepositEditAminoMsg): MsgDepositEdit {
     return MsgDepositEdit.fromAmino(object.value);
+  },
+  toAminoMsg(message: MsgDepositEdit): MsgDepositEditAminoMsg {
+    return {
+      type: "lum-network/millions/MsgDepositEdit",
+      value: MsgDepositEdit.toAmino(message)
+    };
   },
   fromProtoMsg(message: MsgDepositEditProtoMsg): MsgDepositEdit {
     return MsgDepositEdit.decode(message.value);
@@ -1611,6 +1653,7 @@ function createBaseMsgClaimPrize(): MsgClaimPrize {
 }
 export const MsgClaimPrize = {
   typeUrl: "/lum.network.millions.MsgClaimPrize",
+  aminoType: "lum-network/millions/MsgClaimPrize",
   encode(message: MsgClaimPrize, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1687,6 +1730,12 @@ export const MsgClaimPrize = {
   fromAminoMsg(object: MsgClaimPrizeAminoMsg): MsgClaimPrize {
     return MsgClaimPrize.fromAmino(object.value);
   },
+  toAminoMsg(message: MsgClaimPrize): MsgClaimPrizeAminoMsg {
+    return {
+      type: "lum-network/millions/MsgClaimPrize",
+      value: MsgClaimPrize.toAmino(message)
+    };
+  },
   fromProtoMsg(message: MsgClaimPrizeProtoMsg): MsgClaimPrize {
     return MsgClaimPrize.decode(message.value);
   },
@@ -1760,6 +1809,7 @@ function createBaseMsgWithdrawDeposit(): MsgWithdrawDeposit {
 }
 export const MsgWithdrawDeposit = {
   typeUrl: "/lum.network.millions.MsgWithdrawDeposit",
+  aminoType: "lum-network/millions/MsgWithdrawDeposit",
   encode(message: MsgWithdrawDeposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1835,6 +1885,12 @@ export const MsgWithdrawDeposit = {
   },
   fromAminoMsg(object: MsgWithdrawDepositAminoMsg): MsgWithdrawDeposit {
     return MsgWithdrawDeposit.fromAmino(object.value);
+  },
+  toAminoMsg(message: MsgWithdrawDeposit): MsgWithdrawDepositAminoMsg {
+    return {
+      type: "lum-network/millions/MsgWithdrawDeposit",
+      value: MsgWithdrawDeposit.toAmino(message)
+    };
   },
   fromProtoMsg(message: MsgWithdrawDepositProtoMsg): MsgWithdrawDeposit {
     return MsgWithdrawDeposit.decode(message.value);
@@ -1921,6 +1977,7 @@ function createBaseMsgWithdrawDepositRetry(): MsgWithdrawDepositRetry {
 }
 export const MsgWithdrawDepositRetry = {
   typeUrl: "/lum.network.millions.MsgWithdrawDepositRetry",
+  aminoType: "lum-network/millions/MsgWithdrawDepositRetry",
   encode(message: MsgWithdrawDepositRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1985,6 +2042,12 @@ export const MsgWithdrawDepositRetry = {
   },
   fromAminoMsg(object: MsgWithdrawDepositRetryAminoMsg): MsgWithdrawDepositRetry {
     return MsgWithdrawDepositRetry.fromAmino(object.value);
+  },
+  toAminoMsg(message: MsgWithdrawDepositRetry): MsgWithdrawDepositRetryAminoMsg {
+    return {
+      type: "lum-network/millions/MsgWithdrawDepositRetry",
+      value: MsgWithdrawDepositRetry.toAmino(message)
+    };
   },
   fromProtoMsg(message: MsgWithdrawDepositRetryProtoMsg): MsgWithdrawDepositRetry {
     return MsgWithdrawDepositRetry.decode(message.value);
@@ -2058,6 +2121,7 @@ function createBaseMsgDrawRetry(): MsgDrawRetry {
 }
 export const MsgDrawRetry = {
   typeUrl: "/lum.network.millions.MsgDrawRetry",
+  aminoType: "lum-network/millions/MsgRetry",
   encode(message: MsgDrawRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -2122,6 +2186,12 @@ export const MsgDrawRetry = {
   },
   fromAminoMsg(object: MsgDrawRetryAminoMsg): MsgDrawRetry {
     return MsgDrawRetry.fromAmino(object.value);
+  },
+  toAminoMsg(message: MsgDrawRetry): MsgDrawRetryAminoMsg {
+    return {
+      type: "lum-network/millions/MsgRetry",
+      value: MsgDrawRetry.toAmino(message)
+    };
   },
   fromProtoMsg(message: MsgDrawRetryProtoMsg): MsgDrawRetry {
     return MsgDrawRetry.decode(message.value);
@@ -2194,6 +2264,7 @@ function createBaseMsgRestoreInterchainAccounts(): MsgRestoreInterchainAccounts 
 }
 export const MsgRestoreInterchainAccounts = {
   typeUrl: "/lum.network.millions.MsgRestoreInterchainAccounts",
+  aminoType: "lum-network/millions/MsgRestoreInterchainAccounts",
   encode(message: MsgRestoreInterchainAccounts, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -2247,6 +2318,12 @@ export const MsgRestoreInterchainAccounts = {
   },
   fromAminoMsg(object: MsgRestoreInterchainAccountsAminoMsg): MsgRestoreInterchainAccounts {
     return MsgRestoreInterchainAccounts.fromAmino(object.value);
+  },
+  toAminoMsg(message: MsgRestoreInterchainAccounts): MsgRestoreInterchainAccountsAminoMsg {
+    return {
+      type: "lum-network/millions/MsgRestoreInterchainAccounts",
+      value: MsgRestoreInterchainAccounts.toAmino(message)
+    };
   },
   fromProtoMsg(message: MsgRestoreInterchainAccountsProtoMsg): MsgRestoreInterchainAccounts {
     return MsgRestoreInterchainAccounts.decode(message.value);
@@ -2318,6 +2395,7 @@ function createBaseMsgGenerateSeed(): MsgGenerateSeed {
 }
 export const MsgGenerateSeed = {
   typeUrl: "/lum.network.millions.MsgGenerateSeed",
+  aminoType: "lum-network/millions/MsgGenerateSeed",
   encode(message: MsgGenerateSeed, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.requesterAddress !== "") {
       writer.uint32(10).string(message.requesterAddress);
@@ -2360,6 +2438,12 @@ export const MsgGenerateSeed = {
   },
   fromAminoMsg(object: MsgGenerateSeedAminoMsg): MsgGenerateSeed {
     return MsgGenerateSeed.fromAmino(object.value);
+  },
+  toAminoMsg(message: MsgGenerateSeed): MsgGenerateSeedAminoMsg {
+    return {
+      type: "lum-network/millions/MsgGenerateSeed",
+      value: MsgGenerateSeed.toAmino(message)
+    };
   },
   fromProtoMsg(message: MsgGenerateSeedProtoMsg): MsgGenerateSeed {
     return MsgGenerateSeed.decode(message.value);
