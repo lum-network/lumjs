@@ -2,7 +2,7 @@
 import { MsgDeposit, MsgDepositRetry, MsgDepositEdit, MsgClaimPrize, MsgWithdrawDeposit, MsgWithdrawDepositRetry, MsgDrawRetry, MsgRestoreInterchainAccounts, MsgGenerateSeed } from "./tx";
 export const AminoConverter = {
   "/lum.network.millions.MsgDeposit": {
-    aminoType: "lum-network/millions/MsgPool",
+    aminoType: "lum-network/millions/MsgDeposit",
     toAmino: MsgDeposit.toAmino,
     fromAmino: MsgDeposit.fromAmino
   },
@@ -32,7 +32,7 @@ export const AminoConverter = {
     fromAmino: MsgWithdrawDepositRetry.fromAmino
   },
   "/lum.network.millions.MsgDrawRetry": {
-    aminoType: "lum-network/millions/MsgRetry",
+    aminoType: "lum-network/millions/MsgDrawRetry",
     toAmino: MsgDrawRetry.toAmino,
     fromAmino: MsgDrawRetry.fromAmino
   },

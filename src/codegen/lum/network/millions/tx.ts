@@ -183,7 +183,7 @@ export interface MsgDepositAmino {
   is_sponsor?: boolean;
 }
 export interface MsgDepositAminoMsg {
-  type: "lum-network/millions/MsgPool";
+  type: "lum-network/millions/MsgDeposit";
   value: MsgDepositAmino;
 }
 export interface MsgDepositSDKType {
@@ -413,7 +413,7 @@ export interface MsgDrawRetryAmino {
   draw_retry_address?: string;
 }
 export interface MsgDrawRetryAminoMsg {
-  type: "lum-network/millions/MsgRetry";
+  type: "lum-network/millions/MsgDrawRetry";
   value: MsgDrawRetryAmino;
 }
 export interface MsgDrawRetrySDKType {
@@ -1161,7 +1161,7 @@ function createBaseMsgDeposit(): MsgDeposit {
 }
 export const MsgDeposit = {
   typeUrl: "/lum.network.millions.MsgDeposit",
-  aminoType: "lum-network/millions/MsgPool",
+  aminoType: "lum-network/millions/MsgDeposit",
   encode(message: MsgDeposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -1251,7 +1251,7 @@ export const MsgDeposit = {
   },
   toAminoMsg(message: MsgDeposit): MsgDepositAminoMsg {
     return {
-      type: "lum-network/millions/MsgPool",
+      type: "lum-network/millions/MsgDeposit",
       value: MsgDeposit.toAmino(message)
     };
   },
@@ -2121,7 +2121,7 @@ function createBaseMsgDrawRetry(): MsgDrawRetry {
 }
 export const MsgDrawRetry = {
   typeUrl: "/lum.network.millions.MsgDrawRetry",
-  aminoType: "lum-network/millions/MsgRetry",
+  aminoType: "lum-network/millions/MsgDrawRetry",
   encode(message: MsgDrawRetry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.poolId !== BigInt(0)) {
       writer.uint32(8).uint64(message.poolId);
@@ -2189,7 +2189,7 @@ export const MsgDrawRetry = {
   },
   toAminoMsg(message: MsgDrawRetry): MsgDrawRetryAminoMsg {
     return {
-      type: "lum-network/millions/MsgRetry",
+      type: "lum-network/millions/MsgDrawRetry",
       value: MsgDrawRetry.toAmino(message)
     };
   },
