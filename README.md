@@ -33,38 +33,6 @@ The [Documentation](./docs/README.md) contains:
 - Code samples
 - Code auto-generated documentation
 
-## SDK Features
-
-This SDK provides an easy access to all the available Lum Network blockchain
-RPCs as well as the payload generation and the cryptographic features to
-properly consume those RPCs.
-
-**Most commonly used features:**
-
-- Core cryptographic tools:
-  - Seed, private key and encrypted mnemonic generation
-  - Private and public keys management
-  - Transaction payload generation
-  - Transaction signature and verification
-- Wallets:
-  - Unlock wallets from private keys, keystore and mnemonic
-  - Sign transaction using unlocked wallets
-- Client service:
-  - Connection to a blockchain node (http and socket mode)
-  - Commonly used Tendermint and Cosmos RPCs
-  - All Lum Network dedicated RPCs
-  - Transaction broadcast
-- Transactions
-  - Payload generation
-  - Signature
-- Messages & Types:
-  - Cosmos & Lum messages payload building
-  - Typescript implementation of RPCs requests and responses
-- Other utils:
-  - Encoding data from/to: Uint8Array, base64 and hex
-  - Build Transaction search queries
-  - Log & event parsing
-
 ## Code structure
 
 The SDK is based on the
@@ -164,7 +132,7 @@ nb: be patient, this can take up to 15min
 
 ## Credits
 
-🛠 Built witht Cosmology
+🛠 Built with Cosmology
 
 Code built with the help of these related projects:
 
