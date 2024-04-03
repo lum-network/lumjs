@@ -91,7 +91,7 @@ export const Deposit = {
   },
   toAmino(message: Deposit): DepositAmino {
     const obj: any = {};
-    obj.depositor_address = message.depositorAddress;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     return obj;

@@ -1,5 +1,5 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
-import { BeamState, Beam, BeamAmino, BeamSDKType, beamStateFromJSON } from "./beam";
+import { BeamState, Beam, BeamAmino, BeamSDKType } from "./beam";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface QueryGetBeamRequest {
   id: string;
@@ -156,7 +156,7 @@ export const QueryGetBeamRequest = {
   },
   toAmino(message: QueryGetBeamRequest): QueryGetBeamRequestAmino {
     const obj: any = {};
-    obj.id = message.id;
+    obj.id = message.id === "" ? undefined : message.id;
     return obj;
   },
   fromAminoMsg(object: QueryGetBeamRequestAminoMsg): QueryGetBeamRequest {
@@ -287,14 +287,14 @@ export const QueryFetchBeamsRequest = {
       message.pagination = PageRequest.fromAmino(object.pagination);
     }
     if (object.state !== undefined && object.state !== null) {
-      message.state = beamStateFromJSON(object.state);
+      message.state = object.state;
     }
     return message;
   },
   toAmino(message: QueryFetchBeamsRequest): QueryFetchBeamsRequestAmino {
     const obj: any = {};
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
-    obj.state = message.state;
+    obj.state = message.state === 0 ? undefined : message.state;
     return obj;
   },
   fromAminoMsg(object: QueryFetchBeamsRequestAminoMsg): QueryFetchBeamsRequest {
@@ -369,7 +369,7 @@ export const QueryFetchBeamsResponse = {
     if (message.beams) {
       obj.beams = message.beams.map(e => e ? Beam.toAmino(e) : undefined);
     } else {
-      obj.beams = [];
+      obj.beams = message.beams;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -509,7 +509,7 @@ export const QueryFetchBeamsOpenQueueResponse = {
     if (message.beamIds) {
       obj.beam_ids = message.beamIds.map(e => e);
     } else {
-      obj.beam_ids = [];
+      obj.beam_ids = message.beamIds;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

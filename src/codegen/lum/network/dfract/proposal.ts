@@ -123,10 +123,10 @@ export const WithdrawAndMintProposal = {
   },
   toAmino(message: WithdrawAndMintProposal): WithdrawAndMintProposalAmino {
     const obj: any = {};
-    obj.title = message.title;
-    obj.description = message.description;
-    obj.withdrawal_address = message.withdrawalAddress;
-    obj.micro_mint_rate = message.microMintRate ? message.microMintRate.toString() : undefined;
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
+    obj.withdrawal_address = message.withdrawalAddress === "" ? undefined : message.withdrawalAddress;
+    obj.micro_mint_rate = message.microMintRate !== BigInt(0) ? message.microMintRate.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: WithdrawAndMintProposalAminoMsg): WithdrawAndMintProposal {

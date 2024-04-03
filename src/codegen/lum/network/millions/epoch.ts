@@ -230,18 +230,18 @@ export const EpochUnbonding = {
   },
   toAmino(message: EpochUnbonding): EpochUnbondingAmino {
     const obj: any = {};
-    obj.epoch_identifier = message.epochIdentifier;
-    obj.epoch_number = message.epochNumber ? message.epochNumber.toString() : undefined;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.epoch_identifier = message.epochIdentifier === "" ? undefined : message.epochIdentifier;
+    obj.epoch_number = message.epochNumber !== BigInt(0) ? message.epochNumber.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     if (message.withdrawalIds) {
       obj.withdrawal_ids = message.withdrawalIds.map(e => e.toString());
     } else {
-      obj.withdrawal_ids = [];
+      obj.withdrawal_ids = message.withdrawalIds;
     }
-    obj.withdrawal_ids_count = message.withdrawalIdsCount ? message.withdrawalIdsCount.toString() : undefined;
+    obj.withdrawal_ids_count = message.withdrawalIdsCount !== BigInt(0) ? message.withdrawalIdsCount.toString() : undefined;
     obj.total_amount = message.totalAmount ? Coin.toAmino(message.totalAmount) : undefined;
-    obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
-    obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
+    obj.created_at_height = message.createdAtHeight !== BigInt(0) ? message.createdAtHeight.toString() : undefined;
+    obj.updated_at_height = message.updatedAtHeight !== BigInt(0) ? message.updatedAtHeight.toString() : undefined;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
@@ -361,11 +361,11 @@ export const EpochTracker = {
   },
   toAmino(message: EpochTracker): EpochTrackerAmino {
     const obj: any = {};
-    obj.epoch_tracker_type = message.epochTrackerType;
-    obj.epoch_identifier = message.epochIdentifier;
-    obj.epoch_number = message.epochNumber ? message.epochNumber.toString() : undefined;
-    obj.next_epoch_number = message.nextEpochNumber ? message.nextEpochNumber.toString() : undefined;
-    obj.previous_epoch_number = message.previousEpochNumber ? message.previousEpochNumber.toString() : undefined;
+    obj.epoch_tracker_type = message.epochTrackerType === "" ? undefined : message.epochTrackerType;
+    obj.epoch_identifier = message.epochIdentifier === "" ? undefined : message.epochIdentifier;
+    obj.epoch_number = message.epochNumber !== BigInt(0) ? message.epochNumber.toString() : undefined;
+    obj.next_epoch_number = message.nextEpochNumber !== BigInt(0) ? message.nextEpochNumber.toString() : undefined;
+    obj.previous_epoch_number = message.previousEpochNumber !== BigInt(0) ? message.previousEpochNumber.toString() : undefined;
     obj.next_epoch_start_time = message.nextEpochStartTime ? Timestamp.toAmino(toTimestamp(message.nextEpochStartTime)) : undefined;
     return obj;
   },

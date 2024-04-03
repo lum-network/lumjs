@@ -117,7 +117,7 @@ export const MsgDeposit = {
   },
   toAmino(message: MsgDeposit): MsgDepositAmino {
     const obj: any = {};
-    obj.depositor_address = message.depositorAddress;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
     return obj;
   },
@@ -242,8 +242,8 @@ export const MsgWithdrawAndMint = {
   },
   toAmino(message: MsgWithdrawAndMint): MsgWithdrawAndMintAmino {
     const obj: any = {};
-    obj.address = message.address;
-    obj.micro_mint_rate = message.microMintRate ? message.microMintRate.toString() : undefined;
+    obj.address = message.address === "" ? undefined : message.address;
+    obj.micro_mint_rate = message.microMintRate !== BigInt(0) ? message.microMintRate.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawAndMintAminoMsg): MsgWithdrawAndMint {

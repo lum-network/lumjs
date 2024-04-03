@@ -272,7 +272,7 @@ export const QueryModuleAccountBalanceResponse = {
     if (message.moduleAccountBalance) {
       obj.module_account_balance = message.moduleAccountBalance.map(e => e ? Coin.toAmino(e) : undefined);
     } else {
-      obj.module_account_balance = [];
+      obj.module_account_balance = message.moduleAccountBalance;
     }
     return obj;
   },
@@ -449,7 +449,7 @@ export const QueryGetDepositsForAddressRequest = {
   },
   toAmino(message: QueryGetDepositsForAddressRequest): QueryGetDepositsForAddressRequestAmino {
     const obj: any = {};
-    obj.address = message.address;
+    obj.address = message.address === "" ? undefined : message.address;
     return obj;
   },
   fromAminoMsg(object: QueryGetDepositsForAddressRequestAminoMsg): QueryGetDepositsForAddressRequest {
@@ -517,14 +517,14 @@ export const QueryFetchDepositsRequest = {
       message.pagination = PageRequest.fromAmino(object.pagination);
     }
     if (object.type !== undefined && object.type !== null) {
-      message.type = depositsQueryTypeFromJSON(object.type);
+      message.type = object.type;
     }
     return message;
   },
   toAmino(message: QueryFetchDepositsRequest): QueryFetchDepositsRequestAmino {
     const obj: any = {};
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
-    obj.type = message.type;
+    obj.type = message.type === 0 ? undefined : message.type;
     return obj;
   },
   fromAminoMsg(object: QueryFetchDepositsRequestAminoMsg): QueryFetchDepositsRequest {
@@ -686,7 +686,7 @@ export const QueryFetchDepositsResponse = {
     if (message.deposits) {
       obj.deposits = message.deposits.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {
-      obj.deposits = [];
+      obj.deposits = message.deposits;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

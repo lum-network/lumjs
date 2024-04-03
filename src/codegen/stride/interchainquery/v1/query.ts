@@ -151,7 +151,7 @@ export const QueryPendingQueriesResponse = {
     if (message.pendingQueries) {
       obj.pending_queries = message.pendingQueries.map(e => e ? Query.toAmino(e) : undefined);
     } else {
-      obj.pending_queries = [];
+      obj.pending_queries = message.pendingQueries;
     }
     return obj;
   },
@@ -266,7 +266,7 @@ export const QueryQueriesResponse = {
     if (message.queries) {
       obj.queries = message.queries.map(e => e ? Query.toAmino(e) : undefined);
     } else {
-      obj.queries = [];
+      obj.queries = message.queries;
     }
     return obj;
   },

@@ -129,16 +129,16 @@ export const ProposalUpdateParams = {
   },
   toAmino(message: ProposalUpdateParams): ProposalUpdateParamsAmino {
     const obj: any = {};
-    obj.title = message.title;
-    obj.description = message.description;
-    obj.withdrawal_address = message.withdrawalAddress;
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
+    obj.withdrawal_address = message.withdrawalAddress === "" ? undefined : message.withdrawalAddress;
     obj.is_deposit_enabled = message.isDepositEnabled ? BoolValue.toAmino(message.isDepositEnabled) : undefined;
     if (message.depositDenoms) {
       obj.deposit_denoms = message.depositDenoms.map(e => e);
     } else {
-      obj.deposit_denoms = [];
+      obj.deposit_denoms = message.depositDenoms;
     }
-    obj.min_deposit_amount = message.minDepositAmount;
+    obj.min_deposit_amount = message.minDepositAmount === null ? undefined : message.minDepositAmount;
     return obj;
   },
   fromAminoMsg(object: ProposalUpdateParamsAminoMsg): ProposalUpdateParams {

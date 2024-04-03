@@ -103,10 +103,10 @@ export const PrizeBatch = {
   },
   toAmino(message: PrizeBatch): PrizeBatchAmino {
     const obj: any = {};
-    obj.pool_percent = message.poolPercent ? message.poolPercent.toString() : undefined;
-    obj.quantity = message.quantity ? message.quantity.toString() : undefined;
-    obj.draw_probability = message.drawProbability;
-    obj.is_unique = message.isUnique;
+    obj.pool_percent = message.poolPercent !== BigInt(0) ? message.poolPercent.toString() : undefined;
+    obj.quantity = message.quantity !== BigInt(0) ? message.quantity.toString() : undefined;
+    obj.draw_probability = message.drawProbability === "" ? undefined : message.drawProbability;
+    obj.is_unique = message.isUnique === false ? undefined : message.isUnique;
     return obj;
   },
   fromAminoMsg(object: PrizeBatchAminoMsg): PrizeBatch {

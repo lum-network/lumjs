@@ -92,11 +92,11 @@ export const GenesisState = {
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
-    obj.port_id = message.portId;
+    obj.port_id = message.portId === "" ? undefined : message.portId;
     if (message.callbackDataList) {
       obj.callback_data_list = message.callbackDataList.map(e => e ? CallbackData.toAmino(e) : undefined);
     } else {
-      obj.callback_data_list = [];
+      obj.callback_data_list = message.callbackDataList;
     }
     return obj;
   },

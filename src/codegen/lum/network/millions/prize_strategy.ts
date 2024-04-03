@@ -62,7 +62,7 @@ export const PrizeStrategy = {
     if (message.prizeBatches) {
       obj.prize_batches = message.prizeBatches.map(e => e ? PrizeBatch.toAmino(e) : undefined);
     } else {
-      obj.prize_batches = [];
+      obj.prize_batches = message.prizeBatches;
     }
     return obj;
   },

@@ -281,8 +281,8 @@ export const SplitDelegation = {
   },
   toAmino(message: SplitDelegation): SplitDelegationAmino {
     const obj: any = {};
-    obj.validator_address = message.validatorAddress;
-    obj.amount = message.amount;
+    obj.validator_address = message.validatorAddress === "" ? undefined : message.validatorAddress;
+    obj.amount = message.amount === "" ? undefined : message.amount;
     return obj;
   },
   fromAminoMsg(object: SplitDelegationAminoMsg): SplitDelegation {
@@ -365,12 +365,12 @@ export const DelegateCallback = {
   },
   toAmino(message: DelegateCallback): DelegateCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
     if (message.splitDelegations) {
       obj.split_delegations = message.splitDelegations.map(e => e ? SplitDelegation.toAmino(e) : undefined);
     } else {
-      obj.split_delegations = [];
+      obj.split_delegations = message.splitDelegations;
     }
     return obj;
   },
@@ -452,11 +452,11 @@ export const UndelegateCallback = {
   },
   toAmino(message: UndelegateCallback): UndelegateCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     if (message.withdrawalIds) {
       obj.withdrawal_ids = message.withdrawalIds.map(e => e.toString());
     } else {
-      obj.withdrawal_ids = [];
+      obj.withdrawal_ids = message.withdrawalIds;
     }
     return obj;
   },
@@ -540,12 +540,12 @@ export const RedelegateCallback = {
   },
   toAmino(message: RedelegateCallback): RedelegateCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.operator_address = message.operatorAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.operator_address = message.operatorAddress === "" ? undefined : message.operatorAddress;
     if (message.splitDelegations) {
       obj.split_delegations = message.splitDelegations.map(e => e ? SplitDelegation.toAmino(e) : undefined);
     } else {
-      obj.split_delegations = [];
+      obj.split_delegations = message.splitDelegations;
     }
     return obj;
   },
@@ -620,8 +620,8 @@ export const ClaimRewardsCallback = {
   },
   toAmino(message: ClaimRewardsCallback): ClaimRewardsCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: ClaimRewardsCallbackAminoMsg): ClaimRewardsCallback {
@@ -695,8 +695,8 @@ export const TransferToNativeCallback = {
   },
   toAmino(message: TransferToNativeCallback): TransferToNativeCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: TransferToNativeCallbackAminoMsg): TransferToNativeCallback {
@@ -777,7 +777,7 @@ export const TransferFromNativeCallback = {
   fromAmino(object: TransferFromNativeCallbackAmino): TransferFromNativeCallback {
     const message = createBaseTransferFromNativeCallback();
     if (object.type !== undefined && object.type !== null) {
-      message.type = transferTypeFromJSON(object.type);
+      message.type = object.type;
     }
     if (object.pool_id !== undefined && object.pool_id !== null) {
       message.poolId = BigInt(object.pool_id);
@@ -792,10 +792,10 @@ export const TransferFromNativeCallback = {
   },
   toAmino(message: TransferFromNativeCallback): TransferFromNativeCallbackAmino {
     const obj: any = {};
-    obj.type = message.type;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.withdrawal_id = message.withdrawalId ? message.withdrawalId.toString() : undefined;
+    obj.type = message.type === 0 ? undefined : message.type;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.withdrawal_id = message.withdrawalId !== BigInt(0) ? message.withdrawalId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: TransferFromNativeCallbackAminoMsg): TransferFromNativeCallback {
@@ -858,7 +858,7 @@ export const SetWithdrawAddressCallback = {
   },
   toAmino(message: SetWithdrawAddressCallback): SetWithdrawAddressCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: SetWithdrawAddressCallbackAminoMsg): SetWithdrawAddressCallback {
@@ -932,8 +932,8 @@ export const BankSendCallback = {
   },
   toAmino(message: BankSendCallback): BankSendCallbackAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.withdrawal_id = message.withdrawalId ? message.withdrawalId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.withdrawal_id = message.withdrawalId !== BigInt(0) ? message.withdrawalId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: BankSendCallbackAminoMsg): BankSendCallback {

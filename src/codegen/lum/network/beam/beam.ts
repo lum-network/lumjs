@@ -559,9 +559,9 @@ export const BeamMedia = {
   },
   toAmino(message: BeamMedia): BeamMediaAmino {
     const obj: any = {};
-    obj.mimetype = message.mimetype;
-    obj.url = message.url;
-    obj.thumbnail_url = message.thumbnailUrl;
+    obj.mimetype = message.mimetype === "" ? undefined : message.mimetype;
+    obj.url = message.url === "" ? undefined : message.url;
+    obj.thumbnail_url = message.thumbnailUrl === "" ? undefined : message.thumbnailUrl;
     return obj;
   },
   fromAminoMsg(object: BeamMediaAminoMsg): BeamMedia {
@@ -646,9 +646,9 @@ export const BeamReviewer = {
   },
   toAmino(message: BeamReviewer): BeamReviewerAmino {
     const obj: any = {};
-    obj.reviewer_id = message.reviewerId;
-    obj.name = message.name;
-    obj.is_anonymous = message.isAnonymous;
+    obj.reviewer_id = message.reviewerId === "" ? undefined : message.reviewerId;
+    obj.name = message.name === "" ? undefined : message.name;
+    obj.is_anonymous = message.isAnonymous === false ? undefined : message.isAnonymous;
     return obj;
   },
   fromAminoMsg(object: BeamReviewerAminoMsg): BeamReviewer {
@@ -733,9 +733,9 @@ export const BeamVerifier = {
   },
   toAmino(message: BeamVerifier): BeamVerifierAmino {
     const obj: any = {};
-    obj.name = message.name;
-    obj.url = message.url;
-    obj.signature = message.signature;
+    obj.name = message.name === "" ? undefined : message.name;
+    obj.url = message.url === "" ? undefined : message.url;
+    obj.signature = message.signature === "" ? undefined : message.signature;
     return obj;
   },
   fromAminoMsg(object: BeamVerifierAminoMsg): BeamVerifier {
@@ -851,15 +851,15 @@ export const BeamReward = {
   },
   toAmino(message: BeamReward): BeamRewardAmino {
     const obj: any = {};
-    obj.trigger = message.trigger;
-    obj.amount = message.amount;
-    obj.max_amount = message.maxAmount;
-    obj.currency = message.currency;
-    obj.status = message.status;
+    obj.trigger = message.trigger === "" ? undefined : message.trigger;
+    obj.amount = message.amount === 0 ? undefined : message.amount;
+    obj.max_amount = message.maxAmount === 0 ? undefined : message.maxAmount;
+    obj.currency = message.currency === "" ? undefined : message.currency;
+    obj.status = message.status === "" ? undefined : message.status;
     if (message.details) {
       obj.details = message.details.map(e => e ? BeamReward_BeamRewardDetails.toAmino(e) : undefined);
     } else {
-      obj.details = [];
+      obj.details = message.details;
     }
     return obj;
   },
@@ -956,10 +956,10 @@ export const BeamReward_BeamRewardDetails = {
   },
   toAmino(message: BeamReward_BeamRewardDetails): BeamReward_BeamRewardDetailsAmino {
     const obj: any = {};
-    obj.type = message.type;
-    obj.amount = message.amount;
-    obj.max_amount = message.maxAmount;
-    obj.status = message.status;
+    obj.type = message.type === "" ? undefined : message.type;
+    obj.amount = message.amount === 0 ? undefined : message.amount;
+    obj.max_amount = message.maxAmount === 0 ? undefined : message.maxAmount;
+    obj.status = message.status === "" ? undefined : message.status;
     return obj;
   },
   fromAminoMsg(object: BeamReward_BeamRewardDetailsAminoMsg): BeamReward_BeamRewardDetails {
@@ -1121,15 +1121,15 @@ export const BeamMerchantReview = {
   },
   toAmino(message: BeamMerchantReview): BeamMerchantReviewAmino {
     const obj: any = {};
-    obj.order_id = message.orderId;
-    obj.review_id = message.reviewId;
-    obj.merchant_url = message.merchantUrl;
-    obj.rating_url = message.ratingUrl;
-    obj.review_url = message.reviewUrl;
-    obj.collection_method = message.collectionMethod;
-    obj.timestamp = message.timestamp;
+    obj.order_id = message.orderId === "" ? undefined : message.orderId;
+    obj.review_id = message.reviewId === "" ? undefined : message.reviewId;
+    obj.merchant_url = message.merchantUrl === "" ? undefined : message.merchantUrl;
+    obj.rating_url = message.ratingUrl === "" ? undefined : message.ratingUrl;
+    obj.review_url = message.reviewUrl === "" ? undefined : message.reviewUrl;
+    obj.collection_method = message.collectionMethod === "" ? undefined : message.collectionMethod;
+    obj.timestamp = message.timestamp === "" ? undefined : message.timestamp;
     obj.ratings = message.ratings ? BeamMerchantReview_BeamMerchantReviewRating.toAmino(message.ratings) : undefined;
-    obj.title = message.title;
+    obj.title = message.title === "" ? undefined : message.title;
     obj.content = message.content ? BeamMerchantReview_BeamMerchantReviewContent.toAmino(message.content) : undefined;
     return obj;
   },
@@ -1215,9 +1215,9 @@ export const BeamMerchantReview_BeamMerchantReviewRating = {
   },
   toAmino(message: BeamMerchantReview_BeamMerchantReviewRating): BeamMerchantReview_BeamMerchantReviewRatingAmino {
     const obj: any = {};
-    obj.overall = message.overall;
-    obj.customer_service = message.customerService;
-    obj.nps = message.nps;
+    obj.overall = message.overall === 0 ? undefined : message.overall;
+    obj.customer_service = message.customerService === 0 ? undefined : message.customerService;
+    obj.nps = message.nps === 0 ? undefined : message.nps;
     return obj;
   },
   fromAminoMsg(object: BeamMerchantReview_BeamMerchantReviewRatingAminoMsg): BeamMerchantReview_BeamMerchantReviewRating {
@@ -1291,8 +1291,8 @@ export const BeamMerchantReview_BeamMerchantReviewContent = {
   },
   toAmino(message: BeamMerchantReview_BeamMerchantReviewContent): BeamMerchantReview_BeamMerchantReviewContentAmino {
     const obj: any = {};
-    obj.overall = message.overall;
-    obj.customer_service = message.customerService;
+    obj.overall = message.overall === "" ? undefined : message.overall;
+    obj.customer_service = message.customerService === "" ? undefined : message.customerService;
     return obj;
   },
   fromAminoMsg(object: BeamMerchantReview_BeamMerchantReviewContentAminoMsg): BeamMerchantReview_BeamMerchantReviewContent {
@@ -1461,24 +1461,24 @@ export const BeamProductReview = {
   },
   toAmino(message: BeamProductReview): BeamProductReviewAmino {
     const obj: any = {};
-    obj.order_id = message.orderId;
-    obj.review_id = message.reviewId;
-    obj.rating_url = message.ratingUrl;
-    obj.review_url = message.reviewUrl;
-    obj.collection_method = message.collectionMethod;
-    obj.timestamp = message.timestamp;
+    obj.order_id = message.orderId === "" ? undefined : message.orderId;
+    obj.review_id = message.reviewId === "" ? undefined : message.reviewId;
+    obj.rating_url = message.ratingUrl === "" ? undefined : message.ratingUrl;
+    obj.review_url = message.reviewUrl === "" ? undefined : message.reviewUrl;
+    obj.collection_method = message.collectionMethod === "" ? undefined : message.collectionMethod;
+    obj.timestamp = message.timestamp === "" ? undefined : message.timestamp;
     obj.ratings = message.ratings ? BeamProductReview_BeamProductReviewRating.toAmino(message.ratings) : undefined;
-    obj.title = message.title;
+    obj.title = message.title === "" ? undefined : message.title;
     obj.content = message.content ? BeamProductReview_BeamProductReviewContent.toAmino(message.content) : undefined;
     if (message.medias) {
       obj.medias = message.medias.map(e => e ? BeamMedia.toAmino(e) : undefined);
     } else {
-      obj.medias = [];
+      obj.medias = message.medias;
     }
     if (message.products) {
       obj.products = message.products.map(e => e ? BeamProductReview_BeamProduct.toAmino(e) : undefined);
     } else {
-      obj.products = [];
+      obj.products = message.products;
     }
     return obj;
   },
@@ -1553,8 +1553,8 @@ export const BeamProductReview_BeamProductReviewRating = {
   },
   toAmino(message: BeamProductReview_BeamProductReviewRating): BeamProductReview_BeamProductReviewRatingAmino {
     const obj: any = {};
-    obj.overall = message.overall;
-    obj.quality = message.quality;
+    obj.overall = message.overall === 0 ? undefined : message.overall;
+    obj.quality = message.quality === 0 ? undefined : message.quality;
     return obj;
   },
   fromAminoMsg(object: BeamProductReview_BeamProductReviewRatingAminoMsg): BeamProductReview_BeamProductReviewRating {
@@ -1639,9 +1639,9 @@ export const BeamProductReview_BeamProductReviewContent = {
   },
   toAmino(message: BeamProductReview_BeamProductReviewContent): BeamProductReview_BeamProductReviewContentAmino {
     const obj: any = {};
-    obj.overall = message.overall;
-    obj.pros = message.pros;
-    obj.cons = message.cons;
+    obj.overall = message.overall === "" ? undefined : message.overall;
+    obj.pros = message.pros === "" ? undefined : message.pros;
+    obj.cons = message.cons === "" ? undefined : message.cons;
     return obj;
   },
   fromAminoMsg(object: BeamProductReview_BeamProductReviewContentAminoMsg): BeamProductReview_BeamProductReviewContent {
@@ -1735,12 +1735,12 @@ export const BeamProductReview_BeamProduct = {
   },
   toAmino(message: BeamProductReview_BeamProduct): BeamProductReview_BeamProductAmino {
     const obj: any = {};
-    obj.name = message.name;
-    obj.url = message.url;
+    obj.name = message.name === "" ? undefined : message.name;
+    obj.url = message.url === "" ? undefined : message.url;
     if (message.urls) {
       obj.urls = message.urls.map(e => e);
     } else {
-      obj.urls = [];
+      obj.urls = message.urls;
     }
     obj.ids = message.ids ? BeamProductReview_BeamProduct_BeamProductIds.toAmino(message.ids) : undefined;
     return obj;
@@ -1833,22 +1833,22 @@ export const BeamProductReview_BeamProduct_BeamProductIds = {
     if (message.gtins) {
       obj.gtins = message.gtins.map(e => e);
     } else {
-      obj.gtins = [];
+      obj.gtins = message.gtins;
     }
     if (message.mpns) {
       obj.mpns = message.mpns.map(e => e);
     } else {
-      obj.mpns = [];
+      obj.mpns = message.mpns;
     }
     if (message.skus) {
       obj.skus = message.skus.map(e => e);
     } else {
-      obj.skus = [];
+      obj.skus = message.skus;
     }
     if (message.asins) {
       obj.asins = message.asins.map(e => e);
     } else {
-      obj.asins = [];
+      obj.asins = message.asins;
     }
     return obj;
   },
@@ -1961,7 +1961,7 @@ export const BeamData = {
     if (message.productsReviews) {
       obj.products_reviews = message.productsReviews.map(e => e ? BeamProductReview.toAmino(e) : undefined);
     } else {
-      obj.products_reviews = [];
+      obj.products_reviews = message.productsReviews;
     }
     return obj;
   },
@@ -2148,7 +2148,7 @@ export const Beam = {
       message.amount = Coin.fromAmino(object.amount);
     }
     if (object.status !== undefined && object.status !== null) {
-      message.status = beamStateFromJSON(object.status);
+      message.status = object.status;
     }
     if (object.secret !== undefined && object.secret !== null) {
       message.secret = object.secret;
@@ -2190,20 +2190,20 @@ export const Beam = {
   },
   toAmino(message: Beam): BeamAmino {
     const obj: any = {};
-    obj.creator_address = message.creatorAddress;
-    obj.id = message.id;
+    obj.creator_address = message.creatorAddress === "" ? undefined : message.creatorAddress;
+    obj.id = message.id === "" ? undefined : message.id;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
-    obj.status = message.status;
-    obj.secret = message.secret;
-    obj.claim_address = message.claimAddress;
-    obj.funds_withdrawn = message.fundsWithdrawn;
-    obj.claimed = message.claimed;
-    obj.cancel_reason = message.cancelReason;
-    obj.hide_content = message.hideContent;
-    obj.schema = message.schema;
+    obj.status = message.status === 0 ? undefined : message.status;
+    obj.secret = message.secret === "" ? undefined : message.secret;
+    obj.claim_address = message.claimAddress === "" ? undefined : message.claimAddress;
+    obj.funds_withdrawn = message.fundsWithdrawn === false ? undefined : message.fundsWithdrawn;
+    obj.claimed = message.claimed === false ? undefined : message.claimed;
+    obj.cancel_reason = message.cancelReason === "" ? undefined : message.cancelReason;
+    obj.hide_content = message.hideContent === false ? undefined : message.hideContent;
+    obj.schema = message.schema === "" ? undefined : message.schema;
     obj.data = message.data ? BeamData.toAmino(message.data) : undefined;
-    obj.claim_expires_at_block = message.claimExpiresAtBlock;
-    obj.closes_at_block = message.closesAtBlock;
+    obj.claim_expires_at_block = message.claimExpiresAtBlock === 0 ? undefined : message.claimExpiresAtBlock;
+    obj.closes_at_block = message.closesAtBlock === 0 ? undefined : message.closesAtBlock;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     obj.closed_at = message.closedAt ? Timestamp.toAmino(toTimestamp(message.closedAt)) : undefined;
     return obj;

@@ -234,10 +234,10 @@ export const Deposit = {
       message.depositId = BigInt(object.deposit_id);
     }
     if (object.state !== undefined && object.state !== null) {
-      message.state = depositStateFromJSON(object.state);
+      message.state = object.state;
     }
     if (object.error_state !== undefined && object.error_state !== null) {
-      message.errorState = depositStateFromJSON(object.error_state);
+      message.errorState = object.error_state;
     }
     if (object.depositor_address !== undefined && object.depositor_address !== null) {
       message.depositorAddress = object.depositor_address;
@@ -267,16 +267,16 @@ export const Deposit = {
   },
   toAmino(message: Deposit): DepositAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
-    obj.state = message.state;
-    obj.error_state = message.errorState;
-    obj.depositor_address = message.depositorAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
+    obj.state = message.state === 0 ? undefined : message.state;
+    obj.error_state = message.errorState === 0 ? undefined : message.errorState;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
-    obj.winner_address = message.winnerAddress;
-    obj.is_sponsor = message.isSponsor;
-    obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
-    obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
+    obj.is_sponsor = message.isSponsor === false ? undefined : message.isSponsor;
+    obj.created_at_height = message.createdAtHeight !== BigInt(0) ? message.createdAtHeight.toString() : undefined;
+    obj.updated_at_height = message.updatedAtHeight !== BigInt(0) ? message.updatedAtHeight.toString() : undefined;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;

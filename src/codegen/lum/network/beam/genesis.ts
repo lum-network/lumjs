@@ -81,7 +81,7 @@ export const GenesisState = {
     if (message.beams) {
       obj.beams = message.beams.map(e => e ? Beam.toAmino(e) : undefined);
     } else {
-      obj.beams = [];
+      obj.beams = message.beams;
     }
     return obj;
   },

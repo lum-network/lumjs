@@ -158,12 +158,12 @@ export const MsgSubmitQueryResponse = {
   },
   toAmino(message: MsgSubmitQueryResponse): MsgSubmitQueryResponseAmino {
     const obj: any = {};
-    obj.chain_id = message.chainId;
-    obj.query_id = message.queryId;
+    obj.chain_id = message.chainId === "" ? undefined : message.chainId;
+    obj.query_id = message.queryId === "" ? undefined : message.queryId;
     obj.result = message.result ? base64FromBytes(message.result) : undefined;
     obj.proof_ops = message.proofOps ? ProofOps.toAmino(message.proofOps) : undefined;
-    obj.height = message.height ? message.height.toString() : undefined;
-    obj.from_address = message.fromAddress;
+    obj.height = message.height !== BigInt(0) ? message.height.toString() : undefined;
+    obj.from_address = message.fromAddress === "" ? undefined : message.fromAddress;
     return obj;
   },
   fromAminoMsg(object: MsgSubmitQueryResponseAminoMsg): MsgSubmitQueryResponse {

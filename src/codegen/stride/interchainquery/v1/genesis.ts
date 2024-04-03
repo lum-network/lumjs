@@ -302,7 +302,7 @@ export const Query = {
       message.extraId = object.extra_id;
     }
     if (object.timeout_policy !== undefined && object.timeout_policy !== null) {
-      message.timeoutPolicy = timeoutPolicyFromJSON(object.timeout_policy);
+      message.timeoutPolicy = object.timeout_policy;
     }
     if (object.timeout_duration !== undefined && object.timeout_duration !== null) {
       message.timeoutDuration = Duration.fromAmino(object.timeout_duration);
@@ -314,19 +314,19 @@ export const Query = {
   },
   toAmino(message: Query): QueryAmino {
     const obj: any = {};
-    obj.id = message.id;
-    obj.connection_id = message.connectionId;
-    obj.chain_id = message.chainId;
-    obj.query_type = message.queryType;
+    obj.id = message.id === "" ? undefined : message.id;
+    obj.connection_id = message.connectionId === "" ? undefined : message.connectionId;
+    obj.chain_id = message.chainId === "" ? undefined : message.chainId;
+    obj.query_type = message.queryType === "" ? undefined : message.queryType;
     obj.request = message.request ? base64FromBytes(message.request) : undefined;
-    obj.callback_module_name = message.callbackModuleName;
-    obj.callback_id = message.callbackId;
-    obj.timeout_timestamp = message.timeoutTimestamp ? message.timeoutTimestamp.toString() : undefined;
-    obj.request_sent = message.requestSent;
-    obj.extra_id = message.extraId;
-    obj.timeout_policy = message.timeoutPolicy;
+    obj.callback_module_name = message.callbackModuleName === "" ? undefined : message.callbackModuleName;
+    obj.callback_id = message.callbackId === "" ? undefined : message.callbackId;
+    obj.timeout_timestamp = message.timeoutTimestamp !== BigInt(0) ? message.timeoutTimestamp.toString() : undefined;
+    obj.request_sent = message.requestSent === false ? undefined : message.requestSent;
+    obj.extra_id = message.extraId === "" ? undefined : message.extraId;
+    obj.timeout_policy = message.timeoutPolicy === 0 ? undefined : message.timeoutPolicy;
     obj.timeout_duration = message.timeoutDuration ? Duration.toAmino(message.timeoutDuration) : undefined;
-    obj.submission_height = message.submissionHeight ? message.submissionHeight.toString() : undefined;
+    obj.submission_height = message.submissionHeight !== BigInt(0) ? message.submissionHeight.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryAminoMsg): Query {
@@ -422,9 +422,9 @@ export const DataPoint = {
   },
   toAmino(message: DataPoint): DataPointAmino {
     const obj: any = {};
-    obj.id = message.id;
-    obj.remote_height = message.remoteHeight;
-    obj.local_height = message.localHeight;
+    obj.id = message.id === "" ? undefined : message.id;
+    obj.remote_height = message.remoteHeight === "" ? undefined : message.remoteHeight;
+    obj.local_height = message.localHeight === "" ? undefined : message.localHeight;
     obj.value = message.value ? base64FromBytes(message.value) : undefined;
     return obj;
   },
@@ -489,7 +489,7 @@ export const GenesisState = {
     if (message.queries) {
       obj.queries = message.queries.map(e => e ? Query.toAmino(e) : undefined);
     } else {
-      obj.queries = [];
+      obj.queries = message.queries;
     }
     return obj;
   },

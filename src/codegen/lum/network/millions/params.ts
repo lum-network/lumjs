@@ -201,9 +201,9 @@ export const Params = {
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
-    obj.min_deposit_amount = message.minDepositAmount;
-    obj.max_prize_strategy_batches = message.maxPrizeStrategyBatches ? message.maxPrizeStrategyBatches.toString() : undefined;
-    obj.max_prize_batch_quantity = message.maxPrizeBatchQuantity ? message.maxPrizeBatchQuantity.toString() : undefined;
+    obj.min_deposit_amount = message.minDepositAmount === "" ? undefined : message.minDepositAmount;
+    obj.max_prize_strategy_batches = message.maxPrizeStrategyBatches !== BigInt(0) ? message.maxPrizeStrategyBatches.toString() : undefined;
+    obj.max_prize_batch_quantity = message.maxPrizeBatchQuantity !== BigInt(0) ? message.maxPrizeBatchQuantity.toString() : undefined;
     obj.min_draw_schedule_delta = message.minDrawScheduleDelta ? Duration.toAmino(message.minDrawScheduleDelta) : undefined;
     obj.max_draw_schedule_delta = message.maxDrawScheduleDelta ? Duration.toAmino(message.maxDrawScheduleDelta) : undefined;
     obj.prize_expiration_delta = message.prizeExpirationDelta ? Duration.toAmino(message.prizeExpirationDelta) : undefined;

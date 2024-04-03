@@ -130,9 +130,9 @@ export const EventGrant = {
   },
   toAmino(message: EventGrant): EventGrantAmino {
     const obj: any = {};
-    obj.msg_type_url = message.msgTypeUrl;
-    obj.granter = message.granter;
-    obj.grantee = message.grantee;
+    obj.msg_type_url = message.msgTypeUrl === "" ? undefined : message.msgTypeUrl;
+    obj.granter = message.granter === "" ? undefined : message.granter;
+    obj.grantee = message.grantee === "" ? undefined : message.grantee;
     return obj;
   },
   fromAminoMsg(object: EventGrantAminoMsg): EventGrant {
@@ -224,9 +224,9 @@ export const EventRevoke = {
   },
   toAmino(message: EventRevoke): EventRevokeAmino {
     const obj: any = {};
-    obj.msg_type_url = message.msgTypeUrl;
-    obj.granter = message.granter;
-    obj.grantee = message.grantee;
+    obj.msg_type_url = message.msgTypeUrl === "" ? undefined : message.msgTypeUrl;
+    obj.granter = message.granter === "" ? undefined : message.granter;
+    obj.grantee = message.grantee === "" ? undefined : message.grantee;
     return obj;
   },
   fromAminoMsg(object: EventRevokeAminoMsg): EventRevoke {

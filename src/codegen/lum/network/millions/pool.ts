@@ -2,7 +2,7 @@ import { DrawSchedule, DrawScheduleAmino, DrawScheduleSDKType } from "./draw_sch
 import { PrizeStrategy, PrizeStrategyAmino, PrizeStrategySDKType } from "./prize_strategy";
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import { DrawState, drawStateFromJSON } from "./draw";
+import { DrawState } from "./draw";
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { Decimal } from "@cosmjs/math";
@@ -22,7 +22,8 @@ export enum PoolState {
   POOL_STATE_CREATED = 1,
   POOL_STATE_READY = 2,
   POOL_STATE_PAUSED = 3,
-  POOL_STATE_KILLED = 4,
+  POOL_STATE_CLOSING = 4,
+  POOL_STATE_CLOSED = 5,
   UNRECOGNIZED = -1,
 }
 export const PoolStateSDKType = PoolState;
@@ -42,8 +43,11 @@ export function poolStateFromJSON(object: any): PoolState {
     case "POOL_STATE_PAUSED":
       return PoolState.POOL_STATE_PAUSED;
     case 4:
-    case "POOL_STATE_KILLED":
-      return PoolState.POOL_STATE_KILLED;
+    case "POOL_STATE_CLOSING":
+      return PoolState.POOL_STATE_CLOSING;
+    case 5:
+    case "POOL_STATE_CLOSED":
+      return PoolState.POOL_STATE_CLOSED;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -60,8 +64,10 @@ export function poolStateToJSON(object: PoolState): string {
       return "POOL_STATE_READY";
     case PoolState.POOL_STATE_PAUSED:
       return "POOL_STATE_PAUSED";
-    case PoolState.POOL_STATE_KILLED:
-      return "POOL_STATE_KILLED";
+    case PoolState.POOL_STATE_CLOSING:
+      return "POOL_STATE_CLOSING";
+    case PoolState.POOL_STATE_CLOSED:
+      return "POOL_STATE_CLOSED";
     case PoolState.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -367,15 +373,15 @@ export const FeeTaker = {
       message.amount = object.amount;
     }
     if (object.type !== undefined && object.type !== null) {
-      message.type = feeTakerTypeFromJSON(object.type);
+      message.type = object.type;
     }
     return message;
   },
   toAmino(message: FeeTaker): FeeTakerAmino {
     const obj: any = {};
-    obj.destination = message.destination;
-    obj.amount = message.amount;
-    obj.type = message.type;
+    obj.destination = message.destination === "" ? undefined : message.destination;
+    obj.amount = message.amount === "" ? undefined : message.amount;
+    obj.type = message.type === 0 ? undefined : message.type;
     return obj;
   },
   fromAminoMsg(object: FeeTakerAminoMsg): FeeTaker {
@@ -712,7 +718,7 @@ export const Pool = {
       message.icaPrizepoolPortId = object.ica_prizepool_port_id;
     }
     if (object.pool_type !== undefined && object.pool_type !== null) {
-      message.poolType = poolTypeFromJSON(object.pool_type);
+      message.poolType = object.pool_type;
     }
     message.validators = object.validators?.map(e => PoolValidator.fromAmino(e)) || [];
     if (object.bech32_prefix_acc_addr !== undefined && object.bech32_prefix_acc_addr !== null) {
@@ -761,14 +767,14 @@ export const Pool = {
       message.lastDrawCreatedAt = fromTimestamp(Timestamp.fromAmino(object.last_draw_created_at));
     }
     if (object.last_draw_state !== undefined && object.last_draw_state !== null) {
-      message.lastDrawState = drawStateFromJSON(object.last_draw_state);
+      message.lastDrawState = object.last_draw_state;
     }
     if (object.available_prize_pool !== undefined && object.available_prize_pool !== null) {
       message.availablePrizePool = Coin.fromAmino(object.available_prize_pool);
     }
     message.feeTakers = object.fee_takers?.map(e => FeeTaker.fromAmino(e)) || [];
     if (object.state !== undefined && object.state !== null) {
-      message.state = poolStateFromJSON(object.state);
+      message.state = object.state;
     }
     if (object.created_at_height !== undefined && object.created_at_height !== null) {
       message.createdAtHeight = BigInt(object.created_at_height);
@@ -786,45 +792,45 @@ export const Pool = {
   },
   toAmino(message: Pool): PoolAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.denom = message.denom;
-    obj.native_denom = message.nativeDenom;
-    obj.chain_id = message.chainId;
-    obj.connection_id = message.connectionId;
-    obj.transfer_channel_id = message.transferChannelId;
-    obj.ica_deposit_port_id = message.icaDepositPortId;
-    obj.ica_prizepool_port_id = message.icaPrizepoolPortId;
-    obj.pool_type = message.poolType;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.denom = message.denom === "" ? undefined : message.denom;
+    obj.native_denom = message.nativeDenom === "" ? undefined : message.nativeDenom;
+    obj.chain_id = message.chainId === "" ? undefined : message.chainId;
+    obj.connection_id = message.connectionId === "" ? undefined : message.connectionId;
+    obj.transfer_channel_id = message.transferChannelId === "" ? undefined : message.transferChannelId;
+    obj.ica_deposit_port_id = message.icaDepositPortId === "" ? undefined : message.icaDepositPortId;
+    obj.ica_prizepool_port_id = message.icaPrizepoolPortId === "" ? undefined : message.icaPrizepoolPortId;
+    obj.pool_type = message.poolType === 0 ? undefined : message.poolType;
     if (message.validators) {
       obj.validators = message.validators.map(e => e ? PoolValidator.toAmino(e) : undefined);
     } else {
-      obj.validators = [];
+      obj.validators = message.validators;
     }
-    obj.bech32_prefix_acc_addr = message.bech32PrefixAccAddr;
-    obj.bech32_prefix_val_addr = message.bech32PrefixValAddr;
-    obj.min_deposit_amount = message.minDepositAmount;
+    obj.bech32_prefix_acc_addr = message.bech32PrefixAccAddr === "" ? undefined : message.bech32PrefixAccAddr;
+    obj.bech32_prefix_val_addr = message.bech32PrefixValAddr === "" ? undefined : message.bech32PrefixValAddr;
+    obj.min_deposit_amount = message.minDepositAmount === "" ? undefined : message.minDepositAmount;
     obj.draw_schedule = message.drawSchedule ? DrawSchedule.toAmino(message.drawSchedule) : undefined;
     obj.prize_strategy = message.prizeStrategy ? PrizeStrategy.toAmino(message.prizeStrategy) : undefined;
     obj.unbonding_duration = message.unbondingDuration ? Duration.toAmino(message.unbondingDuration) : undefined;
-    obj.max_unbonding_entries = message.maxUnbondingEntries;
-    obj.local_address = message.localAddress;
-    obj.ica_deposit_address = message.icaDepositAddress;
-    obj.ica_prizepool_address = message.icaPrizepoolAddress;
-    obj.next_draw_id = message.nextDrawId ? message.nextDrawId.toString() : undefined;
-    obj.tvl_amount = message.tvlAmount;
-    obj.depositors_count = message.depositorsCount ? message.depositorsCount.toString() : undefined;
-    obj.sponsorship_amount = message.sponsorshipAmount;
+    obj.max_unbonding_entries = message.maxUnbondingEntries === "" ? undefined : message.maxUnbondingEntries;
+    obj.local_address = message.localAddress === "" ? undefined : message.localAddress;
+    obj.ica_deposit_address = message.icaDepositAddress === "" ? undefined : message.icaDepositAddress;
+    obj.ica_prizepool_address = message.icaPrizepoolAddress === "" ? undefined : message.icaPrizepoolAddress;
+    obj.next_draw_id = message.nextDrawId !== BigInt(0) ? message.nextDrawId.toString() : undefined;
+    obj.tvl_amount = message.tvlAmount === "" ? undefined : message.tvlAmount;
+    obj.depositors_count = message.depositorsCount !== BigInt(0) ? message.depositorsCount.toString() : undefined;
+    obj.sponsorship_amount = message.sponsorshipAmount === "" ? undefined : message.sponsorshipAmount;
     obj.last_draw_created_at = message.lastDrawCreatedAt ? Timestamp.toAmino(toTimestamp(message.lastDrawCreatedAt)) : undefined;
-    obj.last_draw_state = message.lastDrawState;
+    obj.last_draw_state = message.lastDrawState === 0 ? undefined : message.lastDrawState;
     obj.available_prize_pool = message.availablePrizePool ? Coin.toAmino(message.availablePrizePool) : undefined;
     if (message.feeTakers) {
       obj.fee_takers = message.feeTakers.map(e => e ? FeeTaker.toAmino(e) : undefined);
     } else {
-      obj.fee_takers = [];
+      obj.fee_takers = message.feeTakers;
     }
-    obj.state = message.state;
-    obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
-    obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
+    obj.state = message.state === 0 ? undefined : message.state;
+    obj.created_at_height = message.createdAtHeight !== BigInt(0) ? message.createdAtHeight.toString() : undefined;
+    obj.updated_at_height = message.updatedAtHeight !== BigInt(0) ? message.updatedAtHeight.toString() : undefined;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;
@@ -911,9 +917,9 @@ export const PoolValidator = {
   },
   toAmino(message: PoolValidator): PoolValidatorAmino {
     const obj: any = {};
-    obj.operator_address = message.operatorAddress;
-    obj.is_enabled = message.isEnabled;
-    obj.bonded_amount = message.bondedAmount;
+    obj.operator_address = message.operatorAddress === "" ? undefined : message.operatorAddress;
+    obj.is_enabled = message.isEnabled === false ? undefined : message.isEnabled;
+    obj.bonded_amount = message.bondedAmount === "" ? undefined : message.bondedAmount;
     return obj;
   },
   fromAminoMsg(object: PoolValidatorAminoMsg): PoolValidator {

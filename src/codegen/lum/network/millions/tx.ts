@@ -630,15 +630,15 @@ export const MsgUpdateParams = {
   },
   toAmino(message: MsgUpdateParams): MsgUpdateParamsAmino {
     const obj: any = {};
-    obj.min_deposit_amount = message.minDepositAmount;
-    obj.max_prize_strategy_batches = message.maxPrizeStrategyBatches;
-    obj.max_prize_batch_quantity = message.maxPrizeBatchQuantity;
+    obj.min_deposit_amount = message.minDepositAmount === null ? undefined : message.minDepositAmount;
+    obj.max_prize_strategy_batches = message.maxPrizeStrategyBatches === null ? undefined : message.maxPrizeStrategyBatches;
+    obj.max_prize_batch_quantity = message.maxPrizeBatchQuantity === null ? undefined : message.maxPrizeBatchQuantity;
     obj.min_draw_schedule_delta = message.minDrawScheduleDelta ? Duration.toAmino(message.minDrawScheduleDelta) : undefined;
     obj.max_draw_schedule_delta = message.maxDrawScheduleDelta ? Duration.toAmino(message.maxDrawScheduleDelta) : undefined;
     obj.prize_expiration_delta = message.prizeExpirationDelta ? Duration.toAmino(message.prizeExpirationDelta) : undefined;
-    obj.fees_stakers = message.feesStakers;
+    obj.fees_stakers = message.feesStakers === null ? undefined : message.feesStakers;
     obj.min_deposit_draw_delta = message.minDepositDrawDelta ? Duration.toAmino(message.minDepositDrawDelta) : undefined;
-    obj.updater_address = message.updaterAddress;
+    obj.updater_address = message.updaterAddress === "" ? undefined : message.updaterAddress;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateParamsAminoMsg): MsgUpdateParams {
@@ -866,21 +866,21 @@ export const MsgRegisterPool = {
   },
   toAmino(message: MsgRegisterPool): MsgRegisterPoolAmino {
     const obj: any = {};
-    obj.chain_id = message.chainId;
-    obj.denom = message.denom;
-    obj.native_denom = message.nativeDenom;
-    obj.connection_id = message.connectionId;
+    obj.chain_id = message.chainId === "" ? undefined : message.chainId;
+    obj.denom = message.denom === "" ? undefined : message.denom;
+    obj.native_denom = message.nativeDenom === "" ? undefined : message.nativeDenom;
+    obj.connection_id = message.connectionId === "" ? undefined : message.connectionId;
     if (message.validators) {
       obj.validators = message.validators.map(e => e);
     } else {
-      obj.validators = [];
+      obj.validators = message.validators;
     }
-    obj.min_deposit_amount = message.minDepositAmount;
+    obj.min_deposit_amount = message.minDepositAmount === "" ? undefined : message.minDepositAmount;
     obj.draw_schedule = message.drawSchedule ? DrawSchedule.toAmino(message.drawSchedule) : undefined;
     obj.prize_strategy = message.prizeStrategy ? PrizeStrategy.toAmino(message.prizeStrategy) : undefined;
-    obj.bech32_prefix_acc_addr = message.bech32PrefixAccAddr;
-    obj.bech32_prefix_val_addr = message.bech32PrefixValAddr;
-    obj.creator_address = message.creatorAddress;
+    obj.bech32_prefix_acc_addr = message.bech32PrefixAccAddr === "" ? undefined : message.bech32PrefixAccAddr;
+    obj.bech32_prefix_val_addr = message.bech32PrefixValAddr === "" ? undefined : message.bech32PrefixValAddr;
+    obj.creator_address = message.creatorAddress === "" ? undefined : message.creatorAddress;
     return obj;
   },
   fromAminoMsg(object: MsgRegisterPoolAminoMsg): MsgRegisterPool {
@@ -949,7 +949,7 @@ export const MsgRegisterPoolResponse = {
   },
   toAmino(message: MsgRegisterPoolResponse): MsgRegisterPoolResponseAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgRegisterPoolResponseAminoMsg): MsgRegisterPoolResponse {
@@ -1066,16 +1066,16 @@ export const MsgUpdatePool = {
   },
   toAmino(message: MsgUpdatePool): MsgUpdatePoolAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     if (message.validators) {
       obj.validators = message.validators.map(e => e);
     } else {
-      obj.validators = [];
+      obj.validators = message.validators;
     }
-    obj.min_deposit_amount = message.minDepositAmount;
+    obj.min_deposit_amount = message.minDepositAmount === null ? undefined : message.minDepositAmount;
     obj.draw_schedule = message.drawSchedule ? DrawSchedule.toAmino(message.drawSchedule) : undefined;
     obj.prize_strategy = message.prizeStrategy ? PrizeStrategy.toAmino(message.prizeStrategy) : undefined;
-    obj.updater_address = message.updaterAddress;
+    obj.updater_address = message.updaterAddress === "" ? undefined : message.updaterAddress;
     return obj;
   },
   fromAminoMsg(object: MsgUpdatePoolAminoMsg): MsgUpdatePool {
@@ -1239,11 +1239,11 @@ export const MsgDeposit = {
   },
   toAmino(message: MsgDeposit): MsgDepositAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
-    obj.depositor_address = message.depositorAddress;
-    obj.winner_address = message.winnerAddress;
-    obj.is_sponsor = message.isSponsor;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
+    obj.is_sponsor = message.isSponsor === false ? undefined : message.isSponsor;
     return obj;
   },
   fromAminoMsg(object: MsgDepositAminoMsg): MsgDeposit {
@@ -1312,7 +1312,7 @@ export const MsgDepositResponse = {
   },
   toAmino(message: MsgDepositResponse): MsgDepositResponseAmino {
     const obj: any = {};
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgDepositResponseAminoMsg): MsgDepositResponse {
@@ -1398,9 +1398,9 @@ export const MsgDepositRetry = {
   },
   toAmino(message: MsgDepositRetry): MsgDepositRetryAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
-    obj.depositor_address = message.depositorAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     return obj;
   },
   fromAminoMsg(object: MsgDepositRetryAminoMsg): MsgDepositRetry {
@@ -1514,11 +1514,11 @@ export const MsgDepositEdit = {
   },
   toAmino(message: MsgDepositEdit): MsgDepositEditAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
-    obj.winner_address = message.winnerAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
     obj.is_sponsor = message.isSponsor ? BoolValue.toAmino(message.isSponsor) : undefined;
-    obj.depositor_address = message.depositorAddress;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     return obj;
   },
   fromAminoMsg(object: MsgDepositEditAminoMsg): MsgDepositEdit {
@@ -1721,10 +1721,10 @@ export const MsgClaimPrize = {
   },
   toAmino(message: MsgClaimPrize): MsgClaimPrizeAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.prize_id = message.prizeId ? message.prizeId.toString() : undefined;
-    obj.winner_address = message.winnerAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.prize_id = message.prizeId !== BigInt(0) ? message.prizeId.toString() : undefined;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
     return obj;
   },
   fromAminoMsg(object: MsgClaimPrizeAminoMsg): MsgClaimPrize {
@@ -1877,10 +1877,10 @@ export const MsgWithdrawDeposit = {
   },
   toAmino(message: MsgWithdrawDeposit): MsgWithdrawDepositAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
-    obj.depositor_address = message.depositorAddress;
-    obj.to_address = message.toAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
+    obj.to_address = message.toAddress === "" ? undefined : message.toAddress;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawDepositAminoMsg): MsgWithdrawDeposit {
@@ -1949,7 +1949,7 @@ export const MsgWithdrawDepositResponse = {
   },
   toAmino(message: MsgWithdrawDepositResponse): MsgWithdrawDepositResponseAmino {
     const obj: any = {};
-    obj.withdrawal_id = message.withdrawalId ? message.withdrawalId.toString() : undefined;
+    obj.withdrawal_id = message.withdrawalId !== BigInt(0) ? message.withdrawalId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawDepositResponseAminoMsg): MsgWithdrawDepositResponse {
@@ -2035,9 +2035,9 @@ export const MsgWithdrawDepositRetry = {
   },
   toAmino(message: MsgWithdrawDepositRetry): MsgWithdrawDepositRetryAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.withdrawal_id = message.withdrawalId ? message.withdrawalId.toString() : undefined;
-    obj.depositor_address = message.depositorAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.withdrawal_id = message.withdrawalId !== BigInt(0) ? message.withdrawalId.toString() : undefined;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawDepositRetryAminoMsg): MsgWithdrawDepositRetry {
@@ -2179,9 +2179,9 @@ export const MsgDrawRetry = {
   },
   toAmino(message: MsgDrawRetry): MsgDrawRetryAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.draw_retry_address = message.drawRetryAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.draw_retry_address = message.drawRetryAddress === "" ? undefined : message.drawRetryAddress;
     return obj;
   },
   fromAminoMsg(object: MsgDrawRetryAminoMsg): MsgDrawRetry {
@@ -2312,8 +2312,8 @@ export const MsgRestoreInterchainAccounts = {
   },
   toAmino(message: MsgRestoreInterchainAccounts): MsgRestoreInterchainAccountsAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.restorer_address = message.restorerAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.restorer_address = message.restorerAddress === "" ? undefined : message.restorerAddress;
     return obj;
   },
   fromAminoMsg(object: MsgRestoreInterchainAccountsAminoMsg): MsgRestoreInterchainAccounts {
@@ -2433,7 +2433,7 @@ export const MsgGenerateSeed = {
   },
   toAmino(message: MsgGenerateSeed): MsgGenerateSeedAmino {
     const obj: any = {};
-    obj.requester_address = message.requesterAddress;
+    obj.requester_address = message.requesterAddress === "" ? undefined : message.requesterAddress;
     return obj;
   },
   fromAminoMsg(object: MsgGenerateSeedAminoMsg): MsgGenerateSeed {
@@ -2502,7 +2502,7 @@ export const MsgGenerateSeedResponse = {
   },
   toAmino(message: MsgGenerateSeedResponse): MsgGenerateSeedResponseAmino {
     const obj: any = {};
-    obj.seed = message.seed ? message.seed.toString() : undefined;
+    obj.seed = message.seed !== BigInt(0) ? message.seed.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgGenerateSeedResponseAminoMsg): MsgGenerateSeedResponse {

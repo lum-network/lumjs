@@ -208,44 +208,44 @@ export const GenesisState = {
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
-    obj.next_pool_id = message.nextPoolId ? message.nextPoolId.toString() : undefined;
-    obj.next_deposit_id = message.nextDepositId ? message.nextDepositId.toString() : undefined;
-    obj.next_prize_id = message.nextPrizeId ? message.nextPrizeId.toString() : undefined;
-    obj.next_withdrawal_id = message.nextWithdrawalId ? message.nextWithdrawalId.toString() : undefined;
+    obj.next_pool_id = message.nextPoolId !== BigInt(0) ? message.nextPoolId.toString() : undefined;
+    obj.next_deposit_id = message.nextDepositId !== BigInt(0) ? message.nextDepositId.toString() : undefined;
+    obj.next_prize_id = message.nextPrizeId !== BigInt(0) ? message.nextPrizeId.toString() : undefined;
+    obj.next_withdrawal_id = message.nextWithdrawalId !== BigInt(0) ? message.nextWithdrawalId.toString() : undefined;
     if (message.pools) {
       obj.pools = message.pools.map(e => e ? Pool.toAmino(e) : undefined);
     } else {
-      obj.pools = [];
+      obj.pools = message.pools;
     }
     if (message.deposits) {
       obj.deposits = message.deposits.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {
-      obj.deposits = [];
+      obj.deposits = message.deposits;
     }
     if (message.draws) {
       obj.draws = message.draws.map(e => e ? Draw.toAmino(e) : undefined);
     } else {
-      obj.draws = [];
+      obj.draws = message.draws;
     }
     if (message.prizes) {
       obj.prizes = message.prizes.map(e => e ? Prize.toAmino(e) : undefined);
     } else {
-      obj.prizes = [];
+      obj.prizes = message.prizes;
     }
     if (message.withdrawals) {
       obj.withdrawals = message.withdrawals.map(e => e ? Withdrawal.toAmino(e) : undefined);
     } else {
-      obj.withdrawals = [];
+      obj.withdrawals = message.withdrawals;
     }
     if (message.epochTrackers) {
       obj.epoch_trackers = message.epochTrackers.map(e => e ? EpochTracker.toAmino(e) : undefined);
     } else {
-      obj.epoch_trackers = [];
+      obj.epoch_trackers = message.epochTrackers;
     }
     if (message.epochUnbondings) {
       obj.epoch_unbondings = message.epochUnbondings.map(e => e ? EpochUnbonding.toAmino(e) : undefined);
     } else {
-      obj.epoch_unbondings = [];
+      obj.epoch_unbondings = message.epochUnbondings;
     }
     return obj;
   },

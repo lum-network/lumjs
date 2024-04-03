@@ -88,9 +88,9 @@ export const PrizeRef = {
   },
   toAmino(message: PrizeRef): PrizeRefAmino {
     const obj: any = {};
-    obj.amount = message.amount;
-    obj.prize_id = message.prizeId ? message.prizeId.toString() : undefined;
-    obj.winner_address = message.winnerAddress;
+    obj.amount = message.amount === "" ? undefined : message.amount;
+    obj.prize_id = message.prizeId !== BigInt(0) ? message.prizeId.toString() : undefined;
+    obj.winner_address = message.winnerAddress === null ? undefined : message.winnerAddress;
     return obj;
   },
   fromAminoMsg(object: PrizeRefAminoMsg): PrizeRef {

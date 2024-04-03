@@ -248,7 +248,7 @@ export const Prize = {
       message.prizeId = BigInt(object.prize_id);
     }
     if (object.state !== undefined && object.state !== null) {
-      message.state = prizeStateFromJSON(object.state);
+      message.state = object.state;
     }
     if (object.winner_address !== undefined && object.winner_address !== null) {
       message.winnerAddress = object.winner_address;
@@ -275,14 +275,14 @@ export const Prize = {
   },
   toAmino(message: Prize): PrizeAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.prize_id = message.prizeId ? message.prizeId.toString() : undefined;
-    obj.state = message.state;
-    obj.winner_address = message.winnerAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.prize_id = message.prizeId !== BigInt(0) ? message.prizeId.toString() : undefined;
+    obj.state = message.state === 0 ? undefined : message.state;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
     obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
-    obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
-    obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
+    obj.created_at_height = message.createdAtHeight !== BigInt(0) ? message.createdAtHeight.toString() : undefined;
+    obj.updated_at_height = message.updatedAtHeight !== BigInt(0) ? message.updatedAtHeight.toString() : undefined;
     obj.expires_at = message.expiresAt ? Timestamp.toAmino(toTimestamp(message.expiresAt)) : undefined;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
@@ -370,9 +370,9 @@ export const PrizeIDs = {
   },
   toAmino(message: PrizeIDs): PrizeIDsAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.prize_id = message.prizeId ? message.prizeId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.prize_id = message.prizeId !== BigInt(0) ? message.prizeId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: PrizeIDsAminoMsg): PrizeIDs {
@@ -436,7 +436,7 @@ export const PrizeIDsCollection = {
     if (message.prizesIds) {
       obj.prizes_ids = message.prizesIds.map(e => e ? PrizeIDs.toAmino(e) : undefined);
     } else {
-      obj.prizes_ids = [];
+      obj.prizes_ids = message.prizesIds;
     }
     return obj;
   },

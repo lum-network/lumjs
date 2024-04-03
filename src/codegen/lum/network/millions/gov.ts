@@ -1,7 +1,7 @@
 import { DrawSchedule, DrawScheduleAmino, DrawScheduleSDKType } from "./draw_schedule";
 import { PrizeStrategy, PrizeStrategyAmino, PrizeStrategySDKType } from "./prize_strategy";
 import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
-import { PoolType, FeeTaker, FeeTakerAmino, FeeTakerSDKType, PoolState, poolTypeFromJSON, poolStateFromJSON } from "./pool";
+import { PoolType, FeeTaker, FeeTakerAmino, FeeTakerSDKType, PoolState } from "./pool";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface ProposalRegisterPool {
   title: string;
@@ -114,6 +114,29 @@ export interface ProposalUpdatePoolSDKType {
   unbonding_duration?: DurationSDKType | undefined;
   max_unbonding_entries?: string;
   fee_takers: FeeTakerSDKType[];
+}
+export interface ProposalClosePool {
+  title: string;
+  description: string;
+  poolId: bigint;
+}
+export interface ProposalClosePoolProtoMsg {
+  typeUrl: "/lum.network.millions.ProposalClosePool";
+  value: Uint8Array;
+}
+export interface ProposalClosePoolAmino {
+  title?: string;
+  description?: string;
+  pool_id?: string;
+}
+export interface ProposalClosePoolAminoMsg {
+  type: "/lum.network.millions.ProposalClosePool";
+  value: ProposalClosePoolAmino;
+}
+export interface ProposalClosePoolSDKType {
+  title: string;
+  description: string;
+  pool_id: bigint;
 }
 export interface ProposalUpdateParams {
   title: string;
@@ -365,37 +388,37 @@ export const ProposalRegisterPool = {
       message.maxUnbondingEntries = object.max_unbonding_entries;
     }
     if (object.pool_type !== undefined && object.pool_type !== null) {
-      message.poolType = poolTypeFromJSON(object.pool_type);
+      message.poolType = object.pool_type;
     }
     message.feeTakers = object.fee_takers?.map(e => FeeTaker.fromAmino(e)) || [];
     return message;
   },
   toAmino(message: ProposalRegisterPool): ProposalRegisterPoolAmino {
     const obj: any = {};
-    obj.title = message.title;
-    obj.description = message.description;
-    obj.chain_id = message.chainId;
-    obj.denom = message.denom;
-    obj.native_denom = message.nativeDenom;
-    obj.connection_id = message.connectionId;
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
+    obj.chain_id = message.chainId === "" ? undefined : message.chainId;
+    obj.denom = message.denom === "" ? undefined : message.denom;
+    obj.native_denom = message.nativeDenom === "" ? undefined : message.nativeDenom;
+    obj.connection_id = message.connectionId === "" ? undefined : message.connectionId;
     if (message.validators) {
       obj.validators = message.validators.map(e => e);
     } else {
-      obj.validators = [];
+      obj.validators = message.validators;
     }
-    obj.min_deposit_amount = message.minDepositAmount;
+    obj.min_deposit_amount = message.minDepositAmount === "" ? undefined : message.minDepositAmount;
     obj.draw_schedule = message.drawSchedule ? DrawSchedule.toAmino(message.drawSchedule) : undefined;
     obj.prize_strategy = message.prizeStrategy ? PrizeStrategy.toAmino(message.prizeStrategy) : undefined;
-    obj.bech32_prefix_acc_addr = message.bech32PrefixAccAddr;
-    obj.bech32_prefix_val_addr = message.bech32PrefixValAddr;
-    obj.transfer_channel_id = message.transferChannelId;
+    obj.bech32_prefix_acc_addr = message.bech32PrefixAccAddr === "" ? undefined : message.bech32PrefixAccAddr;
+    obj.bech32_prefix_val_addr = message.bech32PrefixValAddr === "" ? undefined : message.bech32PrefixValAddr;
+    obj.transfer_channel_id = message.transferChannelId === "" ? undefined : message.transferChannelId;
     obj.unbonding_duration = message.unbondingDuration ? Duration.toAmino(message.unbondingDuration) : undefined;
-    obj.max_unbonding_entries = message.maxUnbondingEntries;
-    obj.pool_type = message.poolType;
+    obj.max_unbonding_entries = message.maxUnbondingEntries === "" ? undefined : message.maxUnbondingEntries;
+    obj.pool_type = message.poolType === 0 ? undefined : message.poolType;
     if (message.feeTakers) {
       obj.fee_takers = message.feeTakers.map(e => e ? FeeTaker.toAmino(e) : undefined);
     } else {
-      obj.fee_takers = [];
+      obj.fee_takers = message.feeTakers;
     }
     return obj;
   },
@@ -552,7 +575,7 @@ export const ProposalUpdatePool = {
       message.prizeStrategy = PrizeStrategy.fromAmino(object.prize_strategy);
     }
     if (object.state !== undefined && object.state !== null) {
-      message.state = poolStateFromJSON(object.state);
+      message.state = object.state;
     }
     if (object.unbonding_duration !== undefined && object.unbonding_duration !== null) {
       message.unbondingDuration = Duration.fromAmino(object.unbonding_duration);
@@ -565,24 +588,24 @@ export const ProposalUpdatePool = {
   },
   toAmino(message: ProposalUpdatePool): ProposalUpdatePoolAmino {
     const obj: any = {};
-    obj.title = message.title;
-    obj.description = message.description;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     if (message.validators) {
       obj.validators = message.validators.map(e => e);
     } else {
-      obj.validators = [];
+      obj.validators = message.validators;
     }
-    obj.min_deposit_amount = message.minDepositAmount;
+    obj.min_deposit_amount = message.minDepositAmount === null ? undefined : message.minDepositAmount;
     obj.draw_schedule = message.drawSchedule ? DrawSchedule.toAmino(message.drawSchedule) : undefined;
     obj.prize_strategy = message.prizeStrategy ? PrizeStrategy.toAmino(message.prizeStrategy) : undefined;
-    obj.state = message.state;
+    obj.state = message.state === 0 ? undefined : message.state;
     obj.unbonding_duration = message.unbondingDuration ? Duration.toAmino(message.unbondingDuration) : undefined;
-    obj.max_unbonding_entries = message.maxUnbondingEntries;
+    obj.max_unbonding_entries = message.maxUnbondingEntries === null ? undefined : message.maxUnbondingEntries;
     if (message.feeTakers) {
       obj.fee_takers = message.feeTakers.map(e => e ? FeeTaker.toAmino(e) : undefined);
     } else {
-      obj.fee_takers = [];
+      obj.fee_takers = message.feeTakers;
     }
     return obj;
   },
@@ -599,6 +622,93 @@ export const ProposalUpdatePool = {
     return {
       typeUrl: "/lum.network.millions.ProposalUpdatePool",
       value: ProposalUpdatePool.encode(message).finish()
+    };
+  }
+};
+function createBaseProposalClosePool(): ProposalClosePool {
+  return {
+    title: "",
+    description: "",
+    poolId: BigInt(0)
+  };
+}
+export const ProposalClosePool = {
+  typeUrl: "/lum.network.millions.ProposalClosePool",
+  encode(message: ProposalClosePool, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.title !== "") {
+      writer.uint32(10).string(message.title);
+    }
+    if (message.description !== "") {
+      writer.uint32(18).string(message.description);
+    }
+    if (message.poolId !== BigInt(0)) {
+      writer.uint32(24).uint64(message.poolId);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): ProposalClosePool {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseProposalClosePool();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.title = reader.string();
+          break;
+        case 2:
+          message.description = reader.string();
+          break;
+        case 3:
+          message.poolId = reader.uint64();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<ProposalClosePool>): ProposalClosePool {
+    const message = createBaseProposalClosePool();
+    message.title = object.title ?? "";
+    message.description = object.description ?? "";
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    return message;
+  },
+  fromAmino(object: ProposalClosePoolAmino): ProposalClosePool {
+    const message = createBaseProposalClosePool();
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = object.description;
+    }
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.poolId = BigInt(object.pool_id);
+    }
+    return message;
+  },
+  toAmino(message: ProposalClosePool): ProposalClosePoolAmino {
+    const obj: any = {};
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ProposalClosePoolAminoMsg): ProposalClosePool {
+    return ProposalClosePool.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ProposalClosePoolProtoMsg): ProposalClosePool {
+    return ProposalClosePool.decode(message.value);
+  },
+  toProto(message: ProposalClosePool): Uint8Array {
+    return ProposalClosePool.encode(message).finish();
+  },
+  toProtoMsg(message: ProposalClosePool): ProposalClosePoolProtoMsg {
+    return {
+      typeUrl: "/lum.network.millions.ProposalClosePool",
+      value: ProposalClosePool.encode(message).finish()
     };
   }
 };
@@ -734,11 +844,11 @@ export const ProposalUpdateParams = {
   },
   toAmino(message: ProposalUpdateParams): ProposalUpdateParamsAmino {
     const obj: any = {};
-    obj.title = message.title;
-    obj.description = message.description;
-    obj.min_deposit_amount = message.minDepositAmount;
-    obj.max_prize_strategy_batches = message.maxPrizeStrategyBatches;
-    obj.max_prize_batch_quantity = message.maxPrizeBatchQuantity;
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
+    obj.min_deposit_amount = message.minDepositAmount === null ? undefined : message.minDepositAmount;
+    obj.max_prize_strategy_batches = message.maxPrizeStrategyBatches === null ? undefined : message.maxPrizeStrategyBatches;
+    obj.max_prize_batch_quantity = message.maxPrizeBatchQuantity === null ? undefined : message.maxPrizeBatchQuantity;
     obj.min_draw_schedule_delta = message.minDrawScheduleDelta ? Duration.toAmino(message.minDrawScheduleDelta) : undefined;
     obj.max_draw_schedule_delta = message.maxDrawScheduleDelta ? Duration.toAmino(message.maxDrawScheduleDelta) : undefined;
     obj.prize_expiration_delta = message.prizeExpirationDelta ? Duration.toAmino(message.prizeExpirationDelta) : undefined;

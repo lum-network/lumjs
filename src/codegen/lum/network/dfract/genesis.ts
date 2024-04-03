@@ -114,23 +114,23 @@ export const GenesisState = {
     if (message.moduleAccountBalance) {
       obj.module_account_balance = message.moduleAccountBalance.map(e => e ? Coin.toAmino(e) : undefined);
     } else {
-      obj.module_account_balance = [];
+      obj.module_account_balance = message.moduleAccountBalance;
     }
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.depositsPendingWithdrawal) {
       obj.deposits_pending_withdrawal = message.depositsPendingWithdrawal.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {
-      obj.deposits_pending_withdrawal = [];
+      obj.deposits_pending_withdrawal = message.depositsPendingWithdrawal;
     }
     if (message.depositsPendingMint) {
       obj.deposits_pending_mint = message.depositsPendingMint.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {
-      obj.deposits_pending_mint = [];
+      obj.deposits_pending_mint = message.depositsPendingMint;
     }
     if (message.depositsMinted) {
       obj.deposits_minted = message.depositsMinted.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {
-      obj.deposits_minted = [];
+      obj.deposits_minted = message.depositsMinted;
     }
     return obj;
   },

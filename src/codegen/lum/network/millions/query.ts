@@ -894,7 +894,7 @@ export const QueryPoolsResponse = {
     if (message.pools) {
       obj.pools = message.pools.map(e => e ? Pool.toAmino(e) : undefined);
     } else {
-      obj.pools = [];
+      obj.pools = message.pools;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -959,7 +959,7 @@ export const QueryPoolRequest = {
   },
   toAmino(message: QueryPoolRequest): QueryPoolRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryPoolRequestAminoMsg): QueryPoolRequest {
@@ -1160,7 +1160,7 @@ export const QueryDepositsResponse = {
     if (message.deposits) {
       obj.deposits = message.deposits.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {
-      obj.deposits = [];
+      obj.deposits = message.deposits;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -1299,8 +1299,8 @@ export const QueryPoolDepositRequest = {
   },
   toAmino(message: QueryPoolDepositRequest): QueryPoolDepositRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.deposit_id = message.depositId ? message.depositId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.deposit_id = message.depositId !== BigInt(0) ? message.depositId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryPoolDepositRequestAminoMsg): QueryPoolDepositRequest {
@@ -1374,7 +1374,7 @@ export const QueryPoolDepositsRequest = {
   },
   toAmino(message: QueryPoolDepositsRequest): QueryPoolDepositsRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -1449,7 +1449,7 @@ export const QueryAccountDepositsRequest = {
   },
   toAmino(message: QueryAccountDepositsRequest): QueryAccountDepositsRequestAmino {
     const obj: any = {};
-    obj.depositor_address = message.depositorAddress;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -1535,8 +1535,8 @@ export const QueryAccountPoolDepositsRequest = {
   },
   toAmino(message: QueryAccountPoolDepositsRequest): QueryAccountPoolDepositsRequestAmino {
     const obj: any = {};
-    obj.depositor_address = message.depositorAddress;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -1675,7 +1675,7 @@ export const QueryDrawsResponse = {
     if (message.draws) {
       obj.draws = message.draws.map(e => e ? Draw.toAmino(e) : undefined);
     } else {
-      obj.draws = [];
+      obj.draws = message.draws;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -1814,7 +1814,7 @@ export const QueryPoolDrawsRequest = {
   },
   toAmino(message: QueryPoolDrawsRequest): QueryPoolDrawsRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -1889,8 +1889,8 @@ export const QueryPoolDrawRequest = {
   },
   toAmino(message: QueryPoolDrawRequest): QueryPoolDrawRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryPoolDrawRequestAminoMsg): QueryPoolDrawRequest {
@@ -2028,7 +2028,7 @@ export const QueryPrizesResponse = {
     if (message.prizes) {
       obj.prizes = message.prizes.map(e => e ? Prize.toAmino(e) : undefined);
     } else {
-      obj.prizes = [];
+      obj.prizes = message.prizes;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -2115,9 +2115,9 @@ export const QueryPoolDrawPrizeRequest = {
   },
   toAmino(message: QueryPoolDrawPrizeRequest): QueryPoolDrawPrizeRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.prize_id = message.prizeId ? message.prizeId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.prize_id = message.prizeId !== BigInt(0) ? message.prizeId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryPoolDrawPrizeRequestAminoMsg): QueryPoolDrawPrizeRequest {
@@ -2254,7 +2254,7 @@ export const QueryPoolPrizesRequest = {
   },
   toAmino(message: QueryPoolPrizesRequest): QueryPoolPrizesRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -2340,8 +2340,8 @@ export const QueryPoolDrawPrizesRequest = {
   },
   toAmino(message: QueryPoolDrawPrizesRequest): QueryPoolDrawPrizesRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -2416,7 +2416,7 @@ export const QueryAccountPrizesRequest = {
   },
   toAmino(message: QueryAccountPrizesRequest): QueryAccountPrizesRequestAmino {
     const obj: any = {};
-    obj.winner_address = message.winnerAddress;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -2502,8 +2502,8 @@ export const QueryAccountPoolPrizesRequest = {
   },
   toAmino(message: QueryAccountPoolPrizesRequest): QueryAccountPoolPrizesRequestAmino {
     const obj: any = {};
-    obj.winner_address = message.winnerAddress;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -2600,9 +2600,9 @@ export const QueryAccountPoolDrawPrizesRequest = {
   },
   toAmino(message: QueryAccountPoolDrawPrizesRequest): QueryAccountPoolDrawPrizesRequestAmino {
     const obj: any = {};
-    obj.winner_address = message.winnerAddress;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
+    obj.winner_address = message.winnerAddress === "" ? undefined : message.winnerAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -2741,7 +2741,7 @@ export const QueryWithdrawalsResponse = {
     if (message.withdrawals) {
       obj.withdrawals = message.withdrawals.map(e => e ? Withdrawal.toAmino(e) : undefined);
     } else {
-      obj.withdrawals = [];
+      obj.withdrawals = message.withdrawals;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -2817,8 +2817,8 @@ export const QueryPoolWithdrawalRequest = {
   },
   toAmino(message: QueryPoolWithdrawalRequest): QueryPoolWithdrawalRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.withdrawal_id = message.withdrawalId ? message.withdrawalId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.withdrawal_id = message.withdrawalId !== BigInt(0) ? message.withdrawalId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryPoolWithdrawalRequestAminoMsg): QueryPoolWithdrawalRequest {
@@ -2955,7 +2955,7 @@ export const QueryPoolWithdrawalsRequest = {
   },
   toAmino(message: QueryPoolWithdrawalsRequest): QueryPoolWithdrawalsRequestAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -3030,7 +3030,7 @@ export const QueryAccountWithdrawalsRequest = {
   },
   toAmino(message: QueryAccountWithdrawalsRequest): QueryAccountWithdrawalsRequestAmino {
     const obj: any = {};
-    obj.depositor_address = message.depositorAddress;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -3116,8 +3116,8 @@ export const QueryAccountPoolWithdrawalsRequest = {
   },
   toAmino(message: QueryAccountPoolWithdrawalsRequest): QueryAccountPoolWithdrawalsRequestAmino {
     const obj: any = {};
-    obj.depositor_address = message.depositorAddress;
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.depositor_address = message.depositorAddress === "" ? undefined : message.depositorAddress;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },

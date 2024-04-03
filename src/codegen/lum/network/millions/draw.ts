@@ -294,10 +294,10 @@ export const Draw = {
       message.drawId = BigInt(object.draw_id);
     }
     if (object.state !== undefined && object.state !== null) {
-      message.state = drawStateFromJSON(object.state);
+      message.state = object.state;
     }
     if (object.error_state !== undefined && object.error_state !== null) {
-      message.errorState = drawStateFromJSON(object.error_state);
+      message.errorState = object.error_state;
     }
     if (object.rand_seed !== undefined && object.rand_seed !== null) {
       message.randSeed = BigInt(object.rand_seed);
@@ -334,23 +334,23 @@ export const Draw = {
   },
   toAmino(message: Draw): DrawAmino {
     const obj: any = {};
-    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
-    obj.draw_id = message.drawId ? message.drawId.toString() : undefined;
-    obj.state = message.state;
-    obj.error_state = message.errorState;
-    obj.rand_seed = message.randSeed ? message.randSeed.toString() : undefined;
+    obj.pool_id = message.poolId !== BigInt(0) ? message.poolId.toString() : undefined;
+    obj.draw_id = message.drawId !== BigInt(0) ? message.drawId.toString() : undefined;
+    obj.state = message.state === 0 ? undefined : message.state;
+    obj.error_state = message.errorState === 0 ? undefined : message.errorState;
+    obj.rand_seed = message.randSeed !== BigInt(0) ? message.randSeed.toString() : undefined;
     obj.prize_pool = message.prizePool ? Coin.toAmino(message.prizePool) : undefined;
-    obj.prize_pool_fresh_amount = message.prizePoolFreshAmount;
-    obj.prize_pool_remains_amount = message.prizePoolRemainsAmount;
+    obj.prize_pool_fresh_amount = message.prizePoolFreshAmount === "" ? undefined : message.prizePoolFreshAmount;
+    obj.prize_pool_remains_amount = message.prizePoolRemainsAmount === "" ? undefined : message.prizePoolRemainsAmount;
     if (message.prizesRefs) {
       obj.prizes_refs = message.prizesRefs.map(e => e ? PrizeRef.toAmino(e) : undefined);
     } else {
-      obj.prizes_refs = [];
+      obj.prizes_refs = message.prizesRefs;
     }
-    obj.total_win_count = message.totalWinCount ? message.totalWinCount.toString() : undefined;
-    obj.total_win_amount = message.totalWinAmount;
-    obj.created_at_height = message.createdAtHeight ? message.createdAtHeight.toString() : undefined;
-    obj.updated_at_height = message.updatedAtHeight ? message.updatedAtHeight.toString() : undefined;
+    obj.total_win_count = message.totalWinCount !== BigInt(0) ? message.totalWinCount.toString() : undefined;
+    obj.total_win_amount = message.totalWinAmount === "" ? undefined : message.totalWinAmount;
+    obj.created_at_height = message.createdAtHeight !== BigInt(0) ? message.createdAtHeight.toString() : undefined;
+    obj.updated_at_height = message.updatedAtHeight !== BigInt(0) ? message.updatedAtHeight.toString() : undefined;
     obj.created_at = message.createdAt ? Timestamp.toAmino(toTimestamp(message.createdAt)) : undefined;
     obj.updated_at = message.updatedAt ? Timestamp.toAmino(toTimestamp(message.updatedAt)) : undefined;
     return obj;

@@ -266,7 +266,7 @@ export const QueryGetCallbackDataRequest = {
   },
   toAmino(message: QueryGetCallbackDataRequest): QueryGetCallbackDataRequestAmino {
     const obj: any = {};
-    obj.callback_key = message.callbackKey;
+    obj.callback_key = message.callbackKey === "" ? undefined : message.callbackKey;
     return obj;
   },
   fromAminoMsg(object: QueryGetCallbackDataRequestAminoMsg): QueryGetCallbackDataRequest {
@@ -467,7 +467,7 @@ export const QueryAllCallbackDataResponse = {
     if (message.callbackData) {
       obj.callback_data = message.callbackData.map(e => e ? CallbackData.toAmino(e) : undefined);
     } else {
-      obj.callback_data = [];
+      obj.callback_data = message.callbackData;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

@@ -103,11 +103,11 @@ export const Params = {
     if (message.depositDenoms) {
       obj.deposit_denoms = message.depositDenoms.map(e => e);
     } else {
-      obj.deposit_denoms = [];
+      obj.deposit_denoms = message.depositDenoms;
     }
-    obj.min_deposit_amount = message.minDepositAmount;
-    obj.withdrawal_address = message.withdrawalAddress;
-    obj.is_deposit_enabled = message.isDepositEnabled;
+    obj.min_deposit_amount = message.minDepositAmount === "" ? undefined : message.minDepositAmount;
+    obj.withdrawal_address = message.withdrawalAddress === "" ? undefined : message.withdrawalAddress;
+    obj.is_deposit_enabled = message.isDepositEnabled === false ? undefined : message.isDepositEnabled;
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {
