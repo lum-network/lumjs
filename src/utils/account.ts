@@ -1,9 +1,10 @@
 import { decodePubkey } from '@cosmjs/proto-signing';
 import { assert } from '@cosmjs/utils';
 
+import { Any } from '../codegen/google/protobuf/any';
 import { BaseAccount, ModuleAccount } from '../codegen/cosmos/auth/v1beta1/auth';
 import { BaseVestingAccount, ContinuousVestingAccount, DelayedVestingAccount, PeriodicVestingAccount } from '../codegen/cosmos/vesting/v1beta1/vesting';
-import { Any } from '../codegen/google/protobuf/any';
+import { EthAccount } from '../codegen/injective/types/v1beta1/account';
 
 import { Account } from '../types';
 
@@ -58,6 +59,13 @@ export const accountFromAny = (input: Any): Account => {
             assert(vestingAccount.baseVestingAccount.baseAccount);
             return Object.assign(accountFromBaseAccount(vestingAccount.baseVestingAccount.baseAccount), {
                 _periodicVestingAccount: vestingAccount,
+            });
+        }
+        case '/injective.types.v1beta1.EthAccount': {
+            const ethAccount = EthAccount.decode(value);
+            assert(ethAccount.baseAccount);
+            return Object.assign(accountFromBaseAccount(ethAccount.baseAccount), {
+                _ethAccount: ethAccount,
             });
         }
         default:

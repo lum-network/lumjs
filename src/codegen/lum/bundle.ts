@@ -1,132 +1,132 @@
-import * as _139 from "./network/airdrop/claim";
-import * as _140 from "./network/airdrop/genesis";
-import * as _141 from "./network/airdrop/params";
-import * as _142 from "./network/airdrop/query";
-import * as _143 from "./network/airdrop/tx";
-import * as _144 from "./network/beam/beam";
-import * as _145 from "./network/beam/genesis";
-import * as _146 from "./network/beam/query";
-import * as _147 from "./network/beam/tx";
-import * as _148 from "./network/dfract/deposit";
-import * as _149 from "./network/dfract/genesis";
-import * as _150 from "./network/dfract/gov";
-import * as _151 from "./network/dfract/params";
-import * as _152 from "./network/dfract/proposal";
-import * as _153 from "./network/dfract/query";
-import * as _154 from "./network/dfract/tx";
-import * as _155 from "./network/epochs/genesis";
-import * as _156 from "./network/epochs/query";
-import * as _157 from "./network/icacallbacks/callback_data";
-import * as _158 from "./network/icacallbacks/genesis";
-import * as _159 from "./network/icacallbacks/packet";
-import * as _160 from "./network/icacallbacks/params";
-import * as _161 from "./network/icacallbacks/query";
-import * as _162 from "./network/icacallbacks/tx";
-import * as _163 from "./network/millions/callbacks";
-import * as _164 from "./network/millions/deposit";
-import * as _165 from "./network/millions/draw_schedule";
-import * as _166 from "./network/millions/draw";
-import * as _167 from "./network/millions/epoch";
-import * as _168 from "./network/millions/genesis";
-import * as _169 from "./network/millions/gov";
-import * as _170 from "./network/millions/params";
-import * as _171 from "./network/millions/pool";
-import * as _172 from "./network/millions/prize_batch";
-import * as _173 from "./network/millions/prize_ref";
-import * as _174 from "./network/millions/prize_strategy";
-import * as _175 from "./network/millions/prize";
-import * as _176 from "./network/millions/query";
-import * as _177 from "./network/millions/tx";
-import * as _178 from "./network/millions/withdrawal";
-import * as _259 from "./network/beam/tx.amino";
-import * as _260 from "./network/dfract/tx.amino";
-import * as _261 from "./network/millions/tx.amino";
-import * as _262 from "./network/beam/tx.registry";
-import * as _263 from "./network/dfract/tx.registry";
-import * as _264 from "./network/millions/tx.registry";
-import * as _265 from "./network/airdrop/query.rpc.Query";
-import * as _266 from "./network/beam/query.rpc.Query";
-import * as _267 from "./network/dfract/query.rpc.Query";
-import * as _268 from "./network/epochs/query.rpc.Query";
-import * as _269 from "./network/icacallbacks/query.rpc.Query";
-import * as _270 from "./network/millions/query.rpc.Query";
-import * as _271 from "./network/beam/tx.rpc.msg";
-import * as _272 from "./network/dfract/tx.rpc.msg";
-import * as _273 from "./network/millions/tx.rpc.msg";
-import * as _281 from "./rpc.query";
-import * as _282 from "./rpc.tx";
+import * as _181 from "./network/airdrop/claim";
+import * as _182 from "./network/airdrop/genesis";
+import * as _183 from "./network/airdrop/params";
+import * as _184 from "./network/airdrop/query";
+import * as _185 from "./network/airdrop/tx";
+import * as _186 from "./network/beam/beam";
+import * as _187 from "./network/beam/genesis";
+import * as _188 from "./network/beam/query";
+import * as _189 from "./network/beam/tx";
+import * as _190 from "./network/dfract/deposit";
+import * as _191 from "./network/dfract/genesis";
+import * as _192 from "./network/dfract/gov";
+import * as _193 from "./network/dfract/params";
+import * as _194 from "./network/dfract/proposal";
+import * as _195 from "./network/dfract/query";
+import * as _196 from "./network/dfract/tx";
+import * as _197 from "./network/epochs/genesis";
+import * as _198 from "./network/epochs/query";
+import * as _199 from "./network/icacallbacks/callback_data";
+import * as _200 from "./network/icacallbacks/genesis";
+import * as _201 from "./network/icacallbacks/packet";
+import * as _202 from "./network/icacallbacks/params";
+import * as _203 from "./network/icacallbacks/query";
+import * as _204 from "./network/icacallbacks/tx";
+import * as _205 from "./network/millions/callbacks";
+import * as _206 from "./network/millions/deposit";
+import * as _207 from "./network/millions/draw_schedule";
+import * as _208 from "./network/millions/draw";
+import * as _209 from "./network/millions/epoch";
+import * as _210 from "./network/millions/genesis";
+import * as _211 from "./network/millions/gov";
+import * as _212 from "./network/millions/params";
+import * as _213 from "./network/millions/pool";
+import * as _214 from "./network/millions/prize_batch";
+import * as _215 from "./network/millions/prize_ref";
+import * as _216 from "./network/millions/prize_strategy";
+import * as _217 from "./network/millions/prize";
+import * as _218 from "./network/millions/query";
+import * as _219 from "./network/millions/tx";
+import * as _220 from "./network/millions/withdrawal";
+import * as _326 from "./network/beam/tx.amino";
+import * as _327 from "./network/dfract/tx.amino";
+import * as _328 from "./network/millions/tx.amino";
+import * as _329 from "./network/beam/tx.registry";
+import * as _330 from "./network/dfract/tx.registry";
+import * as _331 from "./network/millions/tx.registry";
+import * as _332 from "./network/airdrop/query.rpc.Query";
+import * as _333 from "./network/beam/query.rpc.Query";
+import * as _334 from "./network/dfract/query.rpc.Query";
+import * as _335 from "./network/epochs/query.rpc.Query";
+import * as _336 from "./network/icacallbacks/query.rpc.Query";
+import * as _337 from "./network/millions/query.rpc.Query";
+import * as _338 from "./network/beam/tx.rpc.msg";
+import * as _339 from "./network/dfract/tx.rpc.msg";
+import * as _340 from "./network/millions/tx.rpc.msg";
+import * as _350 from "./rpc.query";
+import * as _351 from "./rpc.tx";
 export namespace lum {
   export namespace network {
     export const airdrop = {
-      ..._139,
-      ..._140,
-      ..._141,
-      ..._142,
-      ..._143,
-      ..._265
+      ..._181,
+      ..._182,
+      ..._183,
+      ..._184,
+      ..._185,
+      ..._332
     };
     export const beam = {
-      ..._144,
-      ..._145,
-      ..._146,
-      ..._147,
-      ..._259,
-      ..._262,
-      ..._266,
-      ..._271
+      ..._186,
+      ..._187,
+      ..._188,
+      ..._189,
+      ..._326,
+      ..._329,
+      ..._333,
+      ..._338
     };
     export const dfract = {
-      ..._148,
-      ..._149,
-      ..._150,
-      ..._151,
-      ..._152,
-      ..._153,
-      ..._154,
-      ..._260,
-      ..._263,
-      ..._267,
-      ..._272
+      ..._190,
+      ..._191,
+      ..._192,
+      ..._193,
+      ..._194,
+      ..._195,
+      ..._196,
+      ..._327,
+      ..._330,
+      ..._334,
+      ..._339
     };
     export const epochs = {
-      ..._155,
-      ..._156,
-      ..._268
+      ..._197,
+      ..._198,
+      ..._335
     };
     export const icacallbacks = {
-      ..._157,
-      ..._158,
-      ..._159,
-      ..._160,
-      ..._161,
-      ..._162,
-      ..._269
+      ..._199,
+      ..._200,
+      ..._201,
+      ..._202,
+      ..._203,
+      ..._204,
+      ..._336
     };
     export const millions = {
-      ..._163,
-      ..._164,
-      ..._165,
-      ..._166,
-      ..._167,
-      ..._168,
-      ..._169,
-      ..._170,
-      ..._171,
-      ..._172,
-      ..._173,
-      ..._174,
-      ..._175,
-      ..._176,
-      ..._177,
-      ..._178,
-      ..._261,
-      ..._264,
-      ..._270,
-      ..._273
+      ..._205,
+      ..._206,
+      ..._207,
+      ..._208,
+      ..._209,
+      ..._210,
+      ..._211,
+      ..._212,
+      ..._213,
+      ..._214,
+      ..._215,
+      ..._216,
+      ..._217,
+      ..._218,
+      ..._219,
+      ..._220,
+      ..._328,
+      ..._331,
+      ..._337,
+      ..._340
     };
   }
   export const ClientFactory = {
-    ..._281,
-    ..._282
+    ..._350,
+    ..._351
   };
 }
